@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Book_Lending_System.Models
 {
@@ -6,13 +7,21 @@ namespace Book_Lending_System.Models
     {
         public uint Id { get; set; }
 
-        [Range(7, 7, ErrorMessage = "NPM must be 7 digit numbers.")]
-        public uint NPM { get; set; }
+        [StringLength(7, ErrorMessage = "NPM must be 7 digit numbers.", MinimumLength = 7)]
+        public required string NPM { get; set; }
         public required string Name { get; set; }
+
+        [Display(Name = "Telephone Number")]
         public required string TelephoneNumber { get; set; }
+
+        [Display(Name = "Study Program")]
         public required StudyProgram StudyProgram { get; set; }
 
-        public required uint UserAccountId { get; set; }
+        [Display(Name = "User Account")]
+        
+        public uint? UserAccountId { get; set; }
+
+        public UserAccount? UserAccount { get; set; }
     }
 }
 

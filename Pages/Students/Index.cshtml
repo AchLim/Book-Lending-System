@@ -47,7 +47,7 @@
                 @Html.DisplayFor(modelItem => item.StudyProgram)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.UserAccountId)
+                @Model.GetUsername(item.UserAccountId)
             </td>
             <td>
                 <a asp-page="./Edit" asp-route-id="@item.Id">Edit</a> |

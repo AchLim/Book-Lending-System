@@ -39,5 +39,17 @@ namespace Book_Lending_System.Pages.Students
             }
             return Page();
         }
+
+        public string GetUsername(uint? id)
+        {
+            if (id == null)
+                return "-";
+
+            UserAccount? userAcc = _context.UserAccount.SingleOrDefault(userAccount => userAccount.Id == id);
+            if (userAcc == null)
+                return "-";
+
+            return userAcc.Username;
+        }
     }
 }

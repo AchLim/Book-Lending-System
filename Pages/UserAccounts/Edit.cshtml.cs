@@ -23,6 +23,9 @@ namespace Book_Lending_System.Pages.UserAccounts
         [BindProperty]
         public UserAccount UserAccount { get; set; } = default!;
 
+        [BindProperty]
+        public List<Role> Roles { get; set; } = default!;
+
         public async Task<IActionResult> OnGetAsync(uint? id)
         {
             if (id == null || _context.UserAccount == null)
@@ -36,6 +39,12 @@ namespace Book_Lending_System.Pages.UserAccounts
                 return NotFound();
             }
             UserAccount = useraccount;
+            var role = _context.Role.Where(r => r.Id == id);
+            if (role != null)
+            {
+                Roles = role.ToList();
+            }
+
             return Page();
         }
 
@@ -49,7 +58,6 @@ namespace Book_Lending_System.Pages.UserAccounts
             }
 
             _context.Attach(UserAccount).State = EntityState.Modified;
-
             try
             {
                 await _context.SaveChangesAsync();
@@ -64,6 +72,19 @@ namespace Book_Lending_System.Pages.UserAccounts
                 {
                     throw;
                 }
+            }
+            ICollection<Role> roles = UserAccount.GetRoleChanges(_context);
+
+            IQueryable<Role> existingRoles = _context.Role.Where(r => r.UserAccountId == UserAccount.Id);
+            if (existingRoles != null)
+            {
+                _context.Role.RemoveRange(existingRoles);
+                await _context.SaveChangesAsync();
+            }
+            if (_context.Role != null)
+            {
+                await _context.Role.AddRangeAsync(roles);
+                await _context.SaveChangesAsync();
             }
 
             return RedirectToPage("./Index");

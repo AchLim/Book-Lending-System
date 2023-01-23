@@ -31,12 +31,15 @@
             </div>
             <div class="form-group">
                 <label asp-for="Student.StudyProgram" class="control-label"></label>
-                <select asp-for="Student.StudyProgram" class="form-control"></select>
+                <select asp-for="Student.StudyProgram" class="form-control" asp-items="Html.GetEnumSelectList<StudyProgram>()">
+                    <option></option>
+                </select>
                 <span asp-validation-for="Student.StudyProgram" class="text-danger"></span>
             </div>
-            <div class="form-group">
+            <div class="form-group" style="margin-bottom: 1rem;">
                 <label asp-for="Student.UserAccountId" class="control-label"></label>
-                <input asp-for="Student.UserAccountId" class="form-control" />
+                <br />
+                @Html.DropDownListFor(model => model.Student.UserAccountId, Model.GetUserAccountSelectList(), string.Empty)
                 <span asp-validation-for="Student.UserAccountId" class="text-danger"></span>
             </div>
             <div class="form-group">

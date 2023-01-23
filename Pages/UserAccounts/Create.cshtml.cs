@@ -7,6 +7,8 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Book_Lending_System.Data;
 using Book_Lending_System.Models;
+using Microsoft.EntityFrameworkCore;
+using System.ComponentModel.DataAnnotations;
 
 namespace Book_Lending_System.Pages.UserAccounts
 {
@@ -31,13 +33,21 @@ namespace Book_Lending_System.Pages.UserAccounts
         // To protect from overposting attacks, see https://aka.ms/RazorPagesCRUD
         public async Task<IActionResult> OnPostAsync()
         {
-          if (!ModelState.IsValid || _context.UserAccount == null || UserAccount == null)
+            if (!ModelState.IsValid || _context.UserAccount == null || UserAccount == null)
             {
                 return Page();
             }
 
             _context.UserAccount.Add(UserAccount);
             await _context.SaveChangesAsync();
+
+            ICollection<Role> roles = UserAccount.GetRoleChanges(_context);
+
+            if (_context.Role != null)
+            {
+                await _context.Role.AddRangeAsync(roles);
+                await _context.SaveChangesAsync();
+            }
 
             return RedirectToPage("./Index");
         }

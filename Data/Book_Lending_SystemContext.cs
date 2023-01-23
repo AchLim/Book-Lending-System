@@ -19,5 +19,20 @@ namespace Book_Lending_System.Data
         public DbSet<Book_Lending_System.Models.Student> Student { get; set; } = default!;
 
         public DbSet<Book_Lending_System.Models.UserAccount> UserAccount { get; set; } = default!;
+
+        public DbSet<Book_Lending_System.Models.Role> Role { get; set; } = default!;
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Role>()
+                .HasOne(_ => _.UserAccount)
+                .WithMany(_ => _.Roles)
+                .HasForeignKey(_ => _.UserAccountId);
+
+            modelBuilder.Entity<Student>()
+                .HasOne(_ => _.UserAccount)
+                .WithOne()
+                .OnDelete(DeleteBehavior.SetNull);
+        }
     }
 }

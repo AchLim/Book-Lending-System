@@ -20,13 +20,33 @@ namespace Book_Lending_System.Pages.UserAccounts
         }
 
         public IList<UserAccount> UserAccount { get;set; } = default!;
-
+        public IList<Role> Role { get; set; } = default!;
         public async Task OnGetAsync()
         {
             if (_context.UserAccount != null)
             {
                 UserAccount = await _context.UserAccount.ToListAsync();
             }
+
+            if (_context.Role != null)
+            {
+                Role = await _context.Role.ToListAsync();
+            }
+        }
+
+        public string GetRolesName(ICollection<Role>? roles)
+        {
+            if (roles == null)
+                return "-";
+
+            string roleNames = string.Empty;
+            foreach (Role role in roles)
+            {
+                if (roleNames != string.Empty)
+                    roleNames += " | ";
+                roleNames += role.GetRoleNames();
+            }
+            return roleNames;
         }
     }
 }

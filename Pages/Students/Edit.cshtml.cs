@@ -14,14 +14,28 @@ namespace Book_Lending_System.Pages.Students
     public class EditModel : PageModel
     {
         private readonly Book_Lending_System.Data.Book_Lending_SystemContext _context;
+        public SelectList UserAccountSelectList;
 
         public EditModel(Book_Lending_System.Data.Book_Lending_SystemContext context)
         {
             _context = context;
+            UserAccountSelectList = new(Array.Empty<string>());
         }
 
         [BindProperty]
         public Student Student { get; set; } = default!;
+
+        public IEnumerable<string> GetUserAccounts()
+        {
+            DbSet<UserAccount> userAccounts = _context.UserAccount;
+            List<string> userAccountName = new();
+            foreach (UserAccount acc in userAccounts)
+            {
+                userAccountName.Add(acc.Username);
+            }
+            return userAccountName.AsEnumerable();
+        }
+
 
         public async Task<IActionResult> OnGetAsync(uint? id)
         {
@@ -36,6 +50,7 @@ namespace Book_Lending_System.Pages.Students
                 return NotFound();
             }
             Student = student;
+            this.UserAccountSelectList = new(GetUserAccounts());
             return Page();
         }
 
@@ -72,6 +87,10 @@ namespace Book_Lending_System.Pages.Students
         private bool StudentExists(uint id)
         {
           return (_context.Student?.Any(e => e.Id == id)).GetValueOrDefault();
+        }
+        public SelectList GetUserAccountSelectList()
+        {
+            return new SelectList(_context.UserAccount, "Id", "Username");
         }
     }
 }
