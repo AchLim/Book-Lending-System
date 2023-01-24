@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Book_Lending_System.Models;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 
 namespace Book_Lending_System.Data
 {

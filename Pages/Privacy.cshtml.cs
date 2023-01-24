@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace Book_Lending_System.Pages
@@ -14,6 +15,10 @@ namespace Book_Lending_System.Pages
 
         public void OnGet()
         {
+            foreach (var x in User.Identities)
+            {
+                _logger.LogWarning(x.RoleClaimType);
+            }
         }
     }
 }

@@ -35,6 +35,7 @@ namespace BookLendingSystem.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Username = table.Column<string>(type: "nvarchar(16)", maxLength: 16, nullable: false),
                     Email = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    EmailConfirmed = table.Column<bool>(type: "bit", nullable: false),
                     Password = table.Column<string>(type: "nvarchar(25)", maxLength: 25, nullable: false)
                 },
                 constraints: table =>
@@ -66,17 +67,16 @@ namespace BookLendingSystem.Migrations
                 name: "Student",
                 columns: table => new
                 {
-                    Id = table.Column<long>(type: "bigint", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Id = table.Column<long>(type: "bigint", nullable: false),
                     NPM = table.Column<string>(type: "nvarchar(7)", maxLength: 7, nullable: false),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(40)", maxLength: 40, nullable: false),
                     TelephoneNumber = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     StudyProgram = table.Column<byte>(type: "tinyint", nullable: false),
                     UserAccountId = table.Column<long>(type: "bigint", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Student", x => x.Id);
+                    table.PrimaryKey("PK_Student", x => new { x.Id, x.NPM });
                     table.ForeignKey(
                         name: "FK_Student_UserAccount_UserAccountId",
                         column: x => x.UserAccountId,

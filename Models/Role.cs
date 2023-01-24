@@ -11,6 +11,8 @@ namespace Book_Lending_System.Models
 
         public UserAccount? UserAccount { get; set; }
 
+        [EnumDataType(typeof(RoleType))]
+        [Display(Name = "Role")]
         public RoleType RoleType { get; set; }
 
         public string GetRoleNames()

@@ -14,10 +14,12 @@ namespace Book_Lending_System.Pages.UserAccounts
     public class EditModel : PageModel
     {
         private readonly Book_Lending_System.Data.Book_Lending_SystemContext _context;
+        private ILogger<EditModel> _logger;
 
-        public EditModel(Book_Lending_System.Data.Book_Lending_SystemContext context)
+        public EditModel(Book_Lending_SystemContext context, ILogger<EditModel> logger)
         {
             _context = context;
+            _logger = logger;
         }
 
         [BindProperty]
@@ -39,10 +41,12 @@ namespace Book_Lending_System.Pages.UserAccounts
                 return NotFound();
             }
             UserAccount = useraccount;
-            var role = _context.Role.Where(r => r.Id == id);
+            var role = _context.Role.Where(r => r.UserAccountId == id);
             if (role != null)
             {
                 Roles = role.ToList();
+                var roleTypes = from r in Roles select r.RoleType;
+                useraccount.RoleTypeList = roleTypes.ToArray();
             }
 
             return Page();

@@ -1,19 +1,30 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.EntityFrameworkCore;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Book_Lending_System.Models
 {
+    [PrimaryKey(nameof(Id), nameof(NPM))]
     public class Student
     {
         public uint Id { get; set; }
 
+        [Required]
         [StringLength(7, ErrorMessage = "NPM must be 7 digit numbers.", MinimumLength = 7)]
         public required string NPM { get; set; }
+
+        [Required]
+        [StringLength(40, ErrorMessage = "Name must be between 4 and 40.", MinimumLength = 4)]
         public required string Name { get; set; }
 
+        [Required]
+        [Phone]
+        [DataType(DataType.PhoneNumber)]
         [Display(Name = "Telephone Number")]
         public required string TelephoneNumber { get; set; }
 
+        [Required]
+        [EnumDataType(typeof(StudyProgram))]
         [Display(Name = "Study Program")]
         public required StudyProgram StudyProgram { get; set; }
 

@@ -15,10 +15,12 @@ namespace Book_Lending_System.Pages.UserAccounts
     public class CreateModel : PageModel
     {
         private readonly Book_Lending_System.Data.Book_Lending_SystemContext _context;
+        private ILogger<CreateModel> _logger;
 
-        public CreateModel(Book_Lending_System.Data.Book_Lending_SystemContext context)
+        public CreateModel(Book_Lending_System.Data.Book_Lending_SystemContext context, ILogger<CreateModel> logger)
         {
             _context = context;
+            _logger = logger;
         }
 
         public IActionResult OnGet()

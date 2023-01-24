@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BookLendingSystem.Migrations
 {
     [DbContext(typeof(Book_Lending_SystemContext))]
-    [Migration("20230123173442_InitialCreate")]
+    [Migration("20230124161437_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -76,19 +76,16 @@ namespace BookLendingSystem.Migrations
             modelBuilder.Entity("Book_Lending_System.Models.Student", b =>
                 {
                     b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("bigint");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
-
                     b.Property<string>("NPM")
-                        .IsRequired()
                         .HasMaxLength(7)
                         .HasColumnType("nvarchar(7)");
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(40)
+                        .HasColumnType("nvarchar(40)");
 
                     b.Property<byte>("StudyProgram")
                         .HasColumnType("tinyint");
@@ -100,7 +97,7 @@ namespace BookLendingSystem.Migrations
                     b.Property<long?>("UserAccountId")
                         .HasColumnType("bigint");
 
-                    b.HasKey("Id");
+                    b.HasKey("Id", "NPM");
 
                     b.HasIndex("UserAccountId")
                         .IsUnique()
@@ -120,6 +117,9 @@ namespace BookLendingSystem.Migrations
                     b.Property<string>("Email")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("EmailConfirmed")
+                        .HasColumnType("bit");
 
                     b.Property<string>("Password")
                         .IsRequired()
