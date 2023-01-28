@@ -73,9 +73,13 @@ namespace BookLendingSystem.Migrations
             modelBuilder.Entity("Book_Lending_System.Models.Student", b =>
                 {
                     b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("bigint");
 
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+
                     b.Property<string>("NPM")
+                        .IsRequired()
                         .HasMaxLength(7)
                         .HasColumnType("nvarchar(7)");
 
@@ -94,7 +98,7 @@ namespace BookLendingSystem.Migrations
                     b.Property<long?>("UserAccountId")
                         .HasColumnType("bigint");
 
-                    b.HasKey("Id", "NPM");
+                    b.HasKey("Id");
 
                     b.HasIndex("UserAccountId")
                         .IsUnique()

@@ -67,7 +67,8 @@ namespace BookLendingSystem.Migrations
                 name: "Student",
                 columns: table => new
                 {
-                    Id = table.Column<long>(type: "bigint", nullable: false),
+                    Id = table.Column<long>(type: "bigint", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
                     NPM = table.Column<string>(type: "nvarchar(7)", maxLength: 7, nullable: false),
                     Name = table.Column<string>(type: "nvarchar(40)", maxLength: 40, nullable: false),
                     TelephoneNumber = table.Column<string>(type: "nvarchar(max)", nullable: false),
@@ -76,7 +77,7 @@ namespace BookLendingSystem.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Student", x => new { x.Id, x.NPM });
+                    table.PrimaryKey("PK_Student", x => x.Id);
                     table.ForeignKey(
                         name: "FK_Student_UserAccount_UserAccountId",
                         column: x => x.UserAccountId,
