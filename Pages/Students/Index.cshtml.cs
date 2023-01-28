@@ -13,32 +13,22 @@ namespace Book_Lending_System.Pages.Students
     public class IndexModel : PageModel
     {
         private readonly Book_Lending_System.Data.Book_Lending_SystemContext _context;
+        private readonly ILogger<IndexModel> _logger;
 
-        public IndexModel(Book_Lending_System.Data.Book_Lending_SystemContext context)
+        public IndexModel(Book_Lending_System.Data.Book_Lending_SystemContext context, ILogger<IndexModel> logger)
         {
             _context = context;
+            _logger = logger;
         }
 
-        public IList<Student> Student { get;set; } = default!;
+        public IList<Student> Student { get; set; } = default!;
 
         public async Task OnGetAsync()
         {
             if (_context.Student != null)
             {
-                Student = await _context.Student.ToListAsync();
+                Student = await _context.Student.Include(s => s.UserAccount).ToListAsync();
             }
-        }
-
-        public string GetUsername(uint? id)
-        {
-            if (id == null)
-                return "-";
-
-            UserAccount? userAcc = _context.UserAccount.SingleOrDefault(userAccount => userAccount.Id == id);
-            if (userAcc == null)
-                return "-";
-
-            return userAcc.Username;
         }
     }
 }
