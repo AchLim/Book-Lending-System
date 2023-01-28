@@ -35,7 +35,22 @@
                 @Html.DisplayFor(modelItem => item.Email)
             </td>
             <td>
-                @Model.GetRolesName(item.Roles)
+                    @{
+                        string roles = "-";
+                        if (item.Roles != null)
+                        {
+                            roles = string.Empty;
+                            foreach (Models.Role role in item.Roles)
+                            {
+                                if (roles != string.Empty)
+                                    roles += " | ";
+                                roles += role.RoleType;
+                            }
+                        }
+                        <text>
+                            @roles
+                        </text>
+                    }
              </td>
             <td>
                 <a asp-page="./Edit" asp-route-id="@item.Id">Edit</a> |

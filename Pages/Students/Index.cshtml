@@ -50,7 +50,7 @@
                         if(item.UserAccount != null)
                         {
                             <text>
-                                @Html.DisplayFor(modelItem => item.UserAccount.Username)
+                                <a asp-page="/UserAccounts/Details" asp-route-id="@item.UserAccountId">@item.UserAccount.Username</a>
                             </text>
                         }
                         else

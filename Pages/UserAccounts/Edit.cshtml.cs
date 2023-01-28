@@ -25,9 +25,6 @@ namespace Book_Lending_System.Pages.UserAccounts
         [BindProperty]
         public UserAccount UserAccount { get; set; } = default!;
 
-        [BindProperty]
-        public List<Role> Roles { get; set; } = default!;
-
         public async Task<IActionResult> OnGetAsync(uint? id)
         {
             if (id == null || _context.UserAccount == null)
@@ -35,17 +32,17 @@ namespace Book_Lending_System.Pages.UserAccounts
                 return NotFound();
             }
 
-            var useraccount =  await _context.UserAccount.FirstOrDefaultAsync(m => m.Id == id);
+            var useraccount =  await _context.UserAccount.Include(u => u.Roles).FirstOrDefaultAsync(m => m.Id == id);
             if (useraccount == null)
             {
                 return NotFound();
             }
             UserAccount = useraccount;
-            var role = _context.Role.Where(r => r.UserAccountId == id);
-            if (role != null)
+
+            ICollection<Role>? roles = useraccount.Roles;
+            if (roles != null)
             {
-                Roles = role.ToList();
-                var roleTypes = from r in Roles select r.RoleType;
+                var roleTypes = from r in roles select r.RoleType;
                 useraccount.RoleTypeList = roleTypes.ToArray();
             }
 

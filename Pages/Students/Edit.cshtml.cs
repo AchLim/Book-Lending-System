@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Book_Lending_System.Data;
 using Book_Lending_System.Models;
+using Microsoft.Extensions.Logging;
 
 namespace Book_Lending_System.Pages.Students
 {
@@ -25,8 +26,6 @@ namespace Book_Lending_System.Pages.Students
         [BindProperty]
         public Student Student { get; set; } = default!;
 
-        public SelectList UserAccountSelectList = default!;
-
         public async Task<IActionResult> OnGetAsync(uint? id)
         {
             if (id == null || _context.Student == null)
@@ -40,7 +39,6 @@ namespace Book_Lending_System.Pages.Students
                 return NotFound();
             }
             Student = student;
-            this.UserAccountSelectList = new(GetUserAccounts());
             return Page();
         }
 
@@ -54,7 +52,7 @@ namespace Book_Lending_System.Pages.Students
             }
 
             DbSet<Student> students = _context.Student;
-            var existingStudentNPM = (from s in students where s.NPM == Student.NPM select s.NPM).FirstOrDefault();
+            var existingStudentNPM = (from s in students where s.NPM == Student.NPM && s.Id != Student.Id select s.NPM).FirstOrDefault();
             if (existingStudentNPM != default)
             {
                 ModelState.AddModelError("DuplicatedNPM", "NPM already exist.");
@@ -87,23 +85,12 @@ namespace Book_Lending_System.Pages.Students
           return (_context.Student?.Any(e => e.Id == id)).GetValueOrDefault();
         }
 
-        public IEnumerable<string> GetUserAccounts()
-        {
-            DbSet<UserAccount> userAccounts = _context.UserAccount;
-            List<string> userAccountName = new();
-            foreach (UserAccount acc in userAccounts)
-            {
-                userAccountName.Add(acc.Username);
-            }
-            return userAccountName.AsEnumerable();
-        }
-
         public SelectList GetUserAccountSelectList()
         {
             DbSet<UserAccount> UserAccount = _context.UserAccount;
             DbSet<Student> Student = _context.Student;
 
-            IQueryable<uint> nonavailableUserAccountIds = from s in Student where s.UserAccountId != null select s.Id;
+            IQueryable<uint> nonavailableUserAccountIds = from s in Student where s.UserAccountId != null select s.UserAccountId!.Value;
             IQueryable<uint> userAccountIds = from u in UserAccount select u.Id;
 
             IQueryable<uint> availableUserAccountIds = userAccountIds.Except(nonavailableUserAccountIds);
