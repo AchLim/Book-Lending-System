@@ -4,7 +4,6 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Book_Lending_System.Models
 {
-    [PrimaryKey(nameof(Id), nameof(NPM))]
     public class Student
     {
         public uint Id { get; set; }
