@@ -27,7 +27,23 @@
             @Html.DisplayNameFor(model => model.UserAccount.Roles)
         </dt>
         <dd class="col-sm-10">
-            @Model.GetRolesName(Model.UserAccount.Roles)
+            @{
+                string roles = "-";
+                if (Model.UserAccount.Roles != null)
+                {
+                    roles = String.Empty;
+                    foreach (var role in Model.UserAccount.Roles)
+                    {
+                        if (roles != string.Empty)
+                            roles += " | ";
+                        roles += role.RoleType;
+                    }
+                }
+
+                <text>
+                    @roles
+                </text>
+            }
         </dd>
     </dl>
 </div>
