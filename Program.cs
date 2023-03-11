@@ -4,17 +4,37 @@ using Book_Lending_System.Data;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Book_Lending_System.Models;
-using Microsoft.AspNetCore.Identity.UI.Services;
+using Book_Lending_System;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc.Authorization;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-builder.Services.AddRazorPages();
+builder.Services.AddRazorPages(options =>
+{
+    options.Conventions.AllowAnonymousToPage("/Index");
+});
 
 builder.Services.AddDbContext<Book_Lending_SystemContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("Book_Lending_SystemContext") ?? throw new InvalidOperationException("Connection string 'Book_Lending_SystemContext' not found.")));
 
-builder.Services.AddIdentity<IdentityUser, IdentityRole>().AddEntityFrameworkStores<Book_Lending_SystemContext>().AddDefaultTokenProviders();
+builder.Services.AddTransient<IEmailSender, EmailSender>();
+//builder.Services.AddIdentity<Account, Role>().AddEntityFrameworkStores<Book_Lending_SystemContext>().AddDefaultTokenProviders();
+builder.Services.AddDefaultIdentity<Account>(
+    options => options.SignIn.RequireConfirmedAccount = true
+).AddRoles<Role>().AddEntityFrameworkStores<Book_Lending_SystemContext>();
+
+builder.Services.AddAuthorization(options =>
+{
+    options.FallbackPolicy = new AuthorizationPolicyBuilder().RequireAuthenticatedUser().Build();
+});
+
+builder.Services.AddControllers(config =>
+{
+    var policy = new AuthorizationPolicyBuilder().RequireAuthenticatedUser().Build();
+    config.Filters.Add(new AuthorizeFilter(policy));
+});
 
 var app = builder.Build();
 

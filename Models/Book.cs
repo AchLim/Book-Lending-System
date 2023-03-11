@@ -1,24 +1,33 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.EntityFrameworkCore;
+using System.ComponentModel.DataAnnotations;
 
 namespace Book_Lending_System.Models
 {
+    [PrimaryKey(nameof(Id))]
     public class Book
     {
         public uint Id { get; set; }
 
         [Required]
-        public required string Name { get; set; }
+        [StringLength(200)]
+        public required string Title { get; set; }
 
-        [EnumDataType(typeof(BookStatus))]
-        [Display(Name = "Role")]
-        public BookStatus Status { get; set; }
+        [Required]
+        public required string Author { get; set; }
 
+        [Required]
         [DataType(DataType.Date)]
         [Display(Name = "Release Date")]
         public DateTime ReleaseDate { get; set; }
 
         [Required]
-        public required string Author { get; set; }
+        [EnumDataType(typeof(BookStatus))]
+        [Display(Name = "Book Status")]
+        public BookStatus Status { get; set; }
+
+        [Url]
+        public string? ImageUrl { get; set; }
     }
 }
 

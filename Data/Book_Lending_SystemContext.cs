@@ -5,35 +5,43 @@ using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Book_Lending_System.Models;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.AspNetCore.Identity;
 
 namespace Book_Lending_System.Data
 {
-    public class Book_Lending_SystemContext : DbContext
+    public class Book_Lending_SystemContext : IdentityDbContext<Account, Role, string, IdentityUserClaim<string>,
+                                                AccountRole, IdentityUserLogin<string>, IdentityRoleClaim<string>, IdentityUserToken<string>>
     {
         public Book_Lending_SystemContext (DbContextOptions<Book_Lending_SystemContext> options)
             : base(options)
         {
         }
 
-        public DbSet<Book_Lending_System.Models.Book> Book { get; set; } = default!;
-
-        public DbSet<Book_Lending_System.Models.Student> Student { get; set; } = default!;
-
-        public DbSet<Book_Lending_System.Models.UserAccount> UserAccount { get; set; } = default!;
-
-        public DbSet<Book_Lending_System.Models.Role> Role { get; set; } = default!;
+        public DbSet<Account> Account { get; set; } = default!;
+        public DbSet<Book> Book { get; set; } = default!;
+        public DbSet<Role> Role { get; set; } = default!;
+        public DbSet<Student> Student { get; set; } = default!;
+        public DbSet<UserPartner> UserPartner { get; set; } = default!;
+        public DbSet<AccountRole> AccountRole { get; set; } = default!;
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Role>()
-                .HasOne(_ => _.UserAccount)
-                .WithMany(_ => _.Roles)
-                .HasForeignKey(_ => _.UserAccountId);
+            base.OnModelCreating(modelBuilder);
 
-            modelBuilder.Entity<Student>()
-                .HasOne(_ => _.UserAccount)
-                .WithOne()
-                .OnDelete(DeleteBehavior.SetNull);
+            modelBuilder.Entity<AccountRole>(accountRole =>
+            {
+                accountRole.HasKey(ar => new { ar.UserId, ar.RoleId });
+
+                accountRole.HasOne(ar => ar.Role)
+                            .WithMany(r => r.AccountRoles)
+                            .HasForeignKey(ar => ar.RoleId)
+                            .IsRequired();
+
+                accountRole.HasOne(ar => ar.Account)
+                            .WithMany(a => a.AccountRoles)
+                            .HasForeignKey(ar => ar.UserId)
+                            .IsRequired();
+            });
         }
     }
 }

@@ -4,10 +4,9 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Book_Lending_System.Models
 {
+    [PrimaryKey(nameof(NPM))]
     public class Student
     {
-        public uint Id { get; set; }
-
         [Required]
         [StringLength(7, ErrorMessage = "NPM must be 7 digit numbers.", MinimumLength = 7)]
         public required string NPM { get; set; }
@@ -17,21 +16,16 @@ namespace Book_Lending_System.Models
         public required string Name { get; set; }
 
         [Required]
-        [Phone]
-        [DataType(DataType.PhoneNumber)]
-        [Display(Name = "Telephone Number")]
-        public required string TelephoneNumber { get; set; }
-
-        [Required]
         [EnumDataType(typeof(StudyProgram))]
         [Display(Name = "Study Program")]
         public required StudyProgram StudyProgram { get; set; }
 
-        [Display(Name = "User Account")]
-        
-        public uint? UserAccountId { get; set; }
+        public string? AccountKey { get; set; }
 
-        public UserAccount? UserAccount { get; set; }
+        [ForeignKey(nameof(AccountKey))]
+        [DeleteBehavior(DeleteBehavior.ClientSetNull)]
+        [Display(Name = "User Account")]
+        public virtual Account? Account { get; set; }
     }
 }
 
@@ -68,8 +62,8 @@ public enum StudyProgram : byte
     LawScience,
 
     [Display(Name = "Master of Law Study")]
-    MasterOfLawStudy
-        ,
+    MasterOfLawStudy,
+
     [Display(Name = "English Language Education")]
     EnglishLanguageEducation
 }
