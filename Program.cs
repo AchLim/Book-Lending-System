@@ -7,6 +7,7 @@ using Book_Lending_System.Models;
 using Book_Lending_System;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc.Authorization;
+using Book_Lending_System.FileUploadService;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -20,6 +21,7 @@ builder.Services.AddDbContext<Book_Lending_SystemContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("Book_Lending_SystemContext") ?? throw new InvalidOperationException("Connection string 'Book_Lending_SystemContext' not found.")));
 
 builder.Services.AddTransient<IEmailSender, EmailSender>();
+builder.Services.AddScoped<IFileUploadService, LocalFileUploadService>();
 //builder.Services.AddIdentity<Account, Role>().AddEntityFrameworkStores<Book_Lending_SystemContext>().AddDefaultTokenProviders();
 builder.Services.AddDefaultIdentity<Account>(
     options => options.SignIn.RequireConfirmedAccount = true

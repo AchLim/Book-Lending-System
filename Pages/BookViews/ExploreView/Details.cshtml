@@ -1,0 +1,102 @@
+﻿@page
+@model Book_Lending_System.Pages.BookViews.ExploreView.DetailsModel
+
+@{
+    ViewData["Title"] = "Details";
+    Layout = "~/Pages/Shared/_Layout.cshtml";
+}
+
+
+<div class="container">
+    <div class="row justify-content-md-center">
+        <div class="row text-start">
+            
+            <div class="col-lg-4 col-md-6 col-sm-12 col-12 pb-2">
+                <img src="data:image/jpg;base64,@Model.Book.ImageData" alt="Book Cover" class="img-fluid foto">
+            </div>
+            <div class="col-lg-8 col-md-6 col-sm-12 col-12">
+                <h1>@Model.Book.Title</h1>
+                <h2>Sinopsis</h2>
+                <p>@Model.Book.Synopsis</p>
+                @*<div class="row mb-4">
+                    <div class="col-lg-4 col-md-6 col-sm-6 col-12 mb-2">
+                        <div class="fs-3 fw-bold">PENULIS</div>
+                        <span>Lorem Ipsum</span>
+                    </div>
+                    <div class="col-lg-4 col-md-6 col-sm-6 col-12 mb-2">
+                        <div class="fs-3 fw-bold">PENERBIT</div>
+                        <span>Lorem Ipsum IPSUM SUM</span>
+                    </div>
+                    <div class="col-lg-4 col-md-6 col-sm-6 col-12 mb-2">
+                        <div class="fs-3 fw-bold">HALAMAN</div>
+                        <span>Lorem Ipsum HALAMAN</span>
+                    </div>
+                    <div class="col-lg-4 col-md-6 col-sm-6 col-12 mb-2">
+                        <div class="fs-3 fw-bold">ISBN</div>
+                        <span>123123123123123</span>
+                    </div>
+                    <div class="col-lg-4 col-md-6 col-sm-6 col-12 mb-2">
+                        <div class="fs-3 fw-bold">UKURAN</div>
+                        <span>123123 x 1231</span>
+                    </div>
+                    <div class="col-lg-4 col-md-6 col-sm-6 col-12 mb-2">
+                        <div class="fs-3 fw-bold">TERBIT</div>
+                        <span>L010203182 date</span>
+                    </div>*@
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@*
+<div class="container">
+
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="/Index">Home</a></li>
+            <li class="breadcrumb-item"><a asp-page="Index">Book</a></li>
+            <li class="breadcrumb-item" aria-current="page">@Html.DisplayFor(model => model.Book.Title)</li>
+        </ol>
+    </nav>
+
+    <div class="form-group">
+        <a class="btn btn-primary" asp-page="./Edit" asp-route-id="@Model.Book?.Id">Edit</a>
+        <a class="btn btn-light btn-outline-primary" asp-page="./Index">Back</a>
+    </div>
+
+    <h2>@Html.DisplayFor(model => model.Book.Title)</h2>
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Book.Title)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Book.Title)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Book.Author)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Book.Author)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Book.ReleaseDate)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Book.ReleaseDate)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Book.Status)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Book.Status)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Book.ImageUrl)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Book.ImageUrl)
+        </dd>
+    </dl>
+</div>*@

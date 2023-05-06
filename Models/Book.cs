@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
+using Book_Lending_System.Data;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Book_Lending_System.Models
 {
@@ -17,8 +19,12 @@ namespace Book_Lending_System.Models
         public required string Author { get; set; }
 
         [Required]
+        public required string Synopsis { get; set; }
+
+        [Required]
         [DataType(DataType.Date)]
         [Display(Name = "Release Date")]
+        [DisplayFormat(DataFormatString = "{0:dd MMM yyyy}")]
         public DateTime ReleaseDate { get; set; }
 
         [Required]
@@ -26,22 +32,11 @@ namespace Book_Lending_System.Models
         [Display(Name = "Book Status")]
         public BookStatus Status { get; set; }
 
-        [Url]
-        public string? ImageUrl { get; set; }
+        [DataType(DataType.Upload)]
+        [Display(Name = "Image")]
+        public string? ImageData { get; set; }
+
+        [NotMapped]
+        public IFormFile? ImageFile { get; set; }
     }
-}
-
-public enum BookStatus : byte
-{
-    [Display(Name = "New")]
-    New,
-
-    [Display(Name = "Displayed")]
-    Displayed,
-
-    [Display(Name = "Unfit")]
-    Unfit,
-
-    [Display(Name = "Borrowed")]
-    Borrowed,
 }

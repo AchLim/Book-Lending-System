@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
+using Book_Lending_System.Data;
 
 namespace Book_Lending_System.Models
 {
@@ -39,34 +40,5 @@ namespace Book_Lending_System.Models
         [Required]
         [EnumDataType(typeof(Citizenship), ErrorMessage = "Nationality is not correct.")]
         public Citizenship Citizenship { get; set; }
-    }
-
-
-    public enum Gender : byte
-    {
-        [Display(Name = "Male")]
-        Male = 1,
-
-        [Display(Name = "Female")]
-        Female = 2,
-
-        [Display(Name = "Other")]
-        Other = 4
-    }
-
-    public enum Nationality : ushort
-    {
-        Indonesia,
-        Malaysia,
-        Singapore,
-        India,
-    }
-
-    public enum Citizenship : ushort
-    {
-        Indonesian,
-        Malaysian,
-        Singaporean,
-        Indian,
     }
 }

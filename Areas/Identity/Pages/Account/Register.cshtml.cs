@@ -22,6 +22,7 @@ using Microsoft.Extensions.Logging;
 
 namespace Book_Lending_System.Areas.Identity.Pages.Account
 {
+    [AllowAnonymous]
     public class RegisterModel : PageModel
     {
         private readonly SignInManager<Book_Lending_System.Models.Account> _signInManager;

@@ -1,5 +1,11 @@
 html {
-  font-size: 14px;
+  font-size: 8px;
+}
+
+@media (min-width: 568px) {
+    html {
+        font-size: 12px;
+    }
 }
 
 @media (min-width: 768px) {
@@ -24,6 +30,8 @@ body {
 .nav-link-font {
     text-transform: uppercase;
     font-family: 'Kanit', sans-serif;
+    letter-spacing: 1.8px;
+    margin-top: 0.25rem;
 }
 
 .rounded-t-5 {
@@ -39,4 +47,15 @@ body {
     .rounded-bl-lg-5 {
         border-bottom-left-radius: 0.5rem;
     }
+}
+
+.foto {
+    max-width: 100%;
+    position: relative;
+    display: inline-block;
+}
+
+.book-cover-container {
+    width: 132px;
+
 }

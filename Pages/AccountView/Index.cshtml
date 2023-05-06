@@ -6,13 +6,21 @@
     Layout = "~/Pages/Shared/_Layout.cshtml";
 }
 
-<h1>Index</h1>
+<div class="container">
 
-<p>
-    <a asp-page="Create">Create New</a>
-</p>
-<table class="table">
-    <thead>
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="/Index">Home</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Account</li>
+        </ol>
+    </nav>
+
+    <div class="pb-4">
+        <a class="btn btn-primary" asp-page="Create">Create</a>
+    </div>
+
+    <table class="table">
+        <thead>
         <tr>
             <th>
                 @Html.DisplayNameFor(model => model.Account[0].UserName)
@@ -20,25 +28,25 @@
             <th>
                 @Html.DisplayNameFor(model => model.Account[0].Email)
             </th>
-            <th></th>
         </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model.Account)
-        {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.UserName)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Email)
-                </td>
-                <td>
-                    <a asp-page="./Edit" asp-route-id="@item.Id">Edit</a> |
-                    <a asp-page="./Details" asp-route-id="@item.Id">Details</a> |
-                    <a asp-page="./Delete" asp-route-id="@item.Id">Delete</a>
-                </td>
-            </tr>
-        }
-    </tbody>
-</table>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.Account)
+            {
+                <tr class="cursor-pointer">
+                    <td>
+                        <a class="text-decoration-none text-black d-block" asp-page="./Details" asp-route-id="@item.Id">
+                            @Html.DisplayFor(modelItem => item.UserName)
+                        </a>
+                    </td>
+                    <td>
+                        <a class="text-decoration-none text-black d-block" asp-page="./Details" asp-route-id="@item.Id">
+                            @Html.DisplayFor(modelItem => item.Email)
+                        </a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+</div>

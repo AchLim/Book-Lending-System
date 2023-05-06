@@ -1,64 +1,74 @@
 ﻿@page
 @model Book_Lending_System.Pages.UserView.EditModel
+@using Book_Lending_System.Data
 
 @{
     ViewData["Title"] = "Edit";
     Layout = "~/Pages/Shared/_Layout.cshtml";
 }
-
-<h1>Edit</h1>
-
-<h4>UserPartner</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form method="post">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="UserPartner.NIK" />
-            <div class="form-group">
-                <label asp-for="UserPartner.Name" class="control-label"></label>
-                <input asp-for="UserPartner.Name" class="form-control" />
-                <span asp-validation-for="UserPartner.Name" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="UserPartner.TelephoneNumber" class="control-label"></label>
-                <input asp-for="UserPartner.TelephoneNumber" class="form-control" />
-                <span asp-validation-for="UserPartner.TelephoneNumber" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="UserPartner.Gender" class="control-label"></label>
-                <select asp-for="UserPartner.Gender" class="form-control"></select>
-                <span asp-validation-for="UserPartner.Gender" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="UserPartner.BirthDate" class="control-label"></label>
-                <input asp-for="UserPartner.BirthDate" class="form-control" />
-                <span asp-validation-for="UserPartner.BirthDate" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="UserPartner.Address" class="control-label"></label>
-                <input asp-for="UserPartner.Address" class="form-control" />
-                <span asp-validation-for="UserPartner.Address" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="UserPartner.Nationality" class="control-label"></label>
-                <select asp-for="UserPartner.Nationality" class="form-control"></select>
-                <span asp-validation-for="UserPartner.Nationality" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="UserPartner.Citizenship" class="control-label"></label>
-                <select asp-for="UserPartner.Citizenship" class="form-control"></select>
-                <span asp-validation-for="UserPartner.Citizenship" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
-            </div>
-        </form>
+<div class="container">
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="/Index">Home</a></li>
+            <li class="breadcrumb-item"><a asp-page="Index">User</a></li>
+            <li class="breadcrumb-item" aria-current="page">Edit</li>
+        </ol>
+    </nav>
+    <h4>User</h4>
+    <div class="row">
+        <div class="col-md-4">
+            <form method="post">
+                <div class="form-group">
+                    <input type="submit" value="Save" class="btn btn-primary" />
+                    <a class="btn btn-light btn-outline-primary" asp-page="./Index">Back to List</a>
+                </div>
+                <hr />
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <input type="hidden" asp-for="UserPartner.NIK" />
+                <div class="form-group">
+                    <label asp-for="UserPartner.Name" class="control-label"></label>
+                    <input asp-for="UserPartner.Name" class="form-control" />
+                    <span asp-validation-for="UserPartner.Name" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="UserPartner.TelephoneNumber" class="control-label"></label>
+                    <input asp-for="UserPartner.TelephoneNumber" class="form-control" />
+                    <span asp-validation-for="UserPartner.TelephoneNumber" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="UserPartner.Gender" class="control-label"></label>
+                    <select asp-for="UserPartner.Gender" class="form-control" asp-items="Html.GetEnumSelectList<Gender>()">
+                        <option selected="selected" value="">Please select</option>
+                    </select>
+                    <span asp-validation-for="UserPartner.Gender" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="UserPartner.BirthDate" class="control-label"></label>
+                    <input asp-for="UserPartner.BirthDate" class="form-control" />
+                    <span asp-validation-for="UserPartner.BirthDate" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="UserPartner.Address" class="control-label"></label>
+                    <input asp-for="UserPartner.Address" class="form-control" />
+                    <span asp-validation-for="UserPartner.Address" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="UserPartner.Nationality" class="control-label"></label>
+                    <select asp-for="UserPartner.Nationality" class="form-control" asp-items="Html.GetEnumSelectList<Nationality>()">
+                        <option selected="selected" value="">Please select</option>
+                    </select>
+                    <span asp-validation-for="UserPartner.Nationality" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="UserPartner.Citizenship" class="control-label"></label>
+                    <select asp-for="UserPartner.Citizenship" class="form-control" asp-items="Html.GetEnumSelectList<Citizenship>()">
+                        <option selected="selected" value="">Please select</option>
+                    </select>
+                    <span asp-validation-for="UserPartner.Citizenship" class="text-danger"></span>
+                </div>
+            </form>
+        </div>
     </div>
-</div>
-
-<div>
-    <a asp-page="./Index">Back to List</a>
 </div>
 
 @section Scripts {

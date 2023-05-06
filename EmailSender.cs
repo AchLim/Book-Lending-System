@@ -7,8 +7,8 @@ namespace Book_Lending_System
     {
         public Task SendEmailAsync(string email, string subject, string htmlMessage)
         {
-            var mail = "rimuakoru@gmail.com";
-            var password = "jgclbqozljzkelhg";
+            var mail = "";
+            var password = "";
 
             var client = new SmtpClient("smtp.gmail.com", 587)
             {

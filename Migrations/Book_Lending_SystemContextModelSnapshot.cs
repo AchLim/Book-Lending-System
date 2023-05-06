@@ -17,12 +17,12 @@ namespace Book_Lending_System.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "7.0.3")
+                .HasAnnotation("ProductVersion", "7.0.5")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("Book_Lending_System.Models.Account<string>", b =>
+            modelBuilder.Entity("Book_Lending_System.Models.Account", b =>
                 {
                     b.Property<string>("Id")
                         .HasColumnType("nvarchar(450)");
@@ -87,7 +87,7 @@ namespace Book_Lending_System.Migrations
                     b.ToTable("AspNetUsers", (string)null);
                 });
 
-            modelBuilder.Entity("Book_Lending_System.Models.AccountRole<string>", b =>
+            modelBuilder.Entity("Book_Lending_System.Models.AccountRole", b =>
                 {
                     b.Property<string>("UserId")
                         .HasColumnType("nvarchar(450)");
@@ -114,11 +114,18 @@ namespace Book_Lending_System.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("ImageData")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<DateTime>("ReleaseDate")
                         .HasColumnType("datetime2");
 
                     b.Property<byte>("Status")
                         .HasColumnType("tinyint");
+
+                    b.Property<string>("Synopsis")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Title")
                         .IsRequired()
@@ -130,7 +137,7 @@ namespace Book_Lending_System.Migrations
                     b.ToTable("Book");
                 });
 
-            modelBuilder.Entity("Book_Lending_System.Models.Role<string>", b =>
+            modelBuilder.Entity("Book_Lending_System.Models.Role", b =>
                 {
                     b.Property<string>("Id")
                         .HasColumnType("nvarchar(450)");
@@ -312,15 +319,15 @@ namespace Book_Lending_System.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
-            modelBuilder.Entity("Book_Lending_System.Models.AccountRole<string>", b =>
+            modelBuilder.Entity("Book_Lending_System.Models.AccountRole", b =>
                 {
-                    b.HasOne("Book_Lending_System.Models.Role<string>", "Role")
+                    b.HasOne("Book_Lending_System.Models.Role", "Role")
                         .WithMany("AccountRoles")
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.ClientCascade)
                         .IsRequired();
 
-                    b.HasOne("Book_Lending_System.Models.Account<string>", "Account")
+                    b.HasOne("Book_Lending_System.Models.Account", "Account")
                         .WithMany("AccountRoles")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.ClientCascade)
@@ -333,7 +340,7 @@ namespace Book_Lending_System.Migrations
 
             modelBuilder.Entity("Book_Lending_System.Models.Student", b =>
                 {
-                    b.HasOne("Book_Lending_System.Models.Account<string>", "Account")
+                    b.HasOne("Book_Lending_System.Models.Account", "Account")
                         .WithMany()
                         .HasForeignKey("AccountKey");
 
@@ -342,7 +349,7 @@ namespace Book_Lending_System.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
-                    b.HasOne("Book_Lending_System.Models.Role<string>", null)
+                    b.HasOne("Book_Lending_System.Models.Role", null)
                         .WithMany()
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -351,7 +358,7 @@ namespace Book_Lending_System.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
                 {
-                    b.HasOne("Book_Lending_System.Models.Account<string>", null)
+                    b.HasOne("Book_Lending_System.Models.Account", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -360,7 +367,7 @@ namespace Book_Lending_System.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
                 {
-                    b.HasOne("Book_Lending_System.Models.Account<string>", null)
+                    b.HasOne("Book_Lending_System.Models.Account", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -369,19 +376,19 @@ namespace Book_Lending_System.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
                 {
-                    b.HasOne("Book_Lending_System.Models.Account<string>", null)
+                    b.HasOne("Book_Lending_System.Models.Account", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Book_Lending_System.Models.Account<string>", b =>
+            modelBuilder.Entity("Book_Lending_System.Models.Account", b =>
                 {
                     b.Navigation("AccountRoles");
                 });
 
-            modelBuilder.Entity("Book_Lending_System.Models.Role<string>", b =>
+            modelBuilder.Entity("Book_Lending_System.Models.Role", b =>
                 {
                     b.Navigation("AccountRoles");
                 });

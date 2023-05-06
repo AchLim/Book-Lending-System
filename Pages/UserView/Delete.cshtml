@@ -6,11 +6,22 @@
     Layout = "~/Pages/Shared/_Layout.cshtml";
 }
 
-<h1>Delete</h1>
+<div class="container">
 
-<h3>Are you sure you want to delete this?</h3>
-<div>
-    <h4>UserPartner</h4>
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="/Index">Home</a></li>
+            <li class="breadcrumb-item"><a asp-page="Index">User</a></li>
+            <li class="breadcrumb-item" aria-current="page">Delete</li>
+        </ol>
+    </nav>
+
+    <h4>User</h4>
+    <form method="post">
+        <input type="hidden" asp-for="UserPartner.NIK" />
+        <input type="submit" value="Delete" class="btn btn-danger" />
+        <a class="btn btn-outline-primary btn-light" asp-page="./Index">Back to List</a>
+    </form>
     <hr />
     <dl class="row">
         <dt class="col-sm-2">
@@ -56,10 +67,4 @@
             @Html.DisplayFor(model => model.UserPartner.Citizenship)
         </dd>
     </dl>
-    
-    <form method="post">
-        <input type="hidden" asp-for="UserPartner.NIK" />
-        <input type="submit" value="Delete" class="btn btn-danger" /> |
-        <a asp-page="./Index">Back to List</a>
-    </form>
 </div>

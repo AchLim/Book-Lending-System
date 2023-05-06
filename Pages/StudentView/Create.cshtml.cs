@@ -21,7 +21,7 @@ namespace Book_Lending_System.Pages.StudentView
 
         public IActionResult OnGet()
         {
-        ViewData["AccountKey"] = new SelectList(_context.Account, "Id", "Id");
+            ViewData["Account"] = new SelectList(_context.Account, "Id", "UserName");
             return Page();
         }
 
@@ -34,6 +34,13 @@ namespace Book_Lending_System.Pages.StudentView
         {
           if (!ModelState.IsValid || _context.Student == null || Student == null)
             {
+                return Page();
+            }
+
+            Student duplicatedNPM = _context.Student.Where(student => student.NPM == Student.NPM).FirstOrDefault();
+            if (duplicatedNPM != null)
+            {
+                ModelState.AddModelError("DuplicateNPM", "Duplicated NPM found! Please contact IT Department!");
                 return Page();
             }
 

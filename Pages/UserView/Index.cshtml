@@ -6,14 +6,25 @@
     Layout = "~/Pages/Shared/_Layout.cshtml";
 }
 
-<h1>Index</h1>
+<div class="container">
 
-<p>
-    <a asp-page="Create">Create New</a>
-</p>
-<table class="table">
-    <thead>
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="/Index">Home</a></li>
+            <li class="breadcrumb-item active" aria-current="page">User</li>
+        </ol>
+    </nav>
+
+    <div class="pb-4">
+        <a class="btn btn-primary" asp-page="Create">Create</a>
+    </div>
+
+    <table class="table">
+        <thead>
         <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.UserPartner[0].NIK)
+            </th>
             <th>
                 @Html.DisplayNameFor(model => model.UserPartner[0].Name)
             </th>
@@ -35,39 +46,54 @@
             <th>
                 @Html.DisplayNameFor(model => model.UserPartner[0].Citizenship)
             </th>
-            <th></th>
         </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model.UserPartner) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Name)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.TelephoneNumber)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Gender)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.BirthDate)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Address)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Nationality)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Citizenship)
-            </td>
-            <td>
-                <a asp-page="./Edit" asp-route-id="@item.NIK">Edit</a> |
-                <a asp-page="./Details" asp-route-id="@item.NIK">Details</a> |
-                <a asp-page="./Delete" asp-route-id="@item.NIK">Delete</a>
-            </td>
-        </tr>
-}
-    </tbody>
-</table>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.UserPartner)
+            {
+                <tr class="cursor-pointer">
+                    <td>
+                        <a class="text-decoration-none text-black d-block" asp-page="./Details" asp-route-id="@item.NIK">
+                            @Html.DisplayFor(modelItem => item.NIK)
+                        </a>
+                    </td>
+                    <td>
+                        <a class="text-decoration-none text-black d-block" asp-page="./Details" asp-route-id="@item.NIK">
+                            @Html.DisplayFor(modelItem => item.Name)
+                        </a>
+                    </td>
+                    <td>
+                        <a class="text-decoration-none text-black d-block" asp-page="./Details" asp-route-id="@item.NIK">
+                            @Html.DisplayFor(modelItem => item.TelephoneNumber)
+                        </a>
+                    </td>
+                    <td>
+                        <a class="text-decoration-none text-black d-block" asp-page="./Details" asp-route-id="@item.NIK">
+                            @Html.DisplayFor(modelItem => item.Gender)
+                        </a>
+                    </td>
+                    <td>
+                        <a class="text-decoration-none text-black d-block" asp-page="./Details" asp-route-id="@item.NIK">
+                            @Html.DisplayFor(modelItem => item.BirthDate)
+                        </a>
+                    </td>
+                    <td>
+                        <a class="text-decoration-none text-black d-block" asp-page="./Details" asp-route-id="@item.NIK">
+                            @Html.DisplayFor(modelItem => item.Address)
+                        </a>
+                    </td>
+                    <td>
+                        <a class="text-decoration-none text-black d-block" asp-page="./Details" asp-route-id="@item.NIK">
+                            @Html.DisplayFor(modelItem => item.Nationality)
+                        </a>
+                    </td>
+                    <td>
+                        <a class="text-decoration-none text-black d-block" asp-page="./Details" asp-route-id="@item.NIK">
+                            @Html.DisplayFor(modelItem => item.Citizenship)
+                        </a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
