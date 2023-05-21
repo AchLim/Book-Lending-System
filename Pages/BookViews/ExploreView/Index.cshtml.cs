@@ -21,12 +21,14 @@ namespace Book_Lending_System.Pages.BookViews.ExploreView
             _context = context;
         }
 
+        public IList<Book> TopRatedBooks { get; set; } = default!;
         public IList<Book> Book { get;set; } = default!;
 
         public async Task OnGetAsync()
         {
             if (_context.Book != null)
             {
+                TopRatedBooks = await _context.Book.Take(5).ToListAsync();
                 Book = await _context.Book.ToListAsync();
             }
         }

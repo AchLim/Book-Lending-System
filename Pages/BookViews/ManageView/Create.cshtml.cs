@@ -40,6 +40,37 @@ namespace Book_Lending_System.Pages.BookViews.ManageView
             byte[] bytes;
             if (Book.ImageFile != null)
             {
+                string[] acceptedContentType = { "image/png", "image/jpeg" };
+                bool contentTypeAccepted = false;
+                bool error = false;
+                long fileSize = Book.ImageFile.Length;
+                if (fileSize > 1024 * 100)
+                {
+                    ModelState.AddModelError("", "Max photo size accepted: 100kB");
+                    error = true;
+                }
+
+                foreach (var act in acceptedContentType)
+                {
+                    if (Book.ImageFile.ContentType.ToLower() == act)
+                    {
+                        contentTypeAccepted = true;
+                        break;
+                    }
+
+                }
+
+                if (!contentTypeAccepted)
+                {
+                    ModelState.AddModelError("", "Accepted file: PNG / JPG / JPEG");
+                    error = true;
+                }
+
+                if (error)
+                {
+                    return Page();
+                }
+
                 using (Stream fs = Book.ImageFile.OpenReadStream())
                 {
                     using (BinaryReader br = new(fs))

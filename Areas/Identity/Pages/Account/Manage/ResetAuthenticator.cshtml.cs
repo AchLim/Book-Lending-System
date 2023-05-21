@@ -14,13 +14,13 @@ namespace Book_Lending_System.Areas.Identity.Pages.Account.Manage
 {
     public class ResetAuthenticatorModel : PageModel
     {
-        private readonly UserManager<Book_Lending_System.Models.Account> _userManager;
-        private readonly SignInManager<Book_Lending_System.Models.Account> _signInManager;
+        private readonly UserManager<IdentityUser> _userManager;
+        private readonly SignInManager<IdentityUser> _signInManager;
         private readonly ILogger<ResetAuthenticatorModel> _logger;
 
         public ResetAuthenticatorModel(
-            UserManager<Book_Lending_System.Models.Account> userManager,
-            SignInManager<Book_Lending_System.Models.Account> signInManager,
+            UserManager<IdentityUser> userManager,
+            SignInManager<IdentityUser> signInManager,
             ILogger<ResetAuthenticatorModel> logger)
         {
             _userManager = userManager;

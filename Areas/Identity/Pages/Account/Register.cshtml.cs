@@ -19,23 +19,24 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Logging;
+using Book_Lending_System.Data.Enum;
 
 namespace Book_Lending_System.Areas.Identity.Pages.Account
 {
     [AllowAnonymous]
     public class RegisterModel : PageModel
     {
-        private readonly SignInManager<Book_Lending_System.Models.Account> _signInManager;
-        private readonly UserManager<Book_Lending_System.Models.Account> _userManager;
-        private readonly IUserStore<Book_Lending_System.Models.Account> _userStore;
-        private readonly IUserEmailStore<Book_Lending_System.Models.Account> _emailStore;
+        private readonly SignInManager<IdentityUser> _signInManager;
+        private readonly UserManager<IdentityUser> _userManager;
+        private readonly IUserStore<IdentityUser> _userStore;
+        private readonly IUserEmailStore<IdentityUser> _emailStore;
         private readonly ILogger<RegisterModel> _logger;
         private readonly IEmailSender _emailSender;
 
         public RegisterModel(
-            UserManager<Book_Lending_System.Models.Account> userManager,
-            IUserStore<Book_Lending_System.Models.Account> userStore,
-            SignInManager<Book_Lending_System.Models.Account> signInManager,
+            UserManager<IdentityUser> userManager,
+            IUserStore<IdentityUser> userStore,
+            SignInManager<IdentityUser> signInManager,
             ILogger<RegisterModel> logger,
             IEmailSender emailSender)
         {
@@ -115,7 +116,6 @@ namespace Book_Lending_System.Areas.Identity.Pages.Account
             if (ModelState.IsValid)
             {
                 var user = CreateUser();
-
                 await _userStore.SetUserNameAsync(user, Input.Email, CancellationToken.None);
                 await _emailStore.SetEmailAsync(user, Input.Email, CancellationToken.None);
                 var result = await _userManager.CreateAsync(user, Input.Password);
@@ -125,6 +125,7 @@ namespace Book_Lending_System.Areas.Identity.Pages.Account
                     _logger.LogInformation("User created a new account with password.");
 
                     var userId = await _userManager.GetUserIdAsync(user);
+                    await _userManager.AddToRoleAsync(user, Roles.User.ToString());
                     var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
                     code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
                     var callbackUrl = Url.Page(
@@ -156,11 +157,11 @@ namespace Book_Lending_System.Areas.Identity.Pages.Account
             return Page();
         }
 
-        private Book_Lending_System.Models.Account CreateUser()
+        private IdentityUser CreateUser()
         {
             try
             {
-                return Activator.CreateInstance<Book_Lending_System.Models.Account>();
+                return Activator.CreateInstance<IdentityUser>();
             }
             catch
             {
@@ -170,13 +171,13 @@ namespace Book_Lending_System.Areas.Identity.Pages.Account
             }
         }
 
-        private IUserEmailStore<Book_Lending_System.Models.Account> GetEmailStore()
+        private IUserEmailStore<IdentityUser> GetEmailStore()
         {
             if (!_userManager.SupportsUserEmail)
             {
                 throw new NotSupportedException("The default UI requires a user store with email support.");
             }
-            return (IUserEmailStore<Book_Lending_System.Models.Account>)_userStore;
+            return (IUserEmailStore<IdentityUser>)_userStore;
         }
     }
 }

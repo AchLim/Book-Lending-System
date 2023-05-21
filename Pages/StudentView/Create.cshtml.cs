@@ -21,7 +21,6 @@ namespace Book_Lending_System.Pages.StudentView
 
         public IActionResult OnGet()
         {
-            ViewData["Account"] = new SelectList(_context.Account, "Id", "UserName");
             return Page();
         }
 

@@ -1,8 +1,8 @@
 ﻿@using Microsoft.AspNetCore.Identity
 @using Book_Lending_System.Models
 
-@inject SignInManager<Account> SignInManager
-@inject UserManager<Account> UserManager
+@inject SignInManager<IdentityUser> SignInManager
+@inject UserManager<IdentityUser> UserManager
 
 <ul class="navbar-nav ms-auto">
 @if (SignInManager.IsSignedIn(User))

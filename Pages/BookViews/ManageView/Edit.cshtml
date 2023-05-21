@@ -18,7 +18,6 @@
         </ol>
     </nav>
 
-    <h4>Book</h4>
     <div class="row">
         <div class="col-md-4">
             <form method="post" enctype="multipart/form-data">
@@ -58,8 +57,13 @@
                 </div>
                 <div class="form-group">
                     <label asp-for="Book.ImageFile" class="control-label"></label>
-                    <input type="file" asp-for="Book.ImageFile" class="form-control" />
+                    <input type="file" accept="image/png,image/jpeg" asp-for="Book.ImageFile" class="form-control" />
                     <span asp-validation-for="Book.ImageFile" class="text-danger"></span>
+                </div>
+                <div class="form-group" style="display: none !important;">
+                    <label asp-for="Book.ImageData" class="control-label"></label>
+                    <input type="text" asp-for="Book.ImageData" class="form-control" />
+                    <span asp-validation-for="Book.ImageData" class="text-danger"></span>
                 </div>
                 <br />
             </form>

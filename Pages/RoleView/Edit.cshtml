@@ -1,0 +1,44 @@
+﻿@page
+@model Book_Lending_System.Pages.RoleView.EditModel
+@using Book_Lending_System.Data;
+
+@{
+    ViewData["Title"] = "Edit";
+    Layout = "~/Pages/Shared/_Layout.cshtml";
+}
+
+<div class="container">
+
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="/Index">Home</a></li>
+            <li class="breadcrumb-item"><a asp-page="Index">Role</a></li>
+            <li class="breadcrumb-item"><a asp-page="Details" asp-route-id="@Model.Role.Id">@Html.DisplayFor(model => model.Role.Name)</a></li>
+            <li class="breadcrumb-item" aria-current="page">Edit</li>
+        </ol>
+    </nav>
+
+    <div class="row">
+        <div class="col-md-4">
+            <form method="post" enctype="multipart/form-data">
+                <div class="form-group">
+                    <input type="submit" value="Save" class="btn btn-primary" />
+                    <a asp-page="Details" asp-route-id="@Model.Role?.Id" class="btn btn-light btn-outline-primary">Cancel</a>
+                </div>
+                <hr />
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <input type="hidden" asp-for="Role.Id" />
+                <div class="form-group">
+                    <label asp-for="Role.Name" class="control-label"></label>
+                    <input asp-for="Role.Name" class="form-control" />
+                    <span asp-validation-for="Role.Name" class="text-danger"></span>
+                </div>
+                <br />
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

@@ -14,12 +14,15 @@
             <li class="breadcrumb-item" aria-current="page">Details</li>
         </ol>
     </nav>
-    <h4>Student</h4>
+
     <div>
         <a class="btn btn-primary" asp-page="./Edit" asp-route-id="@Model.Student?.NPM">Edit</a>
+        <a class="btn btn-primary" asp-page="./Delete" asp-route-id="@Model.Student?.NPM">Delete</a>
         <a class="btn btn-light btn-outline-primary" asp-page="./Index">Back to List</a>
     </div>
+
     <hr />
+
     <dl class="row">
         <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.Student.Name)
@@ -33,14 +36,5 @@
         <dd class="col-sm-10">
             @Html.DisplayFor(model => model.Student.StudyProgram)
         </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Student.Account)
-        </dt>
-        @if (Model.Student.Account != null)
-        {
-            <dd class="col-sm-10">
-                @Html.DisplayFor(model => model.Student.Account.UserName)
-            </dd>
-        }
     </dl>
 </div>

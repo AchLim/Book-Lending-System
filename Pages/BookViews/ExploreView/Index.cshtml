@@ -8,13 +8,159 @@
 
 
 <div class="container">
+    <div class="carousel-section">
+        <div class="carousel-section-header">
+            <div class="home-h2">
+                Top Rated Book
+            </div>
+        </div>
+        <div class="carousel-container carousel-container-decorated">
+            <div class="carousel">
+
+                @foreach (var Book in Model.TopRatedBooks)
+                {
+                    <div class="book carousel__item">
+                        <div class="book-cover">
+                            <img src="data:image/jpg;base64,@Book.ImageData" alt="Book Cover" class="book-img img-fluid" title="@Book.Title">
+                        </div>
+                        <div class="book-cta">
+                            <div class="cta-button-group">
+                                <a role="button" asp-area="" asp-page="./Details" asp-route-id="@Book.Id" class="btn btn-primary my-1 mb-3 w-100">
+                                    @switch (Book.Status)
+                                    {
+                                        case Data.BookStatus.Borrowed:
+                                            <text>Borrowed</text>
+                                            break;
+                                        case Data.BookStatus.Displayed:
+                                            <text>Available</text>
+                                            break;
+                                        case Data.BookStatus.New:
+                                            <text>New</text>
+                                            break;
+                                        default:
+                                            <text>Not Available</text>
+                                            break;
+                                    }
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="book carousel__item">
+                        <div class="book-cover">
+                            <img src="data:image/jpg;base64,@Book.ImageData" alt="Book Cover" class="book-img img-fluid" title="@Book.Title">
+                        </div>
+                        <div class="book-cta">
+                            <div class="cta-button-group">
+                                <a role="button" asp-area="" asp-page="./Details" asp-route-id="@Book.Id" class="btn btn-primary my-1 mb-3 w-100">
+                                    @switch (Book.Status)
+                                    {
+                                        case Data.BookStatus.Borrowed:
+                                            <text>Borrowed</text>
+                                            break;
+                                        case Data.BookStatus.Displayed:
+                                            <text>Available</text>
+                                            break;
+                                        case Data.BookStatus.New:
+                                            <text>New</text>
+                                            break;
+                                        default:
+                                            <text>Not Available</text>
+                                            break;
+                                    }
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="book carousel__item">
+                        <div class="book-cover">
+                            <img src="data:image/jpg;base64,@Book.ImageData" alt="Book Cover" class="book-img img-fluid" title="@Book.Title">
+                        </div>
+                        <div class="book-cta">
+                            <div class="cta-button-group">
+                                <a role="button" asp-area="" asp-page="./Details" asp-route-id="@Book.Id" class="btn btn-primary my-1 mb-3 w-100">
+                                    @switch (Book.Status)
+                                    {
+                                        case Data.BookStatus.Borrowed:
+                                            <text>Borrowed</text>
+                                            break;
+                                        case Data.BookStatus.Displayed:
+                                            <text>Available</text>
+                                            break;
+                                        case Data.BookStatus.New:
+                                            <text>New</text>
+                                            break;
+                                        default:
+                                            <text>Not Available</text>
+                                            break;
+                                    }
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+                        @*{
+                            var bookList = Model.Book.ToList();
+
+                            var generated = 0;
+                            var bookCount = bookList.Count;
+                            var bookPerCarousel = 5;
+
+                            while (generated < bookCount)
+                            {
+                                <div class="carousel-item">
+                                    @{
+                                        for (int i = 0; i < bookPerCarousel; i++)
+                                        {
+                                            if (generated >= bookCount)
+                                                break;
+
+                                            <text>
+                                                <div class="book carousel__item">
+                                                    <div class="book-cover">
+                                                        <img src="data:image/jpg;base64,@bookList[generated].ImageData" alt="Book Cover" class="book-img" title="@bookList[generated].Title">
+                                                    </div>
+                                                    <div class="book-cta">
+                                                        <div class="cta-button-group">
+                                                            <a role="button" asp-area="" asp-page="./Details" asp-route-id="@bookList[generated].Id" class="btn btn-primary my-1 mb-3 w-100">
+                                                                @switch (@bookList[generated].Status)
+                                                                {
+                                                                    case Data.BookStatus.Borrowed:
+                                                                        <text>Borrowed</text>
+                                                                        break;
+                                                                    case Data.BookStatus.Displayed:
+                                                                        <text>Available</text>
+                                                                        break;
+                                                                    case Data.BookStatus.New:
+                                                                        <text>New</text>
+                                                                        break;
+                                                                    default:
+                                                                        <text>Not Available</text>
+                                                                        break;
+                                                                }
+                                                            </a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </text>
+                                            generated += 1;
+                                        }
+                                    }
+                                </div>
+                            }
+                        }*@
+</div>
+
+@*<div class="container">
     <div class="row justify-content-md-center">
         <h1> TOP RATED </h1>
         <div class="row text-center">
             @foreach(var Book in Model.Book)
             {
-                <div class="col-lg-2 col-md-3 col-sm-4 col-6 book-cover-container">
-                    <img src="data:image/jpg;base64,@Book.ImageData" alt="Book Cover" class="img-fluid foto" title="BOOK TITLE">
+                <div class="col-lg-2 col-md-3 col-sm-4 col-6 book-cover">
+                    <img src="data:image/jpg;base64,@Book.ImageData" alt="Book Cover" class="img-thumbnail book-img" title="@Book.Title">
                     <a role="button" asp-area="" asp-page="./Details" asp-route-id="@Book.Id" class="btn btn-primary my-1 mb-3 w-100">
                         @switch (Book.Status)
                         {
@@ -36,7 +182,7 @@
             }
         </div>
     </div>
-</div>
+</div>*@
 
 @*<div class="container">
 

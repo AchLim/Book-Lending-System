@@ -36,7 +36,6 @@ namespace Book_Lending_System.Pages.StudentView
                 return NotFound();
             }
             Student = student;
-            ViewData["Account"] = new SelectList(_context.Account, "Id", "UserName");
             return Page();
         }
 

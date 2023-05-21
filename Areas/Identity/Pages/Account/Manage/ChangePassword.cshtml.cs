@@ -15,13 +15,13 @@ namespace Book_Lending_System.Areas.Identity.Pages.Account.Manage
 {
     public class ChangePasswordModel : PageModel
     {
-        private readonly UserManager<Book_Lending_System.Models.Account> _userManager;
-        private readonly SignInManager<Book_Lending_System.Models.Account> _signInManager;
+        private readonly UserManager<IdentityUser> _userManager;
+        private readonly SignInManager<IdentityUser> _signInManager;
         private readonly ILogger<ChangePasswordModel> _logger;
 
         public ChangePasswordModel(
-            UserManager<Book_Lending_System.Models.Account> userManager,
-            SignInManager<Book_Lending_System.Models.Account> signInManager,
+            UserManager<IdentityUser> userManager,
+            SignInManager<IdentityUser> signInManager,
             ILogger<ChangePasswordModel> logger)
         {
             _userManager = userManager;

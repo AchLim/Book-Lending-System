@@ -1,9 +1,11 @@
 ﻿@using Microsoft.AspNetCore.Identity
 @using Book_Lending_System.Models
+@using Book_Lending_System.Data
 
-@inject SignInManager<Account> SignInManager
-@inject UserManager<Account> UserManager
-@inject RoleManager<Role> RoleManager
+@inject SignInManager<IdentityUser> SignInManager
+@inject UserManager<IdentityUser> UserManager
+@inject RoleManager<IdentityRole> RoleManager
+@inject AccessRight AccessRight
 
 <!DOCTYPE html>
 <html lang="en">
@@ -31,6 +33,13 @@
     <link rel="stylesheet" href="~/css/index.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/Book_Lending_System.styles.css" asp-append-version="true" />
 
+    <!-- Slick Carousel -->
+    <link rel="stylesheet" type="text/css" href="/lib/slick/slick.css" />
+    <link rel="stylesheet" type="text/css" href="/lib/slick/slick-theme.css" />
+
+    <!-- DataTables -->
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.min.css" />
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
@@ -49,18 +58,44 @@
                             <a class="nav-link nav-link-font text-dark dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Books</a>
                             <ul class="dropdown-menu">
                                 <li><a class="dropdown-item" asp-area="" asp-page="/BookViews/ExploreView/Index">Explore</a></li>
-                                <li><a class="dropdown-item" asp-area="" asp-page="/BookViews/ManageView/Index">Manage</a></li>
+                                @{
+                                    if (await AccessRight.IsAdmin(User) || await AccessRight.IsStaff(User))
+                                    {
+                                        <li>
+                                            <a class="dropdown-item" asp-area="" asp-page="/BookViews/ManageView/Index">Manage</a>
+                                        </li>
+                                    }
+                                }
                             </ul>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link nav-link-font text-dark" asp-area="" asp-page="/StudentView/Index">Students</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link nav-link-font text-dark" asp-area="" asp-page="/UserView/Index">User</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link nav-link-font text-dark" asp-area="" asp-page="/AccountView/Index">Account</a>
-                        </li>
+                        @{
+                            if (await AccessRight.IsAdmin(User) || await AccessRight.IsStaff(User))
+                            {
+                                <li class="nav-item">
+                                    <a class="nav-link nav-link-font text-dark" asp-area="" asp-page="/StudentView/Index">Students</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link nav-link-font text-dark" asp-area="" asp-page="/UserView/Index">User</a>
+                                </li>
+                            }
+                        }
+
+                        @{
+                            if (await AccessRight.IsAdmin(User))
+                            {
+                                <li class="nav-item dropdown">
+                                    <a class="nav-link nav-link-font text-dark dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Account</a>
+                                    <ul class="dropdown-menu">
+                                        <li class="nav-item">
+                                            <a class="dropdown-item" asp-area="" asp-page="/AccountView/Index">Account</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="dropdown-item" asp-area="" asp-page="/RoleView/Index">Role</a>
+                                        </li>
+                                    </ul>
+                                </li>
+                            }
+                        }
                     </ul>
                     <partial name="_LoginPartial" />
                 </div>
@@ -75,6 +110,15 @@
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
+
+    <!-- Slick Carousel -->
+    <script type="text/javascript" src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+    <script type="text/javascript" src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+    <script type="text/javascript" src="/lib/slick/slick.min.js"></script>
+
+    <!-- DataTables JQuery -->
+    <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.4/js/dataTables.jqueryui.min.js"></script>
 
     @await RenderSectionAsync("Scripts", required: false)
 </body>

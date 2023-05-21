@@ -32,11 +32,15 @@ namespace Book_Lending_System.Models
         [Display(Name = "Book Status")]
         public BookStatus Status { get; set; }
 
-        [DataType(DataType.Upload)]
         [Display(Name = "Image")]
         public string? ImageData { get; set; }
 
         [NotMapped]
+        [Display(Name = "Image File")]
+        [DataType(DataType.Upload)]
         public IFormFile? ImageFile { get; set; }
+
+        public ICollection<UserBook>? UserBooks { get; set; }
+        public ICollection<BookCategory>? BookCategories { get; set; }
     }
 }

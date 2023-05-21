@@ -15,13 +15,13 @@ namespace Book_Lending_System.Areas.Identity.Pages.Account.Manage
 {
     public class DeletePersonalDataModel : PageModel
     {
-        private readonly UserManager<Book_Lending_System.Models.Account> _userManager;
-        private readonly SignInManager<Book_Lending_System.Models.Account> _signInManager;
+        private readonly UserManager<IdentityUser> _userManager;
+        private readonly SignInManager<IdentityUser> _signInManager;
         private readonly ILogger<DeletePersonalDataModel> _logger;
 
         public DeletePersonalDataModel(
-            UserManager<Book_Lending_System.Models.Account> userManager,
-            SignInManager<Book_Lending_System.Models.Account> signInManager,
+            UserManager<IdentityUser> userManager,
+            SignInManager<IdentityUser> signInManager,
             ILogger<DeletePersonalDataModel> logger)
         {
             _userManager = userManager;

@@ -1,0 +1,62 @@
+﻿@page
+@model Book_Lending_System.Pages.AccountView.EditModel
+@using Book_Lending_System.Data;
+
+@{
+    ViewData["Title"] = "Edit";
+    Layout = "~/Pages/Shared/_Layout.cshtml";
+}
+
+<div class="container">
+
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="/Index">Home</a></li>
+            <li class="breadcrumb-item"><a asp-page="Index">Account</a></li>
+            <li class="breadcrumb-item"><a asp-page="Details" asp-route-id="@Model.UserAccount.Id">@Html.DisplayFor(model => model.UserAccount.UserName)</a></li>
+            <li class="breadcrumb-item" aria-current="page">Edit</li>
+        </ol>
+    </nav>
+
+    <div class="row">
+        <div class="col-md-4">
+            <form method="post" enctype="multipart/form-data">
+                <div class="mb-3 mt-3">
+                    <input type="submit" value="Save" class="btn btn-primary" />
+                    <a asp-page="Details" asp-route-id="@Model.UserAccount?.Id" class="btn btn-light btn-outline-primary">Cancel</a>
+                </div>
+                <hr />
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <input type="hidden" asp-for="UserAccount.Id" />
+                <div class="mb-3">
+                    <label asp-for="UserAccount.UserName" class="control-label">Username</label>
+                    <input asp-for="UserAccount.UserName" class="form-control" />
+                    <span asp-validation-for="UserAccount.UserName" class="text-danger"></span>
+                </div>
+                <div class="form-floating mb-3 d-none">
+                    <input asp-for="UserAccount.Email" class="form-control" placeholder="Please enter your email." />
+                    <label asp-for="UserAccount.Email" class="form-label"></label>
+                    <span asp-validation-for="UserAccount.Email" class="text-danger"></span>
+                </div>
+
+                <label class="control-label">Roles</label>
+                @if (Model.RolesList != null)
+                {
+                    var RoleList = Model.RolesList;
+                    @for (int i = 0; i < RoleList.Count; i++)
+                    {
+                        <div class="form-check mb-3">
+                            <input name="SelectedRoleIds" class="form-check-input" type="checkbox" value="@RoleList[i].Value" checked="@RoleList[i].Selected" />
+                            @RoleList[i].Text
+                        </div>
+                    }
+                }
+                <br />
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

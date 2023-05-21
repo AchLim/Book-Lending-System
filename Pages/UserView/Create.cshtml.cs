@@ -31,8 +31,14 @@ namespace Book_Lending_System.Pages.UserView
         // To protect from overposting attacks, see https://aka.ms/RazorPagesCRUD
         public async Task<IActionResult> OnPostAsync()
         {
-          if (!ModelState.IsValid || _context.UserPartner == null || UserPartner == null)
+            if (!ModelState.IsValid || _context.UserPartner == null || UserPartner == null)
             {
+                return Page();
+            }
+
+            if (UserPartnerExists(UserPartner.NIK!))
+            {
+                ModelState.AddModelError(string.Empty, "NIK exists!");
                 return Page();
             }
 
@@ -40,6 +46,11 @@ namespace Book_Lending_System.Pages.UserView
             await _context.SaveChangesAsync();
 
             return RedirectToPage("./Index");
+        }
+
+        private bool UserPartnerExists(string id)
+        {
+            return (_context.UserPartner?.Any(e => e.NIK == id)).GetValueOrDefault();
         }
     }
 }

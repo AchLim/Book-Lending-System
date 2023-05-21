@@ -2,6 +2,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Book_Lending_System.Data;
+using Microsoft.AspNetCore.Identity;
 
 namespace Book_Lending_System.Models
 {
@@ -27,6 +28,6 @@ namespace Book_Lending_System.Models
         [ForeignKey(nameof(AccountKey))]
         [DeleteBehavior(DeleteBehavior.ClientSetNull)]
         [Display(Name = "User Account")]
-        public virtual Account? Account { get; set; }
+        public virtual IdentityUser? Account { get; set; }
     }
 }

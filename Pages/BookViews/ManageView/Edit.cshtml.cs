@@ -27,6 +27,9 @@ namespace Book_Lending_System.Pages.BookViews.ManageView
         [BindProperty]
         public Book Book { get; set; } = default!;
 
+        [BindProperty]
+        private string ImageData { get; set; } = default!;
+
         public async Task<IActionResult> OnGetAsync(uint? id)
         {
             if (id == null || _context.Book == null)
@@ -40,15 +43,6 @@ namespace Book_Lending_System.Pages.BookViews.ManageView
                 return NotFound();
             }
             Book = book;
-            if (Book.ImageData != null)
-            {
-                byte[] bytes = Convert.FromBase64String(Book.ImageData);
-                using (MemoryStream ms = new(bytes))
-                {
-                    FormFile formFile = new(ms, 0, ms.Length, Book.Title, Book.Title);
-                    Book.ImageFile = formFile;
-                }
-            }
 
             return Page();
         }
@@ -64,9 +58,40 @@ namespace Book_Lending_System.Pages.BookViews.ManageView
 
             _context.Attach(Book).State = EntityState.Modified;
 
-            byte[] bytes;
             if (Book.ImageFile != null)
             {
+                byte[] bytes;
+                string[] acceptedContentType = { "image/png", "image/jpeg" };
+                bool contentTypeAccepted = false;
+                bool error = false;
+                long fileSize = Book.ImageFile.Length;
+                if (fileSize > 1024 * 100)
+                {
+                    ModelState.AddModelError("", "Max photo size accepted: 100kB");
+                    error = true;
+                }
+
+                foreach (var act in acceptedContentType)
+                {
+                    if (Book.ImageFile.ContentType.ToLower() == act)
+                    {
+                        contentTypeAccepted = true;
+                        break;
+                    }
+
+                }
+
+                if (!contentTypeAccepted)
+                {
+                    ModelState.AddModelError("", "Accepted file: PNG / JPG / JPEG");
+                    error = true;
+                }
+
+                if (error)
+                {
+                    return Page();
+                }
+
                 using (Stream fs = Book.ImageFile.OpenReadStream())
                 {
                     using (BinaryReader br = new(fs))
@@ -77,7 +102,6 @@ namespace Book_Lending_System.Pages.BookViews.ManageView
 
                 Book.ImageData = Convert.ToBase64String(bytes, 0, bytes.Length);
             }
-
             try
             {
                 await _context.SaveChangesAsync();

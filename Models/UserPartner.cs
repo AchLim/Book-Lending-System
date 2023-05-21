@@ -40,5 +40,7 @@ namespace Book_Lending_System.Models
         [Required]
         [EnumDataType(typeof(Citizenship), ErrorMessage = "Nationality is not correct.")]
         public Citizenship Citizenship { get; set; }
+
+        public ICollection<UserBook>? UserBooks { get; set; }
     }
 }

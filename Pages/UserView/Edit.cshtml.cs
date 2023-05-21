@@ -48,6 +48,12 @@ namespace Book_Lending_System.Pages.UserView
                 return Page();
             }
 
+            if (UserPartnerExists(UserPartner.NIK!))
+            {
+                ModelState.AddModelError(string.Empty, "NIK exists!");
+                return Page();
+            }
+
             _context.Attach(UserPartner).State = EntityState.Modified;
 
             try
