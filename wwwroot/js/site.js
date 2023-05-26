@@ -4,40 +4,8 @@
 // Write your JavaScript code.
 
 $(document).ready(function () {
-    $('#account_datatable_responsive').DataTable({
-        paging: true,
-        ordering: true,
-        info: true,
-        responsive: true,
-        order: [[0, 'desc']],
-    });
 
-
-    $('#user_datatable_responsive').DataTable({
-        paging: true,
-        ordering: true,
-        info: true,
-        responsive: true,
-        order: [[0, 'desc']],
-    });
-
-    $('#student_datatable_responsive').DataTable({
-        paging: true,
-        ordering: true,
-        info: true,
-        responsive: true,
-        order: [[0, 'desc']],
-    });
-
-    $('#book_datatable_responsive').DataTable({
-        paging: true,
-        ordering: true,
-        info: true,
-        responsive: true,
-        order: [[0, 'desc']],
-    });
-
-    $('#role_datatable_responsive').DataTable({
+    $('.datatable_responsive').DataTable({
         paging: true,
         ordering: true,
         info: true,
@@ -99,6 +67,17 @@ $(document).ready(function () {
                 }
             }
         ]
-    })
+    });
+
+
+    $('select[multiple].multiselect').multiselect({
+        columns: 1,
+        placeholder: 'Select',
+        search: true,
+        searchOptions: {
+            'default': 'Search'
+        },
+        selectAll: false
+    });
 });
 

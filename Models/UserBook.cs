@@ -4,9 +4,9 @@ namespace Book_Lending_System.Models;
 
 
 /// <summary>
-/// The default implementation of <see cref="UserBook{TUserKey, TBookKey}"/> which uses a string as a user primary key, and uint as book primary key.
+/// The default implementation of <see cref="UserBook{TUserKey, TBookKey}"/> which uses a string as a user primary key, and string as book primary key.
 /// </summary>
-public class UserBook : UserBook<string, uint> { }
+public class UserBook : UserBook<string, string> { }
 
 /// <summary>
 /// Represents the link between a user and a book.

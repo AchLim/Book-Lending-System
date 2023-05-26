@@ -37,8 +37,11 @@
     <link rel="stylesheet" type="text/css" href="/lib/slick/slick.css" />
     <link rel="stylesheet" type="text/css" href="/lib/slick/slick-theme.css" />
 
+    <!-- Multiselect Listbox -->
+    <link rel="stylesheet" type="text/css" href="/lib/multiselect-listbox/jquery.multiselect.css" />
+
     <!-- DataTables -->
-    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.min.css" />
+    <link rel="stylesheet" href="//cdn.datatables.net/1.13.4/css/jquery.dataTables.min.css" />
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -62,7 +65,21 @@
                                     if (await AccessRight.IsAdmin(User) || await AccessRight.IsStaff(User))
                                     {
                                         <li>
-                                            <a class="dropdown-item" asp-area="" asp-page="/BookViews/ManageView/Index">Manage</a>
+                                            <a class="dropdown-item" asp-area="" asp-page="/BookViews/ManageView/Index">Manage Book</a>
+                                        </li>
+
+                                        <li><hr class="dropdown-divider"></li>
+
+                                        <li>
+                                            <a class="dropdown-item" asp-area="" asp-page="/BookViews/AuthorView/Index">Manage Author</a>
+                                        </li>
+
+                                        <li>
+                                            <a class="dropdown-item" asp-area="" asp-page="/BookViews/CategoryView/Index">Manage Category</a>
+                                        </li>
+
+                                        <li>
+                                            <a class="dropdown-item" asp-area="" asp-page="/BookViews/PublisherView/Index">Manage Publisher</a>
                                         </li>
                                     }
                                 }
@@ -116,9 +133,11 @@
     <script type="text/javascript" src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
     <script type="text/javascript" src="/lib/slick/slick.min.js"></script>
 
+    <!-- Multiselect Listbox -->
+    <script type="text/javascript" src="/lib/multiselect-listbox/jquery.multiselect.js"></script>
+
     <!-- DataTables JQuery -->
-    <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
-    <script src="https://cdn.datatables.net/1.13.4/js/dataTables.jqueryui.min.js"></script>
+    <script src="//cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
 
     @await RenderSectionAsync("Scripts", required: false)
 </body>

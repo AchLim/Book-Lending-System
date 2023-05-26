@@ -73,8 +73,8 @@ using (var scope = app.Services.CreateScope())
         var context = services.GetRequiredService<Book_Lending_SystemContext>();
         var userManager = services.GetRequiredService<UserManager<IdentityUser>>();
         var roleManager = services.GetRequiredService<RoleManager<IdentityRole>>();
-        await ContextSeed.SeedSuperAdminAsync(userManager, roleManager);
         await ContextSeed.SeedRolesAsync(userManager, roleManager);
+        await ContextSeed.SeedSuperAdminAsync(userManager, roleManager);
     }
     catch (Exception ex)
     {

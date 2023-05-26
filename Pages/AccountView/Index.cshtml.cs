@@ -43,7 +43,7 @@ namespace Book_Lending_System.Pages.AccountView
                     IList<string> roles = await _userManager.GetRolesAsync(user);
                     if (_context.Roles != null)
                     {
-                        roleList = _context.Roles.Where(role => roles.Contains(role.Name!)).ToList();
+                        roleList = await _context.Roles.Where(role => roles.Contains(role.Name!)).ToListAsync();
                     }
                     UserRolesDict.Add(user.Id, roleList);
                 }

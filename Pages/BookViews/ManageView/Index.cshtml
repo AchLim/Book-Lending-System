@@ -19,17 +19,23 @@
         <a class="btn btn-primary" asp-page="Create">Create</a>
     </div>
     
-    <table class="table table-striped table-hover gy-5 gs-7 border rounded w-100" id="book_datatable_responsive">
+    <table class="datatable_responsive table table-striped table-hover gy-5 gs-7 border rounded w-100">
         <thead>
             <tr>
                 <th>
                     @Html.DisplayNameFor(model => model.Book[0].Title)
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.Book[0].Author)
+                    @Html.DisplayNameFor(model => model.Book[0].BookAuthors)
                 </th>
                 <th>
                     @Html.DisplayNameFor(model => model.Book[0].ReleaseDate)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Book[0].BookCategories)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Book[0].BookPublishers)
                 </th>
                 <th>
                     @Html.DisplayNameFor(model => model.Book[0].Status)
@@ -45,14 +51,53 @@
                     </a>
                 </td>
                 <td>
+                        @{
+                            if (item.BookAuthors != null)
+                            {
+                                foreach (var author in item.BookAuthors)
+                                {
+                                    <a class="text-decoration-none text-black d-block" asp-page="../AuthorView/Details" asp-route-id="@author.AuthorId">
+                                        <span class="badge bg-primary">@author.Author.Name</span>
+                                    </a>
+                                }
+                            }
+                        }
+                </td>
+@*                <td>
                     <a class="text-decoration-none text-black d-block" asp-page="./Details" asp-route-id="@item.Id">
                         @Html.DisplayFor(modelItem => item.Author)
                     </a>
-                </td>
+                </td>*@
                 <td>
                     <a class="text-decoration-none text-black d-block" asp-page="./Details" asp-route-id="@item.Id">
                         @Html.DisplayFor(modelItem => item.ReleaseDate)
                     </a>
+                </td>
+                <td>
+                    @{
+                        if (item.BookCategories != null)
+                        {
+                            foreach (var category in item.BookCategories)
+                            {
+                                <a class="text-decoration-none text-black d-block" asp-page="../CategoryView/Details" asp-route-id="@category.CategoryId">
+                                    <span class="badge bg-primary">@category.Category.Name</span>
+                                </a>
+                            }
+                        }
+                    }
+                </td>
+                <td>
+                    @{
+                        if (item.BookPublishers != null)
+                        {
+                            foreach (var publisher in item.BookPublishers)
+                            {
+                                <a class="text-decoration-none text-black d-block" asp-page="../PublisherView/Details" asp-route-id="@publisher.PublisherId">
+                                    <span class="badge bg-primary">@publisher.Publisher.Name</span>
+                                </a>
+                            }
+                        }
+                    }
                 </td>
                 <td>
                     <a class="text-decoration-none text-black d-block" asp-page="./Details" asp-route-id="@item.Id">

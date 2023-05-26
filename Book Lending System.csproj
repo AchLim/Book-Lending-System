@@ -21,6 +21,7 @@
 
   <ItemGroup>
     <Folder Include="Migrations\" />
+    <Folder Include="wwwroot\images\uploads\" />
     <Folder Include="wwwroot\js\" />
     <Folder Include="wwwroot\lib\bootstrap\" />
     <Folder Include="wwwroot\lib\bootstrap\dist\js\" />
@@ -29,6 +30,8 @@
     <Folder Include="wwwroot\lib\jquery-validation\dist\" />
     <Folder Include="wwwroot\lib\jquery\" />
     <Folder Include="wwwroot\lib\jquery\dist\" />
+    <Folder Include="wwwroot\lib\slick\" />
+    <Folder Include="wwwroot\lib\multiselect-listbox\" />
   </ItemGroup>
 
   <ItemGroup>

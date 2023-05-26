@@ -19,6 +19,12 @@ namespace Book_Lending_System.Data
         public DbSet<Book> Book { get; set; } = default!;
         public DbSet<Student> Student { get; set; } = default!;
         public DbSet<UserPartner> UserPartner { get; set; } = default!;
+        public DbSet<Category> Category { get; set; } = default!;
+        public DbSet<BookCategory> BookCategories { get; set; } = default!;
+        public DbSet<Author> Author { get; set; } = default!;
+        public DbSet<BookAuthor> BookAuthors { get; set; } = default!;
+        public DbSet<Publisher> Publisher { get; set; } = default!;
+        public DbSet<BookPublisher> BookPublishers { get; set; } = default!;
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -57,8 +63,36 @@ namespace Book_Lending_System.Data
                         .HasForeignKey(bc => bc.CategoryId)
                         .IsRequired();
             });
-        }
 
-        public DbSet<Book_Lending_System.Models.Category> Category { get; set; } = default!;
+            modelBuilder.Entity<BookAuthor>(bookAuthor =>
+            {
+                bookAuthor.HasKey(ba => new { ba.BookId, ba.AuthorId });
+
+                bookAuthor.HasOne(ba => ba.Book)
+                        .WithMany(b => b.BookAuthors)
+                        .HasForeignKey(ba => ba.BookId)
+                        .IsRequired();
+
+                bookAuthor.HasOne(ba => ba.Author)
+                        .WithMany(a => a.BookAuthors)
+                        .HasForeignKey(ba => ba.AuthorId)
+                        .IsRequired();
+            });
+
+            modelBuilder.Entity<BookPublisher>(bookPublisher =>
+            {
+                bookPublisher.HasKey(bp => new { bp.BookId, bp.PublisherId });
+
+                bookPublisher.HasOne(bp => bp.Book)
+                        .WithMany(b => b.BookPublishers)
+                        .HasForeignKey(bp => bp.BookId)
+                        .IsRequired();
+
+                bookPublisher.HasOne(bp => bp.Publisher)
+                        .WithMany(p => p.BookPublishers)
+                        .HasForeignKey(bp => bp.PublisherId)
+                        .IsRequired();
+            });
+        }
     }
 }

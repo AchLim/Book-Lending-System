@@ -22,19 +22,26 @@ namespace Book_Lending_System.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("Book_Lending_System.Models.Book", b =>
+            modelBuilder.Entity("Book_Lending_System.Models.Author", b =>
                 {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint");
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
-
-                    b.Property<string>("Author")
+                    b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("ImageData")
+                    b.HasKey("Id");
+
+                    b.ToTable("Author");
+                });
+
+            modelBuilder.Entity("Book_Lending_System.Models.Book", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("ImageLocation")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("ReleaseDate")
@@ -57,10 +64,25 @@ namespace Book_Lending_System.Migrations
                     b.ToTable("Book");
                 });
 
+            modelBuilder.Entity("Book_Lending_System.Models.BookAuthor", b =>
+                {
+                    b.Property<string>("BookId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("AuthorId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("BookId", "AuthorId");
+
+                    b.HasIndex("AuthorId");
+
+                    b.ToTable("BookAuthors");
+                });
+
             modelBuilder.Entity("Book_Lending_System.Models.BookCategory", b =>
                 {
-                    b.Property<long>("BookId")
-                        .HasColumnType("bigint");
+                    b.Property<string>("BookId")
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("CategoryId")
                         .HasColumnType("nvarchar(450)");
@@ -69,7 +91,22 @@ namespace Book_Lending_System.Migrations
 
                     b.HasIndex("CategoryId");
 
-                    b.ToTable("BookCategory");
+                    b.ToTable("BookCategories");
+                });
+
+            modelBuilder.Entity("Book_Lending_System.Models.BookPublisher", b =>
+                {
+                    b.Property<string>("BookId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("PublisherId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("BookId", "PublisherId");
+
+                    b.HasIndex("PublisherId");
+
+                    b.ToTable("BookPublishers");
                 });
 
             modelBuilder.Entity("Book_Lending_System.Models.Category", b =>
@@ -87,6 +124,20 @@ namespace Book_Lending_System.Migrations
                         .IsUnique();
 
                     b.ToTable("Category");
+                });
+
+            modelBuilder.Entity("Book_Lending_System.Models.Publisher", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Publisher");
                 });
 
             modelBuilder.Entity("Book_Lending_System.Models.Student", b =>
@@ -118,8 +169,8 @@ namespace Book_Lending_System.Migrations
                     b.Property<string>("UserId")
                         .HasColumnType("nvarchar(16)");
 
-                    b.Property<long>("BookId")
-                        .HasColumnType("bigint");
+                    b.Property<string>("BookId")
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<DateTime>("BorrowedTime")
                         .HasColumnType("datetime2");
@@ -369,6 +420,25 @@ namespace Book_Lending_System.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
+            modelBuilder.Entity("Book_Lending_System.Models.BookAuthor", b =>
+                {
+                    b.HasOne("Book_Lending_System.Models.Author", "Author")
+                        .WithMany("BookAuthors")
+                        .HasForeignKey("AuthorId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Book_Lending_System.Models.Book", "Book")
+                        .WithMany("BookAuthors")
+                        .HasForeignKey("BookId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Author");
+
+                    b.Navigation("Book");
+                });
+
             modelBuilder.Entity("Book_Lending_System.Models.BookCategory", b =>
                 {
                     b.HasOne("Book_Lending_System.Models.Book", "Book")
@@ -386,6 +456,25 @@ namespace Book_Lending_System.Migrations
                     b.Navigation("Book");
 
                     b.Navigation("Category");
+                });
+
+            modelBuilder.Entity("Book_Lending_System.Models.BookPublisher", b =>
+                {
+                    b.HasOne("Book_Lending_System.Models.Book", "Book")
+                        .WithMany("BookPublishers")
+                        .HasForeignKey("BookId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Book_Lending_System.Models.Publisher", "Publisher")
+                        .WithMany("BookPublishers")
+                        .HasForeignKey("PublisherId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Book");
+
+                    b.Navigation("Publisher");
                 });
 
             modelBuilder.Entity("Book_Lending_System.Models.Student", b =>
@@ -467,9 +556,18 @@ namespace Book_Lending_System.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("Book_Lending_System.Models.Author", b =>
+                {
+                    b.Navigation("BookAuthors");
+                });
+
             modelBuilder.Entity("Book_Lending_System.Models.Book", b =>
                 {
+                    b.Navigation("BookAuthors");
+
                     b.Navigation("BookCategories");
+
+                    b.Navigation("BookPublishers");
 
                     b.Navigation("UserBooks");
                 });
@@ -477,6 +575,11 @@ namespace Book_Lending_System.Migrations
             modelBuilder.Entity("Book_Lending_System.Models.Category", b =>
                 {
                     b.Navigation("BookCategories");
+                });
+
+            modelBuilder.Entity("Book_Lending_System.Models.Publisher", b =>
+                {
+                    b.Navigation("BookPublishers");
                 });
 
             modelBuilder.Entity("Book_Lending_System.Models.UserPartner", b =>

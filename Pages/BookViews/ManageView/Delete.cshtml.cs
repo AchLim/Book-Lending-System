@@ -22,7 +22,7 @@ namespace Book_Lending_System.Pages.BookViews.ManageView
         [BindProperty]
       public Book Book { get; set; } = default!;
 
-        public async Task<IActionResult> OnGetAsync(uint? id)
+        public async Task<IActionResult> OnGetAsync(string? id)
         {
             if (id == null || _context.Book == null)
             {

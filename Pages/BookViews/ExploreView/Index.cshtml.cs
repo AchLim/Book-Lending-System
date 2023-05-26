@@ -21,16 +21,27 @@ namespace Book_Lending_System.Pages.BookViews.ExploreView
             _context = context;
         }
 
-        public IList<Book> TopRatedBooks { get; set; } = default!;
-        public IList<Book> Book { get;set; } = default!;
+        public List<Category> Category { get; set; } = default!;
 
-        public async Task OnGetAsync()
+        public async Task<IActionResult> OnGetAsync()
         {
-            if (_context.Book != null)
+            if (_context.BookCategories != null)
             {
-                TopRatedBooks = await _context.Book.Take(5).ToListAsync();
-                Book = await _context.Book.ToListAsync();
+                Category = await _context.Category.ToListAsync();
             }
+
+            return Page();
+        }
+
+        public async Task<IEnumerable<Book>> GetAllBookForCategory(Category category)
+        {
+            if (_context.BookCategories != null)
+            {
+                var books = await _context.BookCategories.Where(bc => bc.CategoryId == category.Id).Select(bc => bc.Book).ToListAsync();
+                return books;
+            }
+
+            return Enumerable.Empty<Book>();
         }
     }
 }

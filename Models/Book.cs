@@ -6,19 +6,27 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Book_Lending_System.Models
 {
-    [PrimaryKey(nameof(Id))]
     public class Book
     {
-        public uint Id { get; set; }
+        public Book()
+        {
+            Id = Guid.NewGuid().ToString();
+        }
+
+        public string Id { get; set; }
 
         [Required]
         [StringLength(200)]
         public required string Title { get; set; }
 
-        [Required]
-        public required string Author { get; set; }
+        [Display(Name = "Authors")]
+        public ICollection<BookAuthor>? BookAuthors { get; set; }
+
+        [Display(Name = "Publishers")]
+        public ICollection<BookPublisher>? BookPublishers { get; set; }
 
         [Required]
+        [DataType(DataType.MultilineText)]
         public required string Synopsis { get; set; }
 
         [Required]
@@ -29,18 +37,21 @@ namespace Book_Lending_System.Models
 
         [Required]
         [EnumDataType(typeof(BookStatus))]
-        [Display(Name = "Book Status")]
+        [Display(Name = "Status")]
         public BookStatus Status { get; set; }
 
-        [Display(Name = "Image")]
-        public string? ImageData { get; set; }
+        [Display(Name = "Image Location")]
+        public string? ImageLocation { get; set; }
 
         [NotMapped]
         [Display(Name = "Image File")]
         [DataType(DataType.Upload)]
         public IFormFile? ImageFile { get; set; }
 
+        [Display(Name = "History of users borrowed")]
         public ICollection<UserBook>? UserBooks { get; set; }
+
+        [Display(Name = "Categories")]
         public ICollection<BookCategory>? BookCategories { get; set; }
     }
 }

@@ -82,7 +82,7 @@ namespace Book_Lending_System.Pages.AccountView
             if (_context.Roles != null && _context.UserRoles != null)
             {
                 RolesList = new();
-                var roles = _context.Roles.ToList();
+                var roles = await _context.Roles.ToListAsync();
 
                 foreach (var role in roles)
                 {

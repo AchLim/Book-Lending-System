@@ -7,238 +7,56 @@
 }
 
 
-<div class="container">
+<div id="imageManageView" class="container">
     <div class="carousel-section">
-        <div class="carousel-section-header">
-            <div class="home-h2">
-                Top Rated Book
-            </div>
-        </div>
-        <div class="carousel-container carousel-container-decorated">
-            <div class="carousel">
 
-                @foreach (var Book in Model.TopRatedBooks)
-                {
-                    <div class="book carousel__item">
-                        <div class="book-cover">
-                            <img src="data:image/jpg;base64,@Book.ImageData" alt="Book Cover" class="book-img img-fluid" title="@Book.Title">
-                        </div>
-                        <div class="book-cta">
-                            <div class="cta-button-group">
-                                <a role="button" asp-area="" asp-page="./Details" asp-route-id="@Book.Id" class="btn btn-primary my-1 mb-3 w-100">
-                                    @switch (Book.Status)
-                                    {
-                                        case Data.BookStatus.Borrowed:
-                                            <text>Borrowed</text>
-                                            break;
-                                        case Data.BookStatus.Displayed:
-                                            <text>Available</text>
-                                            break;
-                                        case Data.BookStatus.New:
-                                            <text>New</text>
-                                            break;
-                                        default:
-                                            <text>Not Available</text>
-                                            break;
-                                    }
-                                </a>
-                            </div>
-                        </div>
+        @foreach (var Category in Model.Category)
+        {
+            var Books = await Model.GetAllBookForCategory(Category);
+
+            <text>
+                <div class="carousel-section-header">
+                    <div class="home-h2">
+                        @Category.Name
                     </div>
-                    <div class="book carousel__item">
-                        <div class="book-cover">
-                            <img src="data:image/jpg;base64,@Book.ImageData" alt="Book Cover" class="book-img img-fluid" title="@Book.Title">
-                        </div>
-                        <div class="book-cta">
-                            <div class="cta-button-group">
-                                <a role="button" asp-area="" asp-page="./Details" asp-route-id="@Book.Id" class="btn btn-primary my-1 mb-3 w-100">
-                                    @switch (Book.Status)
-                                    {
-                                        case Data.BookStatus.Borrowed:
-                                            <text>Borrowed</text>
-                                            break;
-                                        case Data.BookStatus.Displayed:
-                                            <text>Available</text>
-                                            break;
-                                        case Data.BookStatus.New:
-                                            <text>New</text>
-                                            break;
-                                        default:
-                                            <text>Not Available</text>
-                                            break;
-                                    }
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="book carousel__item">
-                        <div class="book-cover">
-                            <img src="data:image/jpg;base64,@Book.ImageData" alt="Book Cover" class="book-img img-fluid" title="@Book.Title">
-                        </div>
-                        <div class="book-cta">
-                            <div class="cta-button-group">
-                                <a role="button" asp-area="" asp-page="./Details" asp-route-id="@Book.Id" class="btn btn-primary my-1 mb-3 w-100">
-                                    @switch (Book.Status)
-                                    {
-                                        case Data.BookStatus.Borrowed:
-                                            <text>Borrowed</text>
-                                            break;
-                                        case Data.BookStatus.Displayed:
-                                            <text>Available</text>
-                                            break;
-                                        case Data.BookStatus.New:
-                                            <text>New</text>
-                                            break;
-                                        default:
-                                            <text>Not Available</text>
-                                            break;
-                                    }
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                }
-            </div>
-        </div>
-    </div>
-                        @*{
-                            var bookList = Model.Book.ToList();
-
-                            var generated = 0;
-                            var bookCount = bookList.Count;
-                            var bookPerCarousel = 5;
-
-                            while (generated < bookCount)
-                            {
-                                <div class="carousel-item">
-                                    @{
-                                        for (int i = 0; i < bookPerCarousel; i++)
-                                        {
-                                            if (generated >= bookCount)
-                                                break;
-
-                                            <text>
-                                                <div class="book carousel__item">
-                                                    <div class="book-cover">
-                                                        <img src="data:image/jpg;base64,@bookList[generated].ImageData" alt="Book Cover" class="book-img" title="@bookList[generated].Title">
-                                                    </div>
-                                                    <div class="book-cta">
-                                                        <div class="cta-button-group">
-                                                            <a role="button" asp-area="" asp-page="./Details" asp-route-id="@bookList[generated].Id" class="btn btn-primary my-1 mb-3 w-100">
-                                                                @switch (@bookList[generated].Status)
-                                                                {
-                                                                    case Data.BookStatus.Borrowed:
-                                                                        <text>Borrowed</text>
-                                                                        break;
-                                                                    case Data.BookStatus.Displayed:
-                                                                        <text>Available</text>
-                                                                        break;
-                                                                    case Data.BookStatus.New:
-                                                                        <text>New</text>
-                                                                        break;
-                                                                    default:
-                                                                        <text>Not Available</text>
-                                                                        break;
-                                                                }
-                                                            </a>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </text>
-                                            generated += 1;
-                                        }
-                                    }
-                                </div>
-                            }
-                        }*@
-</div>
-
-@*<div class="container">
-    <div class="row justify-content-md-center">
-        <h1> TOP RATED </h1>
-        <div class="row text-center">
-            @foreach(var Book in Model.Book)
-            {
-                <div class="col-lg-2 col-md-3 col-sm-4 col-6 book-cover">
-                    <img src="data:image/jpg;base64,@Book.ImageData" alt="Book Cover" class="img-thumbnail book-img" title="@Book.Title">
-                    <a role="button" asp-area="" asp-page="./Details" asp-route-id="@Book.Id" class="btn btn-primary my-1 mb-3 w-100">
-                        @switch (Book.Status)
-                        {
-                            case Data.BookStatus.Borrowed:
-                                <text>Borrowed</text>
-                                break;
-                            case Data.BookStatus.Displayed:
-                                <text>Available</text>
-                                break;
-                            case Data.BookStatus.New:
-                                <text>New</text>
-                                break;
-                            default:
-                                <text>Not Available</text>
-                                break;
-                        }
-                    </a>
                 </div>
-            }
-        </div>
+                <div class="carousel-container carousel-container-decorated">
+                    <div class="carousel">
+                        @foreach (var Book in Books) 
+                        {
+                            <div class="book carousel__item">
+                                <div class="book-cover">
+                                    <a role="button" asp-area="" asp-page="./Details" asp-route-id="@Book.Id">
+                                        <img src="~/images/uploads/@{@Book.ImageLocation}" alt="Book Cover" class="bookcover" title="@Book.Title">
+                                    </a>
+                                </div>
+                                <div class="book-cta">
+                                    <div class="cta-button-group">
+                                        <a role="button" asp-area="" asp-page="./Details" asp-route-id="@Book.Id" class="cta-btn cta-btn--available cta-btn--read">
+                                            @switch (Book.Status)
+                                            {
+                                                case Data.BookStatus.Borrowed:
+                                                    <text>Borrowed</text>
+                                                    break;
+                                                case Data.BookStatus.Displayed:
+                                                    <text>Available</text>
+                                                    break;
+                                                case Data.BookStatus.New:
+                                                    <text>New</text>
+                                                    break;
+                                                default:
+                                                    <text>Not Available</text>
+                                                    break;
+                                            }
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </text>
+        }
     </div>
-</div>*@
-
-@*<div class="container">
-
-    <nav aria-label="breadcrumb">
-        <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a href="/Index">Explore</a></li>
-        </ol>
-    </nav>
-   
-    <div class="pb-4">
-        <a class="btn btn-primary" asp-page="Create">Create</a>
-    </div>
-    
-    <table class="table">
-        <thead>
-            <tr>
-                <th>
-                    @Html.DisplayNameFor(model => model.Book[0].Title)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Book[0].Author)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Book[0].ReleaseDate)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Book[0].Status)
-                </th>
-            </tr>
-        </thead>
-        <tbody>
-    @foreach (var item in Model.Book) {
-            <tr class="cursor-pointer">
-                <td>
-                    <a class="text-decoration-none text-black d-block" asp-page="./Details" asp-route-id="@item.Id">
-                        @Html.DisplayFor(modelItem => item.Title)
-                    </a>
-                </td>
-                <td>
-                    <a class="text-decoration-none text-black d-block" asp-page="./Details" asp-route-id="@item.Id">
-                        @Html.DisplayFor(modelItem => item.Author)
-                    </a>
-                </td>
-                <td>
-                    <a class="text-decoration-none text-black d-block" asp-page="./Details" asp-route-id="@item.Id">
-                        @Html.DisplayFor(modelItem => item.ReleaseDate)
-                    </a>
-                </td>
-                <td>
-                    <a class="text-decoration-none text-black d-block" asp-page="./Details" asp-route-id="@item.Id">
-                        @Html.DisplayFor(modelItem => item.Status)
-                    </a>
-                </td>
-            </tr>
-    }
-        </tbody>
-    </table>
-
-</div>*@
+                        
+</div>

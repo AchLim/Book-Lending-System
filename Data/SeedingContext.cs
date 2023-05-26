@@ -38,6 +38,8 @@ namespace Book_Lending_System.Data
                 {
                     await userManager.CreateAsync(defaultUser, "123456");
                     await userManager.AddToRoleAsync(defaultUser, Roles.Admin.ToString());
+                    await userManager.AddToRoleAsync(defaultUser, Roles.Staff.ToString());
+                    await userManager.AddToRoleAsync(defaultUser, Roles.User.ToString());
                 }
 
             }

@@ -57,7 +57,7 @@ namespace Book_Lending_System.Pages.AccountView
             if (_context.Roles != null && _context.UserRoles != null)
             {
                 RolesList = new();
-                var roles = _context.Roles.ToList();
+                var roles = await _context.Roles.ToListAsync();
 
                 foreach (var role in roles)
                 {
@@ -87,7 +87,7 @@ namespace Book_Lending_System.Pages.AccountView
             try
             {
                 // Check for removed roles
-                var userRoleIds = _context.UserRoles.Where(ur => ur.UserId == user.Id).Select(ur => ur.RoleId).ToList();
+                var userRoleIds = await _context.UserRoles.Where(ur => ur.UserId == user.Id).Select(ur => ur.RoleId).ToListAsync();
                 foreach (var roleId in userRoleIds)
                 {
                     if (!SelectedRoleIds.Contains(roleId))

@@ -9,13 +9,29 @@
             _environment = environment;
         }
 
-        public async Task<string> UploadFileAsync(IFormFile file)
+        public async Task<string> UploadFileAsync(IFormFile file, string filePath = "")
         {
-            var filePath = Path.Combine(_environment.ContentRootPath, @"wwwroot\images", file.FileName);
+            string path = filePath;
+            if (string.IsNullOrWhiteSpace(filePath))
+                path = Path.GetFileNameWithoutExtension(file.FileName);
 
-            using var fileStream = new FileStream(filePath, FileMode.Create);
-            await file.CopyToAsync(fileStream);
-            return filePath;
+            string fileType = Path.GetExtension(file.FileName);
+
+            var filePathToCreate = Path.Combine(_environment.ContentRootPath, @"wwwroot\images\uploads", path + fileType);
+            //string checkFileExistPath = Path.Combine(_environment.ContentRootPath, @"wwwroot\images\uploads", path + fileType);
+            //if (File.Exists(checkFileExistPath))
+            //{
+            //    File.Delete(checkFileExistPath);
+            //}
+
+
+            using (var fileStream = new FileStream(filePathToCreate, FileMode.Create))
+            {
+                await file.CopyToAsync(fileStream);
+            }
+
+            string filePathToReturn = Path.Combine(path + fileType);
+            return filePathToReturn;
         }
     }
 }
