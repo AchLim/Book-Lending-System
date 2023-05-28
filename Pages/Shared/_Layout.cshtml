@@ -24,9 +24,13 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet" />
 
     <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
     <link href="https://fonts.googleapis.com/css?family=Merriweather+Sans:400,700" rel="stylesheet" />
     <link href="https://fonts.googleapis.com/css?family=Merriweather:400,300,300italic,400italic,700,700italic" rel="stylesheet" type="text/css" />
     <link href="https://fonts.googleapis.com/css2?family=Arsenal&family=Kanit:wght@500&family=Poppins&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=EB+Garamond&display=swap" rel="stylesheet">
 
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
@@ -42,11 +46,8 @@
 
     <!-- DataTables -->
     <link rel="stylesheet" href="//cdn.datatables.net/1.13.4/css/jquery.dataTables.min.css" />
-
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-
 </head>
+
 <body style="background-color: #E9F1FA">
     <header class="header">
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light border-bottom box-shadow top-nav navbar-expand-lg bg-body-tertiary">
@@ -60,10 +61,20 @@
                         <li class="nav-item dropdown">
                             <a class="nav-link nav-link-font text-dark dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Books</a>
                             <ul class="dropdown-menu">
-                                <li><a class="dropdown-item" asp-area="" asp-page="/BookViews/ExploreView/Index">Explore</a></li>
+                                <li>
+                                    <a class="dropdown-item" asp-area="" asp-page="/BookViews/ExploreView/Index">Explore</a>
+                                </li>
+                                @if (await AccessRight.GetCurrentUser(User) != null)
+                                {
+                                    <li>
+                                        <a class="dropdown-item" asp-area="" asp-page="/BookViews/LendingView/Index">Lending Request</a>
+                                    </li>
+                                }
                                 @{
                                     if (await AccessRight.IsAdmin(User) || await AccessRight.IsStaff(User))
                                     {
+                                        <li><hr class="dropdown-divider"></li>
+
                                         <li>
                                             <a class="dropdown-item" asp-area="" asp-page="/BookViews/ManageView/Index">Manage Book</a>
                                         </li>
