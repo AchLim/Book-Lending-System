@@ -1,15 +1,21 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
 using Book_Lending_System.Data;
+using Microsoft.AspNetCore.Identity;
 
 namespace Book_Lending_System.Models
 {
-    [PrimaryKey(nameof(NIK))]
     public class UserPartner
     {
+        public UserPartner()
+        {
+            Id = Guid.NewGuid().ToString();
+        }
+        public string Id { get; set; }
+
         [Required]
         [StringLength(16, MinimumLength = 16, ErrorMessage = "NIK must be 16 characters")]
-        public required string? NIK { get; set; }
+        public required string NIK { get; set; }
 
         [Required]
         [StringLength(64)]
@@ -42,5 +48,9 @@ namespace Book_Lending_System.Models
         public Citizenship Citizenship { get; set; }
 
         public ICollection<UserBook>? UserBooks { get; set; }
+
+        [Display(Name = "Login Account")]
+        public IdentityUser? User { get; set; }
+        public string? UserId { get; set; }
     }
 }

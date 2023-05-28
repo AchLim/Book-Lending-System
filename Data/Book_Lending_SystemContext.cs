@@ -19,6 +19,7 @@ namespace Book_Lending_System.Data
         public DbSet<Book> Book { get; set; } = default!;
         public DbSet<Student> Student { get; set; } = default!;
         public DbSet<UserPartner> UserPartner { get; set; } = default!;
+        public DbSet<UserBook> UserBook { get; set; } = default!;
         public DbSet<Category> Category { get; set; } = default!;
         public DbSet<BookCategory> BookCategories { get; set; } = default!;
         public DbSet<Author> Author { get; set; } = default!;
@@ -30,9 +31,13 @@ namespace Book_Lending_System.Data
         {
             base.OnModelCreating(modelBuilder);
 
+            modelBuilder.Entity<UserPartner>()
+                        .HasIndex(up => up.NIK)
+                        .IsUnique();
+
             modelBuilder.Entity<UserBook>(userBook =>
             {
-                userBook.HasKey(ub => new { ub.UserId, ub.BookId });
+                userBook.HasKey(ub => new { ub.Id, ub.UserId, ub.BookId });
 
                 userBook.HasOne(ub => ub.Book)
                         .WithMany(b => b.UserBooks)
