@@ -9,94 +9,149 @@
 
 <div class="container">
     <div class="row justify-content-md-center">
-        <div class="row text-start">
+        <div class="row text-start book-detail-parent">
             
-            <div class="col-lg-4 col-md-6 col-sm-12 col-12 pb-2">
-                <img src="~/images/uploads/@{@Model.Book.ImageLocation}" alt="Book Cover" class="img-fluid foto">
-            </div>
-            <div class="col-lg-8 col-md-6 col-sm-12 col-12">
-                <h1>@Model.Book.Title</h1>
-                <h2>Sinopsis</h2>
-                <p>@Model.Book.Synopsis</p>
-                @*<div class="row mb-4">
-                    <div class="col-lg-4 col-md-6 col-sm-6 col-12 mb-2">
-                        <div class="fs-3 fw-bold">PENULIS</div>
-                        <span>Lorem Ipsum</span>
+            <div class="col-12">
+                <div class="row">
+                    <div class="col-12 col-md-6"></div>
+                    <div class="col-12 col-md-6">
+                        <h3 class="book-title">
+                            @Model.Book.Title
+                        </h3>
                     </div>
-                    <div class="col-lg-4 col-md-6 col-sm-6 col-12 mb-2">
-                        <div class="fs-3 fw-bold">PENERBIT</div>
-                        <span>Lorem Ipsum IPSUM SUM</span>
-                    </div>
-                    <div class="col-lg-4 col-md-6 col-sm-6 col-12 mb-2">
-                        <div class="fs-3 fw-bold">HALAMAN</div>
-                        <span>Lorem Ipsum HALAMAN</span>
-                    </div>
-                    <div class="col-lg-4 col-md-6 col-sm-6 col-12 mb-2">
-                        <div class="fs-3 fw-bold">ISBN</div>
-                        <span>123123123123123</span>
-                    </div>
-                    <div class="col-lg-4 col-md-6 col-sm-6 col-12 mb-2">
-                        <div class="fs-3 fw-bold">UKURAN</div>
-                        <span>123123 x 1231</span>
-                    </div>
-                    <div class="col-lg-4 col-md-6 col-sm-6 col-12 mb-2">
-                        <div class="fs-3 fw-bold">TERBIT</div>
-                        <span>L010203182 date</span>
-                    </div>*@
                 </div>
+            </div>
+
+            <div class="col-lg-4 col-md-6 col-sm-12 col-12 py-2 book-img-title">
+                <img src="~/images/uploads/@{@Model.Book.ImageLocation}" alt="Book Cover" class="img img-fluid">
+                <div class="book-detail">
+                    <table>
+                        <tbody>
+                            <tr>
+                                <th scope="row">@Html.DisplayNameFor(m => m.Book.BookAuthors)</th>
+                                <td>
+                                    @if (Model.Book.BookAuthors != null)
+                                    {
+                                        @foreach (var ba in Model.Book.BookAuthors)
+                                        {
+                                            var author = ba.Author;
+                                            <text>
+                                                <span class="badge bg-primary">@author.Name</span>
+                                            </text>
+                                        }
+                                    }
+                                </td>
+                            </tr>
+                            <tr>
+                                <th scope="row">@Html.DisplayNameFor(m => m.Book.ReleaseDate)</th>
+                                <td>
+                                    @Html.DisplayFor(m => m.Book.ReleaseDate)
+                                </td>
+                            </tr>
+                            <tr>
+                                <th scope="row">@Html.DisplayNameFor(m => m.Book.Status)</th>
+                                <td>
+                                    @Html.DisplayFor(m => m.Book.Status)
+                                </td>
+                            </tr>
+                            <tr>
+                                <th scope="row">@Html.DisplayNameFor(m => m.Book.BookPublishers)</th>
+                                <td>
+                                    @if (Model.Book.BookPublishers != null)
+                                    {
+                                        @foreach (var bp in Model.Book.BookPublishers)
+                                        {
+                                            var publisher = bp.Publisher;
+                                            <text>
+                                                <span class="badge bg-primary">@publisher.Name</span>
+                                            </text>
+                                        }
+                                    }
+                                </td>
+                            </tr>
+                            <tr>
+                                <th scope="row">@Html.DisplayNameFor(m => m.Book.BookCategories)</th>
+                                <td>
+                                    @if (Model.Book.BookCategories != null)
+                                    {
+                                        @foreach (var bc in Model.Book.BookCategories)
+                                        {
+                                            var category = bc.Category;
+                                            <text>
+                                                <span class="badge bg-primary">@category.Name</span>
+                                            </text>
+                                        }
+                                    }
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="col-12 d-md-none">
+                <hr />
+            </div>
+
+            <div class="col-lg-8 col-md-6 col-sm-12 col-12 py-1">
+                <h4 class="pb-2">Synopsis</h4>
+                <p class="synopsis">&emsp;@Model.Book.Synopsis</p>
+            </div>
+        </div>
+
+
+        @if (Model.Book.Status != Data.BookStatus.Borrowed)
+        {
+            <div class="col-12 py-4 text-center">
+                <button type="button" class="btn btn-info btn-sm m-1" data-bs-toggle="modal" data-bs-target="#requestLendingModal">
+                    Borrow &nbsp; <i class="bi bi-book"></i>
+                </button>
+            </div>
+        }
+    </div>
+</div>
+
+
+
+<!-- Modal -->
+<div class="modal fade" id="requestLendingModal" tabindex="-1" aria-labelledby="requestLendingModalLabel" aria-hidden="true" aria-modal="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="requestLendingModalLabel">Request Lend</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form method="post">
+                    <div class="form-group">
+                        <input type="submit" id="submit_request_lend" value="Request" class="btn btn-primary" style="display: none !important;" />
+                    </div>
+                    <hr />
+                    <div asp-validation-summary="ModelOnly" class="text-danger p-6 px-4"></div>
+                    <div class="form-group">
+                        <label asp-for="UserBook.StartDate" class="control-label"></label>
+                        <input asp-for="UserBook.StartDate" class="form-control" />
+                        <span asp-validation-for="UserBook.StartDate" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="UserBook.EndDate" class="control-label"></label>
+                        <input asp-for="UserBook.EndDate" class="form-control" />
+                        <span asp-validation-for="UserBook.EndDate" class="text-danger"></span>
+                    </div>
+                    <br />
+                </form>
+            </div>
+            <div class="modal-footer">
+                <label role="button" class="btn btn-primary" for="submit_request_lend" tabindex="0">Request</label>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
             </div>
         </div>
     </div>
 </div>
 
 
-@*
-<div class="container">
-
-    <nav aria-label="breadcrumb">
-        <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a href="/Index">Home</a></li>
-            <li class="breadcrumb-item"><a asp-page="Index">Book</a></li>
-            <li class="breadcrumb-item" aria-current="page">@Html.DisplayFor(model => model.Book.Title)</li>
-        </ol>
-    </nav>
-
-    <div class="form-group">
-        <a class="btn btn-primary" asp-page="./Edit" asp-route-id="@Model.Book?.Id">Edit</a>
-        <a class="btn btn-light btn-outline-primary" asp-page="./Index">Back</a>
-    </div>
-
-    <h2>@Html.DisplayFor(model => model.Book.Title)</h2>
-    <dl class="row">
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Book.Title)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Book.Title)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Book.Author)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Book.Author)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Book.ReleaseDate)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Book.ReleaseDate)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Book.Status)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Book.Status)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Book.ImageUrl)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Book.ImageUrl)
-        </dd>
-    </dl>
-</div>*@
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

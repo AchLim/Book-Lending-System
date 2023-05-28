@@ -16,14 +16,20 @@
         </ol>
     </nav>
     <div>
-        <a class="btn btn-primary" asp-page="./Edit" asp-route-id="@Model.UserPartner?.NIK">Edit</a>
-        <a class="btn btn-primary" asp-page="./Delete" asp-route-id="@Model.UserPartner?.NIK">Delete</a>
+        <a class="btn btn-primary" asp-page="./Edit" asp-route-id="@Model.UserPartner?.Id">Edit</a>
+        <a class="btn btn-primary" asp-page="./Delete" asp-route-id="@Model.UserPartner?.Id">Delete</a>
         <a class="btn btn-light btn-outline-primary" asp-page="./Index">Back to List</a>
     </div>
 
     <hr />
 
     <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.UserPartner.NIK)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.UserPartner.NIK)
+        </dd>
         <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.UserPartner.Name)
         </dt>
@@ -65,6 +71,17 @@
         </dt>
         <dd class="col-sm-10">
             @Html.DisplayFor(model => model.UserPartner.Citizenship)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.UserPartner.User)
+        </dt>
+        <dd class="col-sm-10">
+            @if (Model.UserPartner != null && Model.UserPartner.User != null)
+            {
+                <span class="badge bg-primary">
+                    @Model.UserPartner.User.UserName
+                </span>
+            }
         </dd>
     </dl>
 </div>

@@ -7,6 +7,8 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Book_Lending_System.Data;
 using Book_Lending_System.Models;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 
 namespace Book_Lending_System.Pages.UserView
 {
@@ -19,14 +21,22 @@ namespace Book_Lending_System.Pages.UserView
             _context = context;
         }
 
-        public IActionResult OnGet()
+        [BindProperty]
+        public UserPartner UserPartner { get; set; } = default!;
+
+        [BindProperty]
+        public ICollection<IdentityUser> IdentityUsers { get; set; } = default!;
+
+        public async Task<IActionResult> OnGetAsync()
         {
+            if (_context.Users != null)
+            {
+                IdentityUsers = await _context.Users.ToListAsync();
+            }
+
             return Page();
         }
 
-        [BindProperty]
-        public UserPartner UserPartner { get; set; } = default!;
-        
 
         // To protect from overposting attacks, see https://aka.ms/RazorPagesCRUD
         public async Task<IActionResult> OnPostAsync()

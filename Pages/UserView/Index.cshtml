@@ -46,6 +46,9 @@
             <th>
                 @Html.DisplayNameFor(model => model.UserPartner[0].Citizenship)
             </th>
+            <th>
+                @Html.DisplayNameFor(model => model.UserPartner[0].User)
+            </th>
         </tr>
         </thead>
         <tbody>
@@ -53,44 +56,54 @@
             {
                 <tr class="cursor-pointer">
                     <td>
-                        <a class="text-decoration-none text-black d-block" asp-page="./Details" asp-route-id="@item.NIK">
+                        <a class="text-decoration-none text-black d-block" asp-page="./Details" asp-route-id="@item.Id">
                             @Html.DisplayFor(modelItem => item.NIK)
                         </a>
                     </td>
                     <td>
-                        <a class="text-decoration-none text-black d-block" asp-page="./Details" asp-route-id="@item.NIK">
+                        <a class="text-decoration-none text-black d-block" asp-page="./Details" asp-route-id="@item.Id">
                             @Html.DisplayFor(modelItem => item.Name)
                         </a>
                     </td>
                     <td>
-                        <a class="text-decoration-none text-black d-block" asp-page="./Details" asp-route-id="@item.NIK">
+                        <a class="text-decoration-none text-black d-block" asp-page="./Details" asp-route-id="@item.Id">
                             @Html.DisplayFor(modelItem => item.TelephoneNumber)
                         </a>
                     </td>
                     <td>
-                        <a class="text-decoration-none text-black d-block" asp-page="./Details" asp-route-id="@item.NIK">
+                        <a class="text-decoration-none text-black d-block" asp-page="./Details" asp-route-id="@item.Id">
                             @Html.DisplayFor(modelItem => item.Gender)
                         </a>
                     </td>
                     <td>
-                        <a class="text-decoration-none text-black d-block" asp-page="./Details" asp-route-id="@item.NIK">
+                        <a class="text-decoration-none text-black d-block" asp-page="./Details" asp-route-id="@item.Id">
                             @Html.DisplayFor(modelItem => item.BirthDate)
                         </a>
                     </td>
                     <td>
-                        <a class="text-decoration-none text-black d-block" asp-page="./Details" asp-route-id="@item.NIK">
+                        <a class="text-decoration-none text-black d-block" asp-page="./Details" asp-route-id="@item.Id">
                             @Html.DisplayFor(modelItem => item.Address)
                         </a>
                     </td>
                     <td>
-                        <a class="text-decoration-none text-black d-block" asp-page="./Details" asp-route-id="@item.NIK">
+                        <a class="text-decoration-none text-black d-block" asp-page="./Details" asp-route-id="@item.Id">
                             @Html.DisplayFor(modelItem => item.Nationality)
                         </a>
                     </td>
                     <td>
-                        <a class="text-decoration-none text-black d-block" asp-page="./Details" asp-route-id="@item.NIK">
+                        <a class="text-decoration-none text-black d-block" asp-page="./Details" asp-route-id="@item.Id">
                             @Html.DisplayFor(modelItem => item.Citizenship)
                         </a>
+                    </td>
+                    <td>
+                        @if (item.User != null)
+                        {
+                            <a class="text-decoration-none text-black d-block" asp-page="../AccountView" asp-route-id="@item.UserId">
+                                <span class="badge bg-primary">
+                                    @Html.DisplayFor(modelItem => item.User.UserName)
+                                </span>
+                            </a>
+                        }
                     </td>
                 </tr>
             }

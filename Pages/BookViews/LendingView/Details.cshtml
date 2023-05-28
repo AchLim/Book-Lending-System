@@ -1,0 +1,70 @@
+﻿@page
+@model Book_Lending_System.Pages.BookViews.LendingView.DetailsModel
+
+@{
+    ViewData["Title"] = "Details";
+    Layout = "~/Pages/Shared/_Layout.cshtml";
+}
+
+<div class="container">
+
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="/Index">Home</a></li>
+            <li class="breadcrumb-item"><a asp-page="Index">Book Lending Request</a></li>
+            <li class="breadcrumb-item" aria-current="page">@Html.DisplayFor(model => model.UserBook.User.Name) - @Html.DisplayFor(model => model.UserBook.Book.Title)</li>
+        </ol>
+    </nav>
+
+    <div class="form-group">
+@*        <a class="btn btn-primary" asp-page="./Edit" asp-route-id="@Model.Category?.Id">Edit</a>
+        <a class="btn btn-primary" asp-page="./Delete" asp-route-id="@Model.Category?.Id">Delete</a>*@
+        <a class="btn btn-light btn-outline-primary" asp-page="./Index">Back to List</a>
+    </div>
+
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.UserBook.User.Name)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.UserBook.User.Name)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.UserBook.Book.Title)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.UserBook.Book.Title)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.UserBook.DateRequested)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.UserBook.DateRequested)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.UserBook.StartDate)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.UserBook.StartDate)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.UserBook.EndDate)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.UserBook.EndDate)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.UserBook.DateReturned)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.UserBook.DateReturned)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.UserBook.Status)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.UserBook.Status)
+        </dd>
+    </dl>
+</div>

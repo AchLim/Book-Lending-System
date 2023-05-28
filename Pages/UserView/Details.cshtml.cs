@@ -19,16 +19,16 @@ namespace Book_Lending_System.Pages.UserView
             _context = context;
         }
 
-      public UserPartner UserPartner { get; set; } = default!; 
+        public UserPartner UserPartner { get; set; } = default!; 
 
-        public async Task<IActionResult> OnGetAsync(string id)
+        public async Task<IActionResult> OnGetAsync(string? id)
         {
             if (id == null || _context.UserPartner == null)
             {
                 return NotFound();
             }
 
-            var userpartner = await _context.UserPartner.FirstOrDefaultAsync(m => m.NIK == id);
+            var userpartner = await _context.UserPartner.Include(up => up.User).FirstOrDefaultAsync(m => m.Id == id);
             if (userpartner == null)
             {
                 return NotFound();

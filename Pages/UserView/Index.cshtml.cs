@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using Book_Lending_System.Data;
 using Book_Lending_System.Models;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 
 namespace Book_Lending_System.Pages.UserView
 {
@@ -26,7 +27,7 @@ namespace Book_Lending_System.Pages.UserView
         {
             if (_context.UserPartner != null)
             {
-                UserPartner = await _context.UserPartner.ToListAsync();
+                UserPartner = await _context.UserPartner.Include(up => up.User).ToListAsync();
             }
         }
     }

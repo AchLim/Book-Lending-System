@@ -24,7 +24,12 @@
                 </div>
                 <hr />
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                <input type="hidden" asp-for="UserPartner.NIK" />
+                <input type="hidden" asp-for="UserPartner.Id" />
+                <div class="form-group">
+                    <label asp-for="UserPartner.NIK" class="control-label"></label>
+                    <input asp-for="UserPartner.NIK" class="form-control" />
+                    <span asp-validation-for="UserPartner.NIK" class="text-danger"></span>
+                </div>
                 <div class="form-group">
                     <label asp-for="UserPartner.Name" class="control-label"></label>
                     <input asp-for="UserPartner.Name" class="form-control" />
@@ -42,16 +47,19 @@
                     </select>
                     <span asp-validation-for="UserPartner.Gender" class="text-danger"></span>
                 </div>
+
                 <div class="form-group">
                     <label asp-for="UserPartner.BirthDate" class="control-label"></label>
                     <input asp-for="UserPartner.BirthDate" class="form-control" />
                     <span asp-validation-for="UserPartner.BirthDate" class="text-danger"></span>
                 </div>
+
                 <div class="form-group">
                     <label asp-for="UserPartner.Address" class="control-label"></label>
                     <input asp-for="UserPartner.Address" class="form-control" />
                     <span asp-validation-for="UserPartner.Address" class="text-danger"></span>
                 </div>
+
                 <div class="form-group">
                     <label asp-for="UserPartner.Nationality" class="control-label"></label>
                     <select asp-for="UserPartner.Nationality" class="form-control" asp-items="Html.GetEnumSelectList<Nationality>()">
@@ -59,12 +67,21 @@
                     </select>
                     <span asp-validation-for="UserPartner.Nationality" class="text-danger"></span>
                 </div>
+
                 <div class="form-group">
                     <label asp-for="UserPartner.Citizenship" class="control-label"></label>
                     <select asp-for="UserPartner.Citizenship" class="form-control" asp-items="Html.GetEnumSelectList<Citizenship>()">
                         <option selected="selected" value="">Please select</option>
                     </select>
                     <span asp-validation-for="UserPartner.Citizenship" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="UserPartner.User" class="control-label"></label>
+                    <select asp-for="UserPartner.UserId" class="form-control" asp-items='new SelectList(Model.IdentityUsers, "Id", "UserName")'>
+                        <option selected="selected" value="">&nbsp;</option>
+                    </select>
+                    <span asp-validation-for="UserPartner.User" class="text-danger"></span>
                 </div>
             </form>
         </div>

@@ -73,6 +73,14 @@
                     </select>
                     <span asp-validation-for="UserPartner.Citizenship" class="text-danger"></span>
                 </div>
+
+                <div class="form-group">
+                    <label asp-for="UserPartner.User" class="control-label"></label>
+                    <select asp-for="UserPartner.UserId" class="form-control" asp-items='new SelectList(Model.IdentityUsers, "Id", "UserName")'>
+                        <option selected="selected" value="">&nbsp;</option>
+                    </select>
+                    <span asp-validation-for="UserPartner.User" class="text-danger"></span>
+                </div>
             </form>
         </div>
     </div>

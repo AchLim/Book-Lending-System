@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Book_Lending_System.Data;
 using Book_Lending_System.Models;
+using Microsoft.AspNetCore.Identity;
 
 namespace Book_Lending_System.Pages.UserView
 {
@@ -23,6 +24,9 @@ namespace Book_Lending_System.Pages.UserView
         [BindProperty]
         public UserPartner UserPartner { get; set; } = default!;
 
+        [BindProperty]
+        public ICollection<IdentityUser> IdentityUsers { get; set; } = default!;
+
         public async Task<IActionResult> OnGetAsync(string id)
         {
             if (id == null || _context.UserPartner == null)
@@ -30,12 +34,18 @@ namespace Book_Lending_System.Pages.UserView
                 return NotFound();
             }
 
-            var userpartner =  await _context.UserPartner.FirstOrDefaultAsync(m => m.NIK == id);
+            var userpartner =  await _context.UserPartner.Include(up => up.User).FirstOrDefaultAsync(m => m.Id == id);
             if (userpartner == null)
             {
                 return NotFound();
             }
             UserPartner = userpartner;
+
+            if (_context.Users != null)
+            {
+                IdentityUsers = await _context.Users.ToListAsync();
+            }
+
             return Page();
         }
 
@@ -62,7 +72,7 @@ namespace Book_Lending_System.Pages.UserView
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!UserPartnerExists(UserPartner.NIK!))
+                if (!UserPartnerExists(UserPartner.Id!))
                 {
                     return NotFound();
                 }
@@ -77,7 +87,7 @@ namespace Book_Lending_System.Pages.UserView
 
         private bool UserPartnerExists(string id)
         {
-          return (_context.UserPartner?.Any(e => e.NIK == id)).GetValueOrDefault();
+          return (_context.UserPartner?.Any(e => e.Id == id)).GetValueOrDefault();
         }
     }
 }

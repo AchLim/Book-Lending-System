@@ -18,12 +18,18 @@
 
     <h4>User</h4>
     <form method="post">
-        <input type="hidden" asp-for="UserPartner.NIK" />
+        <input type="hidden" asp-for="UserPartner.Id" />
         <input type="submit" value="Delete" class="btn btn-danger" />
         <a class="btn btn-outline-primary btn-light" asp-page="./Index">Back to List</a>
     </form>
     <hr />
     <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.UserPartner.NIK)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.UserPartner.NIK)
+        </dd>
         <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.UserPartner.Name)
         </dt>
