@@ -4,6 +4,7 @@ using Book_Lending_System.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Book_Lending_System.Migrations
 {
     [DbContext(typeof(Book_Lending_SystemContext))]
-    partial class Book_Lending_SystemContextModelSnapshot : ModelSnapshot
+    [Migration("20230527202028_V5")]
+    partial class V5
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -33,7 +36,7 @@ namespace Book_Lending_System.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Author", (string)null);
+                    b.ToTable("Author");
                 });
 
             modelBuilder.Entity("Book_Lending_System.Models.Book", b =>
@@ -61,7 +64,7 @@ namespace Book_Lending_System.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Book", (string)null);
+                    b.ToTable("Book");
                 });
 
             modelBuilder.Entity("Book_Lending_System.Models.BookAuthor", b =>
@@ -76,7 +79,7 @@ namespace Book_Lending_System.Migrations
 
                     b.HasIndex("AuthorId");
 
-                    b.ToTable("BookAuthors", (string)null);
+                    b.ToTable("BookAuthors");
                 });
 
             modelBuilder.Entity("Book_Lending_System.Models.BookCategory", b =>
@@ -91,7 +94,7 @@ namespace Book_Lending_System.Migrations
 
                     b.HasIndex("CategoryId");
 
-                    b.ToTable("BookCategories", (string)null);
+                    b.ToTable("BookCategories");
                 });
 
             modelBuilder.Entity("Book_Lending_System.Models.BookPublisher", b =>
@@ -106,7 +109,7 @@ namespace Book_Lending_System.Migrations
 
                     b.HasIndex("PublisherId");
 
-                    b.ToTable("BookPublishers", (string)null);
+                    b.ToTable("BookPublishers");
                 });
 
             modelBuilder.Entity("Book_Lending_System.Models.Category", b =>
@@ -123,7 +126,7 @@ namespace Book_Lending_System.Migrations
                     b.HasIndex("Name")
                         .IsUnique();
 
-                    b.ToTable("Category", (string)null);
+                    b.ToTable("Category");
                 });
 
             modelBuilder.Entity("Book_Lending_System.Models.Publisher", b =>
@@ -137,7 +140,7 @@ namespace Book_Lending_System.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Publisher", (string)null);
+                    b.ToTable("Publisher");
                 });
 
             modelBuilder.Entity("Book_Lending_System.Models.Student", b =>
@@ -161,7 +164,7 @@ namespace Book_Lending_System.Migrations
 
                     b.HasIndex("AccountKey");
 
-                    b.ToTable("Student", (string)null);
+                    b.ToTable("Student");
                 });
 
             modelBuilder.Entity("Book_Lending_System.Models.UserBook", b =>
@@ -196,7 +199,7 @@ namespace Book_Lending_System.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("UserBook", (string)null);
+                    b.ToTable("UserBook");
                 });
 
             modelBuilder.Entity("Book_Lending_System.Models.UserPartner", b =>
@@ -244,7 +247,7 @@ namespace Book_Lending_System.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("UserPartner", (string)null);
+                    b.ToTable("UserPartner");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>

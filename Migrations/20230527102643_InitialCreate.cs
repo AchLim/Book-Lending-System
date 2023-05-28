@@ -323,7 +323,10 @@ namespace Book_Lending_System.Migrations
                 {
                     UserId = table.Column<string>(type: "nvarchar(16)", nullable: false),
                     BookId = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    BorrowedTime = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    DateRequested = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    StartDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    EndDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Status = table.Column<byte>(type: "tinyint", nullable: false)
                 },
                 constraints: table =>
                 {

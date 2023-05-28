@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Book_Lending_System.Migrations
 {
     [DbContext(typeof(Book_Lending_SystemContext))]
-    [Migration("20230526201211_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20230527111756_v2")]
+    partial class v2
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -175,8 +175,20 @@ namespace Book_Lending_System.Migrations
                     b.Property<string>("BookId")
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<DateTime>("BorrowedTime")
+                    b.Property<DateTime>("DateRequested")
                         .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("DateReturned")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("EndDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("StartDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<byte>("Status")
+                        .HasColumnType("tinyint");
 
                     b.HasKey("UserId", "BookId");
 
