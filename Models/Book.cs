@@ -40,7 +40,7 @@ namespace Book_Lending_System.Models
         [Display(Name = "Status")]
         public BookStatus Status { get; set; }
 
-        [Display(Name = "Image Location")]
+        [Display(Name = "Image")]
         public string? ImageLocation { get; set; }
 
         [NotMapped]
