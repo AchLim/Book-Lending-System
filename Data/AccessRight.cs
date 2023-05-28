@@ -14,6 +14,12 @@ namespace Book_Lending_System.Data
             _roleManager = roleManager;
         }
 
+        public async Task<string> GetUserName(ClaimsPrincipal loggedUser)
+        {
+            var user = await GetCurrentUser(loggedUser!);
+            return user!.UserName!;
+        }
+
         public async Task<bool> IsAdmin(ClaimsPrincipal loggedUser)
         {
             IdentityUser? currentUser = await GetCurrentUser(loggedUser);
