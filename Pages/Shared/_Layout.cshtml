@@ -50,90 +50,216 @@
 
 <body style="background-color: #E9F1FA">
     <header class="header">
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light border-bottom box-shadow top-nav navbar-expand-lg bg-body-tertiary">
-            <div class="container">
-                <a class="navbar-brand" asp-area="" asp-page="/Index">Book Lending System</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="collapse navbar-collapse" id="navbarNavDropdown">
-                    <ul class="navbar-nav">
-                        <li class="nav-item dropdown">
-                            <a class="nav-link nav-link-font text-dark dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Books</a>
-                            <ul class="dropdown-menu">
+        <nav>
+            <div class="main-navbar">
+                <div role="button" class="menu-brand" asp-area="" asp-page="/Index">Book Lending System</div>
+
+                <button class="bi bi-list float-right visible-xs-block" style="font-size: 1.5rem;" data-bs-toggle="collapse" data-bs-target=".burger_menu" aria-controls="burger_menu" aria-expanded="false" aria-label="Toggle Navigation" type="button"></button>
+
+                <ul class="menu-sections">
+                    <li class="dropdown">
+                        <a class="dropdown-toggle" href="#" data-bs-toggle="dropdown" role="button" aria-expanded="false">Books</a>
+                        <ul class="dropdown-menu" role="menu">
+                            <li>
+                                <a class="dropdown-item" asp-area="" asp-page="/BookViews/ExploreView/Index">Explore</a>
+                            </li>
+                            @if (await AccessRight.GetCurrentUser(User) != null)
+                            {
                                 <li>
-                                    <a class="dropdown-item" asp-area="" asp-page="/BookViews/ExploreView/Index">Explore</a>
+                                    <a class="dropdown-item" asp-area="" asp-page="/BookViews/LendingView/Index">Lending Request</a>
                                 </li>
-                                @if (await AccessRight.GetCurrentUser(User) != null)
+                            }
+                            @{
+                                if (await AccessRight.IsAdmin(User) || await AccessRight.IsStaff(User))
                                 {
+                                    <li><hr class="dropdown-divider"></li>
+
                                     <li>
-                                        <a class="dropdown-item" asp-area="" asp-page="/BookViews/LendingView/Index">Lending Request</a>
+                                        <a class="dropdown-item" asp-area="" asp-page="/BookViews/ManageView/Index">Manage Book</a>
+                                    </li>
+
+                                    <li><hr class="dropdown-divider"></li>
+
+                                    <li>
+                                        <a class="dropdown-item" asp-area="" asp-page="/BookViews/AuthorView/Index">Manage Author</a>
+                                    </li>
+
+                                    <li>
+                                        <a class="dropdown-item" asp-area="" asp-page="/BookViews/CategoryView/Index">Manage Category</a>
+                                    </li>
+
+                                    <li>
+                                        <a class="dropdown-item" asp-area="" asp-page="/BookViews/PublisherView/Index">Manage Publisher</a>
                                     </li>
                                 }
-                                @{
-                                    if (await AccessRight.IsAdmin(User) || await AccessRight.IsStaff(User))
-                                    {
-                                        <li><hr class="dropdown-divider"></li>
-
-                                        <li>
-                                            <a class="dropdown-item" asp-area="" asp-page="/BookViews/ManageView/Index">Manage Book</a>
-                                        </li>
-
-                                        <li><hr class="dropdown-divider"></li>
-
-                                        <li>
-                                            <a class="dropdown-item" asp-area="" asp-page="/BookViews/AuthorView/Index">Manage Author</a>
-                                        </li>
-
-                                        <li>
-                                            <a class="dropdown-item" asp-area="" asp-page="/BookViews/CategoryView/Index">Manage Category</a>
-                                        </li>
-
-                                        <li>
-                                            <a class="dropdown-item" asp-area="" asp-page="/BookViews/PublisherView/Index">Manage Publisher</a>
-                                        </li>
-                                    }
-                                }
-                            </ul>
-                        </li>
-                        @{
-                            if (await AccessRight.IsAdmin(User) || await AccessRight.IsStaff(User))
-                            {
-                                <li class="nav-item">
-                                    <a class="nav-link nav-link-font text-dark" asp-area="" asp-page="/StudentView/Index">Students</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link nav-link-font text-dark" asp-area="" asp-page="/UserView/Index">User</a>
-                                </li>
                             }
+                        </ul>
+                    </li>
+                    @{
+                        if (await AccessRight.IsAdmin(User) || await AccessRight.IsStaff(User))
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-page="/StudentView/Index">Students</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-page="/UserView/Index">User</a>
+                            </li>
                         }
+                    }
 
-                        @{
-                            if (await AccessRight.IsAdmin(User))
-                            {
-                                <li class="nav-item dropdown">
-                                    <a class="nav-link nav-link-font text-dark dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Account</a>
-                                    <ul class="dropdown-menu">
-                                        <li class="nav-item">
-                                            <a class="dropdown-item" asp-area="" asp-page="/AccountView/Index">Account</a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a class="dropdown-item" asp-area="" asp-page="/RoleView/Index">Role</a>
-                                        </li>
-                                    </ul>
-                                </li>
-                            }
+                    @{
+                        if (await AccessRight.IsAdmin(User))
+                        {
+                            <li class="dropdown">
+                                <a class="dropdown-toggle" href="#" data-bs-toggle="dropdown" role="button" aria-expanded="false">Account</a>
+                                <ul class="dropdown-menu" role="menu">
+                                    <li class="nav-item">
+                                        <a class="dropdown-item" asp-area="" asp-page="/AccountView/Index">Account</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="dropdown-item" asp-area="" asp-page="/RoleView/Index">Role</a>
+                                    </li>
+                                </ul>
+                            </li>
                         }
-                    </ul>
-                    <partial name="_LoginPartial" />
-                </div>
+                    }
+                </ul>
+                <partial name="_LoginPartial" />
             </div>
         </nav>
     </header>
 
     <main role="main" class="">
         @RenderBody()
-    </main> 
+    </main>
+
+    <div class="burger_menu dropdown-menu collapse" id="burger_menu" role="menu">
+        <div class="burger_menu_topbar" role="button" data-bs-toggle="collapse" data-bs-target="#burger_menu_app" aria-controls="burger_menu_app" aria-expanded="true" aria-label="Toggle Content">
+            <span>
+                <span class="burger_menu_username">
+                    @if (SignInManager.IsSignedIn(User))
+                    {
+                        <text>
+                            @await AccessRight.GetUserName(User)
+                        </text>
+                    }
+                    else
+                    {
+                        <text>
+                            Anonymous
+                        </text>
+                    }
+                </span>
+            </span>
+            <span class="btn-close float-right" data-bs-toggle="collapse" data-bs-target=".burger_menu" aria-controls="burger_menu" aria-expanded="false" aria-label="Close"></span>
+        </div>
+
+        <div class="burger_menu_content">
+            <div class="burger_menu_app collapse show" id="burger_menu_app" role="menu">
+                <ul class="menu-sections">
+                    <li class="burger_menu_section">
+                        <a class="dropdown-toggle" href="#" data-bs-toggle="collapse" data-bs-target=".book-dropdown-menu" aria-controls="book-dropdown-menu" role="button" aria-expanded="false">
+                            Books
+                            <span class="bi bi-chevron-right float-right"></span>
+                            <span class="bi bi-chevron-down float-right"></span>
+                        </a>
+
+                        <div class="book-dropdown-menu collapse" id="book-dropdown-menu" role="menu">
+                            <span>
+                                <a class="burger_menu_child" asp-area="" asp-page="/BookViews/ExploreView/Index">Explore</a>
+                            </span>
+                            @if (await AccessRight.GetCurrentUser(User) != null)
+                            {
+                                <span>
+                                    <a class="burger_menu_child" asp-area="" asp-page="/BookViews/LendingView/Index">Lending Request</a>
+                                </span>
+                            }
+                            @{
+                                if (await AccessRight.IsAdmin(User) || await AccessRight.IsStaff(User))
+                                {
+                                    <hr class="dropdown-divider" />
+
+                                    <span>
+                                        <a class="burger_menu_child" asp-area="" asp-page="/BookViews/ManageView/Index">Manage Book</a>
+                                    </span>
+
+                                    <hr class="dropdown-divider" />
+
+                                    <span>
+                                        <a class="burger_menu_child" asp-area="" asp-page="/BookViews/AuthorView/Index">Manage Author</a>
+                                    </span>
+
+                                    <span>
+                                        <a class="burger_menu_child" asp-area="" asp-page="/BookViews/CategoryView/Index">Manage Category</a>
+                                    </span>
+
+                                    <span>
+                                        <a class="burger_menu_child" asp-area="" asp-page="/BookViews/PublisherView/Index">Manage Publisher</a>
+                                    </span>
+                                }
+                            }
+                        </div>
+                    </li>
+
+                    @{
+                        if (await AccessRight.IsAdmin(User) || await AccessRight.IsStaff(User))
+                        {
+                            <li class="burger_menu_section">
+                                <a asp-area="" asp-page="/StudentView/Index">Students</a>
+                            </li>
+                            <li class="burger_menu_section">
+                                <a asp-area="" asp-page="/UserView/Index">User</a>
+                            </li>
+                        }
+                        if (await AccessRight.IsAdmin(User))
+                        {
+                            <li class="burger_menu_section">
+                                <a class="dropdown-toggle" href="#" data-bs-toggle="collapse" data-bs-target=".account-dropdown-menu" aria-controls="account-dropdown-menu" role="button" aria-expanded="false">
+                                    Account
+                                    <span class="bi bi-chevron-right float-right"></span>
+                                    <span class="bi bi-chevron-down float-right"></span>
+                                </a>
+
+                                <div class="account-dropdown-menu collapse" id="account-dropdown-menu" role="menu">
+                                    <span>
+                                        <a class="burger_menu_child" asp-area="" asp-page="/AccountView/Index">Explore</a>
+                                    </span>
+                                    <span>
+                                        <a class="burger_menu_child" asp-area="" asp-page="/RoleView/Index">Role</a>
+                                    </span>
+                                </div>
+                            </li>
+                        }
+                    }
+                </ul>
+            </div>
+
+            <hr />
+
+            <div class="burger_menu_user">
+                <ul class="user_menu_mobile">
+                    @if (SignInManager.IsSignedIn(User))
+                    {
+                        <li>
+                            <a id="manage" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Profile</a>
+                        </li>
+                        <li>
+                            <label for="logout" class="w-100" role="button">Logout</label>
+                            <form id="logoutForm" class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Page("/Index", new { area = "" })">
+                                <button id="logout" type="submit" class="border-0 invisible">Logout</button>
+                            </form>
+                        </li>
+                    }
+                    else
+                    {
+                        <li>
+                            <a id="login" asp-area="Identity" asp-page="/Account/Login">Login</a>
+                        </li>
+                    }
+                </ul>
+            </div>
+        </div>
+    </div>
 
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
@@ -152,4 +278,5 @@
 
     @await RenderSectionAsync("Scripts", required: false)
 </body>
+
 </html>
