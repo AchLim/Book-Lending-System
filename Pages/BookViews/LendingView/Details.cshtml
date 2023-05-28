@@ -23,48 +23,74 @@
     </div>
 
     <hr />
-    <dl class="row">
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.UserBook.User.Name)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.UserBook.User.Name)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.UserBook.Book.Title)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.UserBook.Book.Title)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.UserBook.DateRequested)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.UserBook.DateRequested)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.UserBook.StartDate)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.UserBook.StartDate)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.UserBook.EndDate)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.UserBook.EndDate)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.UserBook.DateReturned)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.UserBook.DateReturned)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.UserBook.Status)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.UserBook.Status)
-        </dd>
-    </dl>
+
+    <div class="row form-sheet">
+        <div class="col-sm-12 col-md-6">
+            <div class="row">
+                <div class="col-4 form-label">
+                    @Html.DisplayNameFor(model => model.UserBook.User.Name)
+                </div>
+                <div class="col-8 form-value">
+                    @Html.DisplayFor(model => model.UserBook.User.Name)
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-4 form-label">
+                    @Html.DisplayNameFor(model => model.UserBook.Book)
+                </div>
+                <div class="col-8 form-value">
+                    @Html.DisplayFor(model => model.UserBook.Book.Title)
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-12 col-md-6">
+            <div class="row">
+                <div class="col-4 form-label">
+                    @Html.DisplayNameFor(model => model.UserBook.DateRequested)
+                </div>
+                <div class="col-8 form-value">
+                    @Html.DisplayFor(model => model.UserBook.DateRequested)
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-12 col-md-6">
+            <div class="row">
+                <div class="col-4 form-label">
+                    @Html.DisplayNameFor(model => model.UserBook.Status)
+                </div>
+                <div class="col-8 form-value">
+                    @Html.DisplayFor(model => model.UserBook.Status)
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-12 col-md-6">
+            <div class="row">
+                <div class="col-4 form-label">
+                    @Html.DisplayNameFor(model => model.UserBook.StartDate)
+                </div>
+                <div class="col-8 form-value">
+                    @Html.DisplayFor(model => model.UserBook.StartDate)
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-4 form-label">
+                    @Html.DisplayNameFor(model => model.UserBook.EndDate)
+                </div>
+                <div class="col-8 form-value">
+                    @Html.DisplayFor(model => model.UserBook.EndDate)
+                </div>
+            </div>
+            @if (Model.UserBook.Status == Data.BookLendingStatus.Returned)
+            {
+                <div class="row">
+                    <div class="col-4 form-label">
+                        @Html.DisplayNameFor(model => model.UserBook.DateReturned)
+                    </div>
+                    <div class="col-8 form-value">
+                        @Html.DisplayFor(model => model.UserBook.DateReturned)
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
 </div>
