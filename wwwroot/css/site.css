@@ -119,26 +119,26 @@ div#imageManageView img, div.imageManageView img {
     transition: background-color .2s
 }
 
-    .cta-btn .btn-icon, a.cta-btn .btn-icon {
-        width: 40px;
-        flex-shrink: 0
-    }
+.cta-btn .btn-icon, a.cta-btn .btn-icon {
+    width: 40px;
+    flex-shrink: 0
+}
 
-        .cta-btn .btn-icon.read-aloud, a.cta-btn .btn-icon.read-aloud {
-            background-image: url(/static/images/icons/read%20aloud.svg);
-            background-repeat: no-repeat;
-            background-size: contain;
-            background-position: center
-        }
+.cta-btn .btn-icon.read-aloud, a.cta-btn .btn-icon.read-aloud {
+    background-image: url(/static/images/icons/read%20aloud.svg);
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center
+}
 
-    .cta-btn .btn-label, a.cta-btn .btn-label {
-        padding: 0 10px
-    }
+.cta-btn .btn-label, a.cta-btn .btn-label {
+    padding: 0 10px
+}
 
-    .cta-btn:link, .cta-btn:visited, a.cta-btn:link, a.cta-btn:visited {
-        color: #fff;
-        text-decoration: none
-    }
+.cta-btn:link, .cta-btn:visited, a.cta-btn:link, a.cta-btn:visited {
+    color: #fff;
+    text-decoration: none
+}
 
 .cta-btn--available, a.cta-btn--available {
     background-color: #0376b8;
@@ -171,11 +171,11 @@ div#imageManageView img, div.imageManageView img {
     color: #0376b8
 }
 
-    .cta-btn--shell:disabled, a.cta-btn--shell:disabled {
-        border: 2px solid #ccc;
-        color: #ccc;
-        cursor: default
-    }
+.cta-btn--shell:disabled, a.cta-btn--shell:disabled {
+    border: 2px solid #ccc;
+    color: #ccc;
+    cursor: default
+}
 
 .cta-btn--sponsor, a.cta-btn--sponsor {
     border: 2px solid #02598b;
@@ -202,9 +202,9 @@ div#imageManageView img, div.imageManageView img {
     background-color: #de351b
 }
 
-    .cta-btn--delete:hover, a.cta-btn--delete:hover {
-        background-color: #831f10
-    }
+.cta-btn--delete:hover, a.cta-btn--delete:hover {
+    background-color: #831f10
+}
 
 .cta-btn--sponsor:link, .cta-btn--sponsor:visited, a.cta-btn--sponsor:link, a.cta-btn--sponsor:visited {
     color: #02598b
@@ -375,4 +375,45 @@ div#imageManageView img, div.imageManageView img {
 
 .slick-track {
     float: left !important;
+}
+
+.book-detail-parent {
+    background-color: #cde5ff;
+    padding-top: .75rem;
+    margin-top: 2rem;
+}
+
+.book-detail table {
+    width: 100%;
+}
+
+.book-detail table th, .book-detail table td {
+    vertical-align: top;
+    padding-top: .25rem;
+    padding-bottom: .25rem;
+}
+
+.book-detail table th {
+    width: 40%;
+}
+
+.book-detail table td {
+    width: 60%;
+}
+
+.synopsis {
+    font-family: 'EB Garamond', serif;
+    text-align: justify;
+}
+
+@media (min-width: 768px) {
+    .book-img-title {
+        margin-top: -2.5rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .book-title {
+        text-align: center;
+    }
 }
