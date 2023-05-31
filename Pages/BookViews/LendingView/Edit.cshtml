@@ -1,0 +1,131 @@
+﻿@page
+@model Book_Lending_System.Pages.BookViews.LendingView.EditModel
+
+@using Book_Lending_System.Data;
+
+@inject AccessRight AccessRight;
+
+@{
+    ViewData["Title"] = "Edit";
+    Layout = "~/Pages/Shared/_Layout.cshtml";
+}
+
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a asp-page="Index">Book Lending Request</a></li>
+        <li class="breadcrumb-item"><a asp-page="Details" asp-route-id="@Model.LendRequest?.Id">@Html.DisplayFor(model => model.LendRequest.User.Name) - @Html.DisplayFor(model => model.LendRequest.Book.Title)</a></li>
+        <li class="breadcrumb-item" aria-current="page">Edit</li>
+    </ol>
+
+    <div class="form-button-view">
+        <label role="button" for="form-save-record" class="btn btn-primary btn-sm">Save</label>
+        <a asp-page="Details" asp-route-id="@Model.LendRequest?.Id" class="btn btn-light btn-sm btn-outline-primary">Cancel</a>
+    </div>
+</nav>
+
+
+<div class="container">
+    <form method="post">
+        <div class="row form-sheet">
+            <div class="col-12">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            </div>
+
+            <div class="col-sm-12 col-md-6">
+                <div class="row">
+                    <div class="col-4 form-label">
+                        @Html.DisplayNameFor(m => m.LendRequest.User)
+                    </div>
+                    <div class="col-8 form-value">
+                        @Html.DisplayFor(m => m.LendRequest.User.Name)
+                        <input type="hidden" asp-for="LendRequest.UserId" />
+                    </div>
+                    <span asp-validation-for="LendRequest.UserId" class="text-danger"></span>
+                </div>
+                <div class="row">
+                    <div class="col-4 form-label">
+                        <label asp-for="LendRequest.Book" class="control-label"></label>
+                    </div>
+                    <div class="col-8 form-value">
+                        <select asp-for="LendRequest.BookId" class="form-control" asp-items='new SelectList(Model.Books, "Id", "Title")'>
+                            <option selected="selected" value="">Please select</option>
+                        </select>
+                    </div>
+                    <span asp-validation-for="LendRequest.BookId" class="text-danger"></span>
+                </div>
+                <div class="row">
+                    <div class="col-4 form-label">
+                        @Html.DisplayNameFor(m => m.LendRequest.Status)
+                        @*<label asp-for="LendRequest.Status" class="control-label"></label>*@
+                    </div>
+                    <div class="col-8 form-value">
+                        @Html.DisplayFor(m => m.LendRequest.Status)
+                        <input type="hidden" asp-for="LendRequest.Status" />
+                        @*<select asp-for="LendRequest.Status" class="form-control" asp-items="Html.GetEnumSelectList<BookLendingStatus>()">*@
+                            @*<option selected="selected" value="">Please select</option>*@
+                        @*</select>*@
+                    </div>
+                    <span asp-validation-for="LendRequest.Status" class="text-danger"></span>
+                </div>
+                <div class="row">
+                    <div class="col-4 form-label">
+                        <label asp-for="LendRequest.RejectionReason" class="control-label"></label>
+                    </div>
+                    <div class="col-8 form-value">
+                        <textarea asp-for="LendRequest.RejectionReason" wrap="soft"></textarea>
+                    </div>
+                    <span asp-validation-for="LendRequest.RejectionReason" class="text-danger"></span>
+                </div>
+            </div>
+
+            <div class="col-sm-12 col-md-6">
+                <div class="row">
+                    <div class="col-4 form-label">
+                        <label asp-for="LendRequest.DateRequested" class="control-label"></label>
+                    </div>
+                    <div class="col-8 form-value">
+                        <input asp-for="LendRequest.DateRequested" class="form-control" />
+                    </div>
+                    <span asp-validation-for="LendRequest.DateRequested" class="text-danger"></span>
+                </div>
+                <div class="row">
+                    <div class="col-4 form-label">
+                        <label asp-for="LendRequest.StartDate" class="control-label"></label>
+                    </div>
+                    <div class="col-8 form-value">
+                        <input asp-for="LendRequest.StartDate" class="form-control" />
+                    </div>
+                    <span asp-validation-for="LendRequest.StartDate" class="text-danger"></span>
+                </div>
+                <div class="row">
+                    <div class="col-4 form-label">
+                        <label asp-for="LendRequest.EndDate" class="control-label"></label>
+                    </div>
+                    <div class="col-8 form-value">
+                        <input asp-for="LendRequest.EndDate" class="form-control" />
+                    </div>
+                    <span asp-validation-for="LendRequest.EndDate" class="text-danger"></span>
+                </div>
+                <div class="row">
+                    <div class="col-4 form-label">
+                        <label asp-for="LendRequest.DateReturned" class="control-label"></label>
+                    </div>
+                    <div class="col-8 form-value">
+                        <input asp-for="LendRequest.DateReturned" class="form-control" />
+                    </div>
+                    <span asp-validation-for="LendRequest.DateReturned" class="text-danger"></span>
+                </div>
+            </div>
+
+            <!-- Invisible -->
+            <div class="form-group d-none-important">
+                <input type="submit" id="form-save-record" value="Save" class="btn btn-primary" />
+                <input type="hidden" asp-for="LendRequest.Id" />
+            </div>
+        </div>
+    </form>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

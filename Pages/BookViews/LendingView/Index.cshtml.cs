@@ -22,33 +22,35 @@ namespace Book_Lending_System.Pages.BookViews.LendingView
             _accessRight = accessRight;
         }
 
-        public IList<UserBook> UserBook { get;set; } = default!;
+        public IList<LendRequest> LendRequest { get;set; } = default!;
 
         public async Task<IActionResult> OnGetAsync()
         {
-            if (_context.UserBook != null)
+            if (_context.LendRequest != null)
             {
-                IdentityUser? currentUser = await _accessRight.GetCurrentUser(User);
-                UserPartner? userPartner = null;
-                if (currentUser != null && _context.UserPartner != null)
-                {
-                    userPartner = _context.UserPartner.FirstOrDefault(up => up.User.Id == currentUser.Id);
-                }
+                // Allow staff / admin to see all requests.
                 if (await _accessRight.IsStaff(User) || await _accessRight.IsAdmin(User))
                 {
-                    UserBook = await _context.UserBook
+                    LendRequest = await _context.LendRequest
                     .Include(u => u.Book)
                     .Include(u => u.User).ToListAsync();
-                }
 
-                if (userPartner != null)
-                {
-                    UserBook = await _context.UserBook
-                                            .Include(u => u.Book)
-                                            .Include(u => u.User)
-                                            .Where(u => u.UserId == userPartner.Id)
-                                            .ToListAsync();
+                    return Page();
                 }
+                IdentityUser? currentUser = await _accessRight.GetCurrentUser(User);
+                if (currentUser == null || _context.UserPartner == null)
+                    return Page();
+
+                var userPartner = _context.UserPartner.FirstOrDefault(up => up.User.Id == currentUser.Id);
+                if (userPartner == null)
+                    return Page();
+
+                // Self requests.
+                LendRequest = await _context.LendRequest
+                                        .Include(u => u.Book)
+                                        .Include(u => u.User)
+                                        .Where(u => u.UserId == userPartner.Id)
+                                        .ToListAsync();
             }
             return Page();
         }

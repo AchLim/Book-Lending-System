@@ -1,93 +1,267 @@
 ﻿@page
 @model Book_Lending_System.Pages.BookViews.LendingView.DetailsModel
 
+@using Book_Lending_System.Data;
+
+@inject AccessRight AccessRight;
+
 @{
     ViewData["Title"] = "Details";
     Layout = "~/Pages/Shared/_Layout.cshtml";
 }
 
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a asp-page="Index">Book Lending Request</a></li>
+        <li class="breadcrumb-item" aria-current="page">@Html.DisplayFor(model => model.LendRequest.User.Name) - @Html.DisplayFor(model => model.LendRequest.Book.Title)</li>
+    </ol>
+
+    @if (await AccessRight.IsAdmin(User))
+    {
+        <div class="form-button-view">
+            <a class="btn btn-primary btn-sm" asp-page="./Edit" asp-route-id="@Model.LendRequest?.Id">Edit</a>
+            @*<a class="btn btn-primary btn-sm" asp-page="./Delete" asp-route-id="@Model.LendRequest?.Id">Delete</a>*@
+        </div>
+    }
+</nav>
+
+<!-- Check if any approval needed and is a staff / admin, Only show header when user is staff / admin & pending approval. -->
+@{
+    if (Model.LendRequest == null) return;
+
+    bool showApproveRejectButton = Model.LendRequest.Status switch
+    {
+        BookLendingStatus.Submitted => true,
+        _ => false
+    };
+
+    bool showBookReturnedButton = Model.LendRequest.Status switch
+    {
+        BookLendingStatus.Approved => true,
+        _ => false
+    };
+
+    bool showPaidButton = Model.LendRequest.Status switch
+    {
+        BookLendingStatus.Pending_Payment_Due => true,
+        _ => false
+    };
+
+    var hasAccess = (await AccessRight.IsAdmin(User)) || (await AccessRight.IsStaff(User));
+
+    if (hasAccess && (showApproveRejectButton || showBookReturnedButton || showPaidButton))
+    {
+        <text>
+            <div class="button-header">
+                <div class="button-container">
+                    @if (showApproveRejectButton)
+                    {
+                        <text>
+                            <button type="button" class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#approveModal">Approve</button>
+                            <button type="button" class="btn btn-sm btn-outline-primary" data-bs-toggle="modal" data-bs-target="#rejectModal">Reject</button>
+                        </text>
+                    }
+                    @if (showBookReturnedButton)
+                    {
+                        <text>
+                            <button type="button" class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#bookReturnedModal">Book Returned</button>
+                        </text>
+                    }
+                    @if (showPaidButton)
+                    {
+                        <text>
+                            <button type="button" class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#loanPaidModal">Paid</button>
+                        </text>
+                    }
+                </div>
+            </div>
+        </text>
+
+        @if (showApproveRejectButton)
+        {
+            <partial name="./Modal/_ApproveLendingPartial" />
+
+            <!-- Reject Modal -->
+            <div class="modal fade" id="rejectModal" tabindex="-1" aria-labelledby="rejectModalLabel" aria-hidden="true" aria-modal="true">
+                <div class="modal-dialog modal-dialog-m">
+                    <form method="post" asp-page-handler="reject" asp-route-id="@Model.LendRequest.Id" asp-route-reason="@Model.LendRequest.RejectionReason">
+                        <div class="modal-content">
+
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="rejectModalLabel">Request Lend Rejection</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+
+                            <div class="modal-body">
+                                <p class="text-danger">@Html.ValidationMessage("InvalidReason")</p>
+                                <div class="row mx-2">
+                                    <div class="col-12">
+                                        <div class="row mb-2 modal-label">
+                                            @Html.DisplayNameFor(model => model.LendRequest.RejectionReason)
+                                        </div>
+                                        <div class="row modal-value">
+                                            <textarea asp-for="RejectionReason" wrap="soft" rows="4"></textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="modal-footer">
+                                <input type="submit" class="btn btn-primary" data-bs-dismiss="modal" value="Reject" />
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        }
+
+        @if (showBookReturnedButton)
+        {
+            <!-- Book Returned Modal -->
+            <div class="modal fade" id="bookReturnedModal" tabindex="-1" aria-labelledby="bookReturnedModalLabel" aria-hidden="true" aria-modal="true">
+                <div class="modal-dialog modal-dialog-m">
+                    <form method="post" asp-page-handler="returned" asp-route-id="@Model.LendRequest.Id" asp-route-return-date="@Model.LendRequest.DateReturned">
+                        <div class="modal-content">
+
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="bookReturnedModalLabel">Book Returned</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+
+                            <div class="modal-body">
+                                <p class="text-danger">@Html.ValidationMessage("InvalidReason")</p>
+                                <div class="row mx-2">
+                                    <div class="col-12">
+                                        <div class="row mb-2 modal-label">
+                                            <label asp-for="LendRequest.DateReturned" class="control-label"></label>
+                                        </div>
+                                        <div class="row modal-value">
+                                            <input asp-for="ReturnedDate" class="form-control" />
+                                        </div>
+                                    </div>
+                                    <span asp-asp-validation-for="LendRequest.DateReturned" class="text-danger"></span>
+                                </div>
+                            </div>
+
+                            <div class="modal-footer">
+                                <input type="submit" class="btn btn-primary" data-bs-dismiss="modal" value="Update" />
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        }
+
+        @if (showPaidButton)
+        {
+            <!-- Paid Modal -->
+            <div class="modal fade" id="loanPaidModal" tabindex="-1" aria-labelledby="loanPaidModalLabel" aria-hidden="true" aria-modal="true">
+                <div class="modal-dialog modal-dialog-m">
+                    <form method="post" asp-page-handler="updatepaid" asp-route-id="@Model.LendRequest.Id">
+                        <div class="modal-content">
+
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="loanPaidModalLabel">Loan Payment Confirmation</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+
+                            <div class="modal-body">
+                                <span>
+                                    Update due payment to paid?
+                                </span>
+                            </div>
+
+                            <div class="modal-footer">
+                                <input type="submit" class="btn btn-primary" data-bs-dismiss="modal" value="Update" />
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        }
+
+    }
+}
+
 <div class="container">
-
-    <nav aria-label="breadcrumb">
-        <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a href="/Index">Home</a></li>
-            <li class="breadcrumb-item"><a asp-page="Index">Book Lending Request</a></li>
-            <li class="breadcrumb-item" aria-current="page">@Html.DisplayFor(model => model.UserBook.User.Name) - @Html.DisplayFor(model => model.UserBook.Book.Title)</li>
-        </ol>
-    </nav>
-
-    <div class="form-group">
-@*        <a class="btn btn-primary" asp-page="./Edit" asp-route-id="@Model.Category?.Id">Edit</a>
-        <a class="btn btn-primary" asp-page="./Delete" asp-route-id="@Model.Category?.Id">Delete</a>*@
-        <a class="btn btn-light btn-outline-primary" asp-page="./Index">Back to List</a>
-    </div>
-
-    <hr />
-
     <div class="row form-sheet">
         <div class="col-sm-12 col-md-6">
             <div class="row">
                 <div class="col-4 form-label">
-                    @Html.DisplayNameFor(model => model.UserBook.User.Name)
+                    @Html.DisplayNameFor(model => model.LendRequest.User.Name)
                 </div>
                 <div class="col-8 form-value">
-                    @Html.DisplayFor(model => model.UserBook.User.Name)
+                    @Html.DisplayFor(model => model.LendRequest.User.Name)
                 </div>
             </div>
             <div class="row">
                 <div class="col-4 form-label">
-                    @Html.DisplayNameFor(model => model.UserBook.Book)
+                    @Html.DisplayNameFor(model => model.LendRequest.Book)
                 </div>
                 <div class="col-8 form-value">
-                    @Html.DisplayFor(model => model.UserBook.Book.Title)
+                    @Html.DisplayFor(model => model.LendRequest.Book.Title)
                 </div>
             </div>
         </div>
         <div class="col-sm-12 col-md-6">
             <div class="row">
                 <div class="col-4 form-label">
-                    @Html.DisplayNameFor(model => model.UserBook.DateRequested)
+                    @Html.DisplayNameFor(model => model.LendRequest.DateRequested)
                 </div>
                 <div class="col-8 form-value">
-                    @Html.DisplayFor(model => model.UserBook.DateRequested)
+                    @Html.DisplayFor(model => model.LendRequest.DateRequested)
                 </div>
             </div>
         </div>
         <div class="col-sm-12 col-md-6">
             <div class="row">
                 <div class="col-4 form-label">
-                    @Html.DisplayNameFor(model => model.UserBook.Status)
+                    @Html.DisplayNameFor(model => model.LendRequest.Status)
                 </div>
                 <div class="col-8 form-value">
-                    @Html.DisplayFor(model => model.UserBook.Status)
+                    @Html.DisplayFor(model => model.LendRequest.Status)
                 </div>
             </div>
-        </div>
-        <div class="col-sm-12 col-md-6">
-            <div class="row">
-                <div class="col-4 form-label">
-                    @Html.DisplayNameFor(model => model.UserBook.StartDate)
-                </div>
-                <div class="col-8 form-value">
-                    @Html.DisplayFor(model => model.UserBook.StartDate)
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-4 form-label">
-                    @Html.DisplayNameFor(model => model.UserBook.EndDate)
-                </div>
-                <div class="col-8 form-value">
-                    @Html.DisplayFor(model => model.UserBook.EndDate)
-                </div>
-            </div>
-            @if (Model.UserBook.Status == Data.BookLendingStatus.Returned)
+            @if (Model.LendRequest != null && !string.IsNullOrWhiteSpace(Model.LendRequest.RejectionReason))
             {
                 <div class="row">
                     <div class="col-4 form-label">
-                        @Html.DisplayNameFor(model => model.UserBook.DateReturned)
+                        @Html.DisplayNameFor(model => model.LendRequest.RejectionReason)
                     </div>
                     <div class="col-8 form-value">
-                        @Html.DisplayFor(model => model.UserBook.DateReturned)
+                        @Html.DisplayFor(model => model.LendRequest.RejectionReason)
+                    </div>
+                </div>
+            }
+        </div>
+        <div class="col-sm-12 col-md-6">
+            <div class="row">
+                <div class="col-4 form-label">
+                    @Html.DisplayNameFor(model => model.LendRequest.StartDate)
+                </div>
+                <div class="col-8 form-value">
+                    @Html.DisplayFor(model => model.LendRequest.StartDate)
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-4 form-label">
+                    @Html.DisplayNameFor(model => model.LendRequest.EndDate)
+                </div>
+                <div class="col-8 form-value">
+                    @Html.DisplayFor(model => model.LendRequest.EndDate)
+                </div>
+            </div>
+            @if (Model.LendRequest.Status == Data.BookLendingStatus.Returned)
+            {
+                <div class="row">
+                    <div class="col-4 form-label">
+                        @Html.DisplayNameFor(model => model.LendRequest.DateReturned)
+                    </div>
+                    <div class="col-8 form-value">
+                        @Html.DisplayFor(model => model.LendRequest.DateReturned)
                     </div>
                 </div>
             }
