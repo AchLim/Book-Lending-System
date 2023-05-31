@@ -4,6 +4,7 @@ using Book_Lending_System.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Book_Lending_System.Migrations
 {
     [DbContext(typeof(Book_Lending_SystemContext))]
-    partial class Book_Lending_SystemContextModelSnapshot : ModelSnapshot
+    [Migration("20230531082938_V8")]
+    partial class V8
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -126,46 +129,6 @@ namespace Book_Lending_System.Migrations
                     b.ToTable("Category");
                 });
 
-            modelBuilder.Entity("Book_Lending_System.Models.LendRequest", b =>
-                {
-                    b.Property<string>("Id")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("BookId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<DateTime>("DateRequested")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime?>("DateReturned")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime>("EndDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("RejectionReason")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("StartDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<byte>("Status")
-                        .HasColumnType("tinyint");
-
-                    b.Property<string>("UserId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("BookId");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("LendRequest");
-                });
-
             modelBuilder.Entity("Book_Lending_System.Models.Publisher", b =>
                 {
                     b.Property<string>("Id")
@@ -209,6 +172,45 @@ namespace Book_Lending_System.Migrations
                     b.HasIndex("UserPartnerId");
 
                     b.ToTable("Student");
+                });
+
+            modelBuilder.Entity("Book_Lending_System.Models.UserBook", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("BookId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<DateTime>("DateRequested")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("DateReturned")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("EndDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("RejectionReason")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("StartDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<byte>("Status")
+                        .HasColumnType("tinyint");
+
+                    b.HasKey("Id", "UserId", "BookId");
+
+                    b.HasIndex("BookId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("UserBook");
                 });
 
             modelBuilder.Entity("Book_Lending_System.Models.UserPartner", b =>
@@ -518,25 +520,6 @@ namespace Book_Lending_System.Migrations
                     b.Navigation("Publisher");
                 });
 
-            modelBuilder.Entity("Book_Lending_System.Models.LendRequest", b =>
-                {
-                    b.HasOne("Book_Lending_System.Models.Book", "Book")
-                        .WithMany()
-                        .HasForeignKey("BookId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Book_Lending_System.Models.UserPartner", "User")
-                        .WithMany("LendRequest")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Book");
-
-                    b.Navigation("User");
-                });
-
             modelBuilder.Entity("Book_Lending_System.Models.Student", b =>
                 {
                     b.HasOne("Book_Lending_System.Models.UserPartner", "UserPartner")
@@ -544,6 +527,25 @@ namespace Book_Lending_System.Migrations
                         .HasForeignKey("UserPartnerId");
 
                     b.Navigation("UserPartner");
+                });
+
+            modelBuilder.Entity("Book_Lending_System.Models.UserBook", b =>
+                {
+                    b.HasOne("Book_Lending_System.Models.Book", "Book")
+                        .WithMany("UserBooks")
+                        .HasForeignKey("BookId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Book_Lending_System.Models.UserPartner", "User")
+                        .WithMany("UserBooks")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Book");
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("Book_Lending_System.Models.UserPartner", b =>
@@ -618,6 +620,8 @@ namespace Book_Lending_System.Migrations
                     b.Navigation("BookCategories");
 
                     b.Navigation("BookPublishers");
+
+                    b.Navigation("UserBooks");
                 });
 
             modelBuilder.Entity("Book_Lending_System.Models.Category", b =>
@@ -632,7 +636,7 @@ namespace Book_Lending_System.Migrations
 
             modelBuilder.Entity("Book_Lending_System.Models.UserPartner", b =>
                 {
-                    b.Navigation("LendRequest");
+                    b.Navigation("UserBooks");
                 });
 #pragma warning restore 612, 618
         }
