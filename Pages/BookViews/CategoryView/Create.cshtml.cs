@@ -39,7 +39,7 @@ namespace Book_Lending_System.Pages.BookViews.CategoryView
             _context.Category.Add(Category);
             await _context.SaveChangesAsync();
 
-            return RedirectToPage("./Index");
+            return RedirectToPage("./Details", new { id = Category.Id });
         }
     }
 }

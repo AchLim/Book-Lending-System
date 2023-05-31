@@ -66,7 +66,7 @@ namespace Book_Lending_System.Pages.BookViews.AuthorView
                 }
             }
 
-            return RedirectToPage("./Index");
+            return RedirectToPage("./Details", new { id = Author.Id });
         }
 
         private bool AuthorExists(string id)

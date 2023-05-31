@@ -8,6 +8,8 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Book_Lending_System.Data;
 using Book_Lending_System.Models;
 using Microsoft.AspNetCore.Identity;
+using System.Text;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 
 namespace Book_Lending_System.Pages.RoleView
 {
@@ -46,9 +48,23 @@ namespace Book_Lending_System.Pages.RoleView
                 return Page();
             }    
 
-            await _roleManager.CreateAsync(new IdentityRole(RoleName));
-
-            return RedirectToPage("./Index");
+            IdentityResult result = await _roleManager.CreateAsync(new IdentityRole(RoleName));
+            if (!result.Succeeded)
+            {
+                StringBuilder sb = new();
+                var errorList = result.Errors.ToList();
+                foreach (var e in errorList)
+                {
+                    sb.Append(e.Description + '\n');
+                }
+                ModelState.AddModelError("", sb.ToString());
+            }
+            else
+            {
+                IdentityRole roleCreated = (await _roleManager.FindByNameAsync(RoleName))!;
+                return RedirectToPage("./Details", new { id = roleCreated.Id });
+            }
+            return Page();
         }
     }
 }

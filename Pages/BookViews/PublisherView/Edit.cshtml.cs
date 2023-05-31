@@ -66,7 +66,7 @@ namespace Book_Lending_System.Pages.BookViews.PublisherView
                 }
             }
 
-            return RedirectToPage("./Index");
+            return RedirectToPage("./Details", new { id = Publisher.Id });
         }
 
         private bool PublisherExists(string id)

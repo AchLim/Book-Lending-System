@@ -39,7 +39,7 @@ namespace Book_Lending_System.Pages.BookViews.AuthorView
             _context.Author.Add(Author);
             await _context.SaveChangesAsync();
 
-            return RedirectToPage("./Index");
+            return RedirectToPage("./Details", new { id = Author.Id });
         }
     }
 }

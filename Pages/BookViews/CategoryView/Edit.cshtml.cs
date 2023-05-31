@@ -66,7 +66,7 @@ namespace Book_Lending_System.Pages.BookViews.CategoryView
                 }
             }
 
-            return RedirectToPage("./Index");
+            return RedirectToPage("./Details", new { id = Category.Id });
         }
 
         private bool CategoryExists(string id)
