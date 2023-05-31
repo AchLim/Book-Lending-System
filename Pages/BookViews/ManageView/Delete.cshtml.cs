@@ -42,7 +42,7 @@ namespace Book_Lending_System.Pages.BookViews.ManageView
             return Page();
         }
 
-        public async Task<IActionResult> OnPostAsync(uint? id)
+        public async Task<IActionResult> OnPostAsync(string? id)
         {
             if (id == null || _context.Book == null)
             {

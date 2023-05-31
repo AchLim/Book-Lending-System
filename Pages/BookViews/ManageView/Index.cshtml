@@ -6,102 +6,102 @@
     Layout = "~/Pages/Shared/_Layout.cshtml";
 }
 
-<div class="container">
 
-    <nav aria-label="breadcrumb">
-        <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a href="/Index">Home</a></li>
-            <li class="breadcrumb-item active" aria-current="page">Book</li>
-        </ol>
-    </nav>
-   
-    <div class="pb-4">
-        <a class="btn btn-primary" asp-page="Create">Create</a>
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item active" aria-current="page">Book</li>
+    </ol>
+
+    <div class="form-button-view">
+        <a class="btn btn-primary btn-sm" asp-page="Create">Create</a>
     </div>
-    
-    <table class="datatable_responsive table table-striped table-hover gy-5 gs-7 border rounded w-100">
-        <thead>
-            <tr>
-                <th>
-                    @Html.DisplayNameFor(model => model.Book[0].Title)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Book[0].BookAuthors)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Book[0].ReleaseDate)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Book[0].BookCategories)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Book[0].BookPublishers)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Book[0].Status)
-                </th>
-            </tr>
-        </thead>
-        <tbody>
-    @foreach (var item in Model.Book) {
-            <tr class="cursor-pointer">
-                <td>
-                    <a class="text-decoration-none text-black d-block" asp-page="./Details" asp-route-id="@item.Id">
-                        @Html.DisplayFor(modelItem => item.Title)
-                    </a>
-                </td>
-                <td>
-                        @{
-                            if (item.BookAuthors != null)
-                            {
-                                foreach (var author in item.BookAuthors)
+</nav>
+<div class="container">
+    <div class="datatable-container pb-4">
+        <table class="datatable_responsive table table-striped table-hover gy-5 gs-7 border rounded w-100">
+            <thead>
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Book[0].Title)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Book[0].BookAuthors)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Book[0].ReleaseDate)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Book[0].BookCategories)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Book[0].BookPublishers)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Book[0].Status)
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+        @foreach (var item in Model.Book) {
+                <tr class="cursor-pointer">
+                    <td>
+                        <a class="text-decoration-none text-black d-block" asp-page="./Details" asp-route-id="@item.Id">
+                            @Html.DisplayFor(modelItem => item.Title)
+                        </a>
+                    </td>
+                    <td>
+                            @{
+                                if (item.BookAuthors != null)
                                 {
-                                    <a class="text-decoration-none text-black d-block" asp-page="../AuthorView/Details" asp-route-id="@author.AuthorId">
-                                        <span class="badge bg-primary">@author.Author.Name</span>
+                                    foreach (var author in item.BookAuthors)
+                                    {
+                                        <a class="text-decoration-none text-black d-block" asp-page="../AuthorView/Details" asp-route-id="@author.AuthorId">
+                                            <span class="badge bg-primary">@author.Author.Name</span>
+                                        </a>
+                                    }
+                                }
+                            }
+                    </td>
+                    <td>
+                        <a class="text-decoration-none text-black d-block" asp-page="./Details" asp-route-id="@item.Id">
+                            @Html.DisplayFor(modelItem => item.ReleaseDate)
+                        </a>
+                    </td>
+                    <td>
+                        @{
+                            if (item.BookCategories != null)
+                            {
+                                foreach (var category in item.BookCategories)
+                                {
+                                    <a class="text-decoration-none text-black d-block" asp-page="../CategoryView/Details" asp-route-id="@category.CategoryId">
+                                        <span class="badge bg-primary">@category.Category.Name</span>
                                     </a>
                                 }
                             }
                         }
-                </td>
-                <td>
-                    <a class="text-decoration-none text-black d-block" asp-page="./Details" asp-route-id="@item.Id">
-                        @Html.DisplayFor(modelItem => item.ReleaseDate)
-                    </a>
-                </td>
-                <td>
-                    @{
-                        if (item.BookCategories != null)
-                        {
-                            foreach (var category in item.BookCategories)
+                    </td>
+                    <td>
+                        @{
+                            if (item.BookPublishers != null)
                             {
-                                <a class="text-decoration-none text-black d-block" asp-page="../CategoryView/Details" asp-route-id="@category.CategoryId">
-                                    <span class="badge bg-primary">@category.Category.Name</span>
-                                </a>
+                                foreach (var publisher in item.BookPublishers)
+                                {
+                                    <a class="text-decoration-none text-black d-block" asp-page="../PublisherView/Details" asp-route-id="@publisher.PublisherId">
+                                        <span class="badge bg-primary">@publisher.Publisher.Name</span>
+                                    </a>
+                                }
                             }
                         }
-                    }
-                </td>
-                <td>
-                    @{
-                        if (item.BookPublishers != null)
-                        {
-                            foreach (var publisher in item.BookPublishers)
-                            {
-                                <a class="text-decoration-none text-black d-block" asp-page="../PublisherView/Details" asp-route-id="@publisher.PublisherId">
-                                    <span class="badge bg-primary">@publisher.Publisher.Name</span>
-                                </a>
-                            }
-                        }
-                    }
-                </td>
-                <td>
-                    <a class="text-decoration-none text-black d-block" asp-page="./Details" asp-route-id="@item.Id">
-                        @Html.DisplayFor(modelItem => item.Status)
-                    </a>
-                </td>
-            </tr>
-    }
-        </tbody>
-    </table>
+                    </td>
+                    <td>
+                        <a class="text-decoration-none text-black d-block" asp-page="./Details" asp-route-id="@item.Id">
+                            @Html.DisplayFor(modelItem => item.Status)
+                        </a>
+                    </td>
+                </tr>
+        }
+            </tbody>
+        </table>
+    </div>
 
 </div>
