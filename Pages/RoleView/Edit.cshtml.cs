@@ -63,7 +63,7 @@ namespace Book_Lending_System.Pages.RoleView
             }
 
             IdentityRole? duplicatedRole = await _roleManager.FindByNameAsync(Role.Name);
-            if (duplicatedRole != null)
+            if (duplicatedRole != null && duplicatedRole.Id != id)
             {
                 ModelState.AddModelError("", "Duplicated role found, please use different name.");
                 return Page();

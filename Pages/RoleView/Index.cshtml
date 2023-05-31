@@ -6,38 +6,37 @@
     Layout = "~/Pages/Shared/_Layout.cshtml";
 }
 
-<div class="container">
-
-    <nav aria-label="breadcrumb">
-        <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a href="/Index">Home</a></li>
-            <li class="breadcrumb-item active" aria-current="page">Role</li>
-        </ol>
-    </nav>
-
-    <div class="pb-4">
-        <a class="btn btn-primary" asp-page="Create">Create</a>
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item active" aria-current="page">Role</li>
+    </ol>
+    <div class="form-button-view">
+        <a class="btn btn-primary btn-sm" asp-page="Create">Create</a>
     </div>
+</nav>
 
-    <table class="datatable_responsive table table-striped table-hover gy-5 gs-7 border rounded w-100">
-        <thead>
-            <tr>
-                <th>
-                    @Html.DisplayNameFor(model => model.Role[0].Name)
-                </th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var item in Model.Role)
-            {
-                <tr class="cursor-pointer">
-                    <td>
-                        <a class="text-decoration-none text-black d-block" asp-page="./Details" asp-route-id="@item.Id">
-                            @Html.DisplayFor(modelItem => item.Name)
-                        </a>
-                    </td>
+<div class="container">
+    <div class="datatable-container pb-4">
+        <table class="datatable_responsive table table-striped table-hover gy-5 gs-7 border rounded w-100">
+            <thead>
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Role[0].Name)
+                    </th>
                 </tr>
-            }
-        </tbody>
-    </table>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.Role)
+                {
+                    <tr class="cursor-pointer">
+                        <td>
+                            <a class="text-decoration-none text-black d-block" asp-page="./Details" asp-route-id="@item.Id">
+                                @Html.DisplayFor(modelItem => item.Name)
+                            </a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
 </div>

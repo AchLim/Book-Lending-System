@@ -7,34 +7,44 @@
     Layout = "~/Pages/Shared/_Layout.cshtml";
 }
 
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a asp-page="Index">Role</a></li>
+        <li class="breadcrumb-item" aria-current="page">Create</li>
+    </ol>
+
+    <div class="form-button-view">
+        <label role="button" for="form-save-record" class="btn btn-primary btn-sm">Save</label>
+        <a asp-page="Index" class="btn btn-light btn-sm btn-outline-primary">Cancel</a>
+    </div>
+</nav>
+
 <div class="container">
-
-    <nav aria-label="breadcrumb">
-        <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a href="/Index">Home</a></li>
-            <li class="breadcrumb-item"><a asp-page="Index">Role</a></li>
-            <li class="breadcrumb-item" aria-current="page">Create</li>
-        </ol>
-    </nav>
-
-    <h4>User</h4>
-    <div class="row">
-        <div class="col-md-4">
-            <form method="post">
-                <div class="form-group">
-                    <input type="submit" value="Create" class="btn btn-primary" />
-                    <a asp-page="Index" class="btn btn-light btn-outline-primary">Cancel</a>
-                </div>
-                <hr />
+    <form method="post">
+        <div class="row form-sheet">
+            <div class="col-12">
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                <div class="form-group">
-                    <label asp-for="RoleName" class="control-label">Name</label>
-                    <input asp-for="RoleName" class="form-control" />
+            </div>
+
+            <div class="col-sm-12 col-md-6">
+                <div class="row">
+                    <div class="col-4 form-label">
+                        <label asp-for="RoleName" class="control-label">Name</label>
+                    </div>
+                    <div class="col-8 form-value">
+                        <input asp-for="RoleName" class="form-control" />
+                    </div>
                     <span asp-validation-for="RoleName" class="text-danger"></span>
                 </div>
-            </form>
+            </div>
+
+            <!-- Invisible -->
+            <div class="form-group d-none-important">
+                <input type="submit" id="form-save-record" value="Save" class="btn btn-primary" />
+                <a asp-page="Index" class="btn btn-light btn-outline-primary">Cancel</a>
+            </div>
         </div>
-    </div>
+    </form>
 </div>
 
 @section Scripts {
