@@ -22,16 +22,32 @@ namespace Book_Lending_System.Pages.UserView
         }
 
         [BindProperty]
-        public UserPartner UserPartner { get; set; } = default!;
+        public UserPartner UserPartner { get; set; }
 
         [BindProperty]
         public ICollection<IdentityUser> IdentityUsers { get; set; } = default!;
 
         public async Task<IActionResult> OnGetAsync()
         {
-            if (_context.Users != null)
+            if (_context.Users != null && _context.UserPartner != null)
             {
-                IdentityUsers = await _context.Users.ToListAsync();
+                var users = await _context.Users.ToListAsync();
+                var userPartners = await _context.UserPartner.Include(up => up.User).ToListAsync();
+
+                IdentityUsers = new List<IdentityUser>();
+
+                foreach (var user in users)
+                    IdentityUsers.Add(user);
+
+                foreach (var userPartner in userPartners)
+                {
+                    if (userPartner.User != null)
+                    {
+                        IdentityUsers.Remove(userPartner.User);
+                    }
+                }
+
+                //IdentityUsers = await _context.Users.Join.ToListAsync();
             }
 
             return Page();
@@ -55,7 +71,7 @@ namespace Book_Lending_System.Pages.UserView
             _context.UserPartner.Add(UserPartner);
             await _context.SaveChangesAsync();
 
-            return RedirectToPage("./Index");
+            return RedirectToPage("./Details", new { id = UserPartner.Id });
         }
 
         private bool UserPartnerExists(string id)

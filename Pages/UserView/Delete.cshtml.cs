@@ -29,7 +29,7 @@ namespace Book_Lending_System.Pages.UserView
                 return NotFound();
             }
 
-            var userpartner = await _context.UserPartner.FirstOrDefaultAsync(m => m.Id == id);
+            var userpartner = await _context.UserPartner.Include(up => up.User).FirstOrDefaultAsync(m => m.Id == id);
 
             if (userpartner == null)
             {

@@ -6,82 +6,109 @@
     Layout = "~/Pages/Shared/_Layout.cshtml";
 }
 
+
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a asp-page="Index">User</a></li>
+        <li class="breadcrumb-item" aria-current="page">@Html.DisplayFor(model => model.UserPartner.Name)</li>
+    </ol>
+
+    <div class="form-button-view">
+        <a class="btn btn-primary btn-sm" asp-page="./Edit" asp-route-id="@Model.UserPartner?.Id">Edit</a>
+        <a class="btn btn-primary btn-sm" asp-page="./Delete" asp-route-id="@Model.UserPartner?.Id">Delete</a>
+    </div>
+</nav>
+
 <div class="container">
 
-    <nav aria-label="breadcrumb">
-        <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a href="/Index">Home</a></li>
-            <li class="breadcrumb-item"><a asp-page="Index">User</a></li>
-            <li class="breadcrumb-item" aria-current="page">Details</li>
-        </ol>
-    </nav>
-    <div>
-        <a class="btn btn-primary" asp-page="./Edit" asp-route-id="@Model.UserPartner?.Id">Edit</a>
-        <a class="btn btn-primary" asp-page="./Delete" asp-route-id="@Model.UserPartner?.Id">Delete</a>
-        <a class="btn btn-light btn-outline-primary" asp-page="./Index">Back to List</a>
+    <div class="row form-sheet">
+        <div class="col-12">
+            <div class="row">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            </div>
+        </div>
+
+        <div class="col-sm-12 col-md-6">
+            <div class="row">
+                <div class="col-4 form-label">
+                    @Html.DisplayNameFor(model => model.UserPartner.NIK)
+                </div>
+                <div class="col-8 form-value">
+                    @Html.DisplayFor(model => model.UserPartner.NIK)
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-4 form-label">
+                    @Html.DisplayNameFor(model => model.UserPartner.Name)
+                </div>
+                <div class="col-8 form-value">
+                    @Html.DisplayFor(model => model.UserPartner.Name)
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-4 form-label">
+                    @Html.DisplayNameFor(model => model.UserPartner.BirthDate)
+                </div>
+                <div class="col-8 form-value">
+                    @Html.DisplayFor(model => model.UserPartner.BirthDate)
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-4 form-label">
+                    @Html.DisplayNameFor(model => model.UserPartner.Address)
+                </div>
+                <div class="col-8 form-value">
+                    @Html.DisplayFor(model => model.UserPartner.Address)
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-4 form-label">
+                    @Html.DisplayNameFor(model => model.UserPartner.TelephoneNumber)
+                </div>
+                <div class="col-8 form-value">
+                    @Html.DisplayFor(model => model.UserPartner.TelephoneNumber)
+                </div>
+            </div>
+        </div>
+
+        <div class="col-sm-12 col-md-6">
+            <div class="row">
+                <div class="col-4 form-label">
+                    @Html.DisplayNameFor(model => model.UserPartner.Gender)
+                </div>
+                <div class="col-8 form-value">
+                    @Html.DisplayFor(model => model.UserPartner.Gender)
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-4 form-label">
+                    @Html.DisplayNameFor(model => model.UserPartner.Nationality)
+                </div>
+                <div class="col-8 form-value">
+                    @Html.DisplayFor(model => model.UserPartner.Nationality)
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-4 form-label">
+                    @Html.DisplayNameFor(model => model.UserPartner.Citizenship)
+                </div>
+                <div class="col-8 form-value">
+                    @Html.DisplayFor(model => model.UserPartner.Citizenship)
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-4 form-label">
+                    @Html.DisplayNameFor(model => model.UserPartner.User)
+                </div>
+                <div class="col-8 form-value">
+                    @if (Model.UserPartner != null && Model.UserPartner.User != null)
+                    {
+                        <span class="badge bg-primary">
+                            @Model.UserPartner.User.UserName
+                        </span>
+                    }
+                </div>
+            </div>
+        </div>
     </div>
-
-    <hr />
-
-    <dl class="row">
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.UserPartner.NIK)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.UserPartner.NIK)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.UserPartner.Name)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.UserPartner.Name)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.UserPartner.TelephoneNumber)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.UserPartner.TelephoneNumber)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.UserPartner.Gender)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.UserPartner.Gender)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.UserPartner.BirthDate)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.UserPartner.BirthDate)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.UserPartner.Address)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.UserPartner.Address)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.UserPartner.Nationality)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.UserPartner.Nationality)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.UserPartner.Citizenship)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.UserPartner.Citizenship)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.UserPartner.User)
-        </dt>
-        <dd class="col-sm-10">
-            @if (Model.UserPartner != null && Model.UserPartner.User != null)
-            {
-                <span class="badge bg-primary">
-                    @Model.UserPartner.User.UserName
-                </span>
-            }
-        </dd>
-    </dl>
 </div>

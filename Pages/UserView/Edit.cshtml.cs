@@ -43,7 +43,23 @@ namespace Book_Lending_System.Pages.UserView
 
             if (_context.Users != null)
             {
-                IdentityUsers = await _context.Users.ToListAsync();
+                var users = await _context.Users.ToListAsync();
+                var userPartners = await _context.UserPartner.Include(up => up.User).ToListAsync();
+
+                IdentityUsers = new List<IdentityUser>();
+
+                foreach (var user in users)
+                    IdentityUsers.Add(user);
+
+                foreach (var userPartner in userPartners)
+                {
+                    if (userPartner.Id != UserPartner.Id && userPartner.User != null)
+                    {
+                        IdentityUsers.Remove(userPartner.User);
+                    }
+                }
+
+                //IdentityUsers = await _context.Users.ToListAsync();
             }
 
             return Page();
@@ -82,7 +98,7 @@ namespace Book_Lending_System.Pages.UserView
                 }
             }
 
-            return RedirectToPage("./Index");
+            return RedirectToPage("./Details", new { id = UserPartner.Id });
         }
 
         private bool UserPartnerExists(string id)
