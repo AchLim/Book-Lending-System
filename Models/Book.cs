@@ -48,9 +48,6 @@ namespace Book_Lending_System.Models
         [DataType(DataType.Upload)]
         public IFormFile? ImageFile { get; set; }
 
-        [Display(Name = "History of users borrowed")]
-        public ICollection<UserBook>? UserBooks { get; set; }
-
         [Display(Name = "Categories")]
         public ICollection<BookCategory>? BookCategories { get; set; }
     }

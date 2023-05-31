@@ -7,57 +7,85 @@
     Layout = "~/Pages/Shared/_Layout.cshtml";
 }
 
+
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a asp-page="Index">Account</a></li>
+        <li class="breadcrumb-item" aria-current="page">Create</li>
+    </ol>
+
+    <div class="form-button-view">
+        <label role="button" for="form-save-record" class="btn btn-primary btn-sm">Save</label>
+        <a asp-page="Index" class="btn btn-light btn-sm btn-outline-primary">Cancel</a>
+    </div>
+</nav>
+
 <div class="container">
-
-    <nav aria-label="breadcrumb">
-        <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a href="/Index">Home</a></li>
-            <li class="breadcrumb-item"><a asp-page="Index">Account</a></li>
-            <li class="breadcrumb-item" aria-current="page">Create</li>
-        </ol>
-    </nav>
-
-    <h4>Account</h4>
-    <div class="row">
-        <div class="col-md-4">
-            <form method="post">
-                <div class="form-group">
-                    <input type="submit" value="Create" class="btn btn-primary" />
-                    <a asp-page="Index" class="btn btn-light btn-outline-primary">Cancel</a>
-                </div>
-                <hr />
+    <form method="post">
+        <div class="row form-sheet">
+            <div class="col-12">
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                <div class="form-group">
-                    <label asp-for="Input.Username" class="control-label"></label>
-                    <input asp-for="Input.Username" class="form-control" />
+            </div>
+
+            <div class="col-sm-12 col-md-6">
+                <div class="row">
+                    <div class="col-4 form-label">
+                        <label asp-for="Input.Username" class="control-label"></label>
+                    </div>
+                    <div class="col-8 form-value">
+                        <input asp-for="Input.Username" class="form-control" />
+                    </div>
                     <span asp-validation-for="Input.Username" class="text-danger"></span>
                 </div>
-                <div class="form-group">
-                    <label asp-for="Input.Email" class="control-label"></label>
-                    <input asp-for="Input.Email" class="form-control" />
+                <div class="row">
+                    <div class="col-4 form-label">
+                        <label asp-for="Input.Email" class="control-label"></label>
+                    </div>
+                    <div class="col-8 form-value">
+                        <input asp-for="Input.Email" class="form-control" />
+                    </div>
                     <span asp-validation-for="Input.Email" class="text-danger"></span>
                 </div>
-                <div class="form-group">
-                    <label asp-for="Input.Password" class="control-label"></label>
-                    <input asp-for="Input.Password" class="form-control" />
+                <div class="row">
+                    <div class="col-4 form-label">
+                        <label asp-for="Input.Password" class="control-label"></label>
+                    </div>
+                    <div class="col-8 form-value">
+                        <input asp-for="Input.Password" class="form-control" />
+                    </div>
                     <span asp-validation-for="Input.Password" class="text-danger"></span>
                 </div>
+            </div>
 
-                <label class="control-label">Roles</label>
-                @if (Model.RolesList != null)
-                {
-                    var RoleList = Model.RolesList;
-                    @for (int i = 0; i < RoleList.Count; i++)
-                    {
-                        <div class="form-check mb-3">
-                            <input name="SelectedRoleIds" class="form-check-input" type="checkbox" value="@RoleList[i].Value" checked="@RoleList[i].Selected" />
-                            @RoleList[i].Text
-                        </div>
-                    }
-                }
-            </form>
+            <div class="col-sm-12 col-md-6">
+                <div class="row">
+                    <div class="col-4 form-label">
+                        Roles
+                    </div>
+                    <div class="col-8 form-value">
+                        @if (Model.RolesList != null)
+                        {
+                            var RoleList = Model.RolesList;
+                            @for (int i = 0; i < RoleList.Count; i++)
+                            {
+                                <div>
+                                    <input name="SelectedRoleIds" class="form-check-input" type="checkbox" value="@RoleList[i].Value" checked="@RoleList[i].Selected" />
+                                    @RoleList[i].Text
+                                </div>
+                            }
+                        }
+                    </div>
+                </div>
+            </div>
+
+
+            <!-- Invisible -->
+            <div class="form-group d-none-important">
+                <input type="submit" id="form-save-record" value="Save" class="btn btn-primary" />
+                <a asp-page="Index" class="btn btn-light btn-outline-primary">Cancel</a>
+            </div>
         </div>
-    </div>
+    </form>
 </div>
 
 @section Scripts {

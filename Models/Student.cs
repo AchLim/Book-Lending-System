@@ -6,9 +6,14 @@ using Microsoft.AspNetCore.Identity;
 
 namespace Book_Lending_System.Models
 {
-    [PrimaryKey(nameof(NPM))]
     public class Student
     {
+        public Student ()
+        {
+            Id = Guid.NewGuid().ToString();
+        }
+        public string Id { get; set; }
+
         [Required]
         [StringLength(7, ErrorMessage = "NPM must be 7 digit numbers.", MinimumLength = 7)]
         public required string NPM { get; set; }
@@ -22,12 +27,10 @@ namespace Book_Lending_System.Models
         [Display(Name = "Study Program")]
         public required StudyProgram StudyProgram { get; set; }
 
-        [Display(Name = "User Account")]
-        public string? AccountKey { get; set; }
+        public string? UserPartnerId { get; set; }
 
-        [ForeignKey(nameof(AccountKey))]
         [DeleteBehavior(DeleteBehavior.ClientSetNull)]
-        [Display(Name = "User Account")]
-        public virtual IdentityUser? Account { get; set; }
+        [Display(Name = "User")]
+        public virtual UserPartner? UserPartner { get; set; }
     }
 }
