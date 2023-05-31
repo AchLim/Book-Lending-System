@@ -96,9 +96,8 @@ namespace Book_Lending_System.Pages.AccountView
             return Page();
         }
 
-        public async Task<IActionResult> OnPostAsync(string? returnUrl = null)
+        public async Task<IActionResult> OnPostAsync()
         {
-            returnUrl ??= Url.Content("~/");
             if (ModelState.IsValid)
             {
                 var user = CreateUser();
@@ -130,7 +129,7 @@ namespace Book_Lending_System.Pages.AccountView
                     //    $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
 
                     //await _signInManager.SignInAsync(user, isPersistent: false);
-                    return LocalRedirect(returnUrl);
+                    return RedirectToPage("./Details", new { id = user.Id });
                 }
                 foreach (var error in result.Errors)
                 {
