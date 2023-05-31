@@ -29,7 +29,7 @@ namespace Book_Lending_System.Pages.BookViews.ExploreView
         public Book Book { get; set; } = default!;
 
         [BindProperty]
-        public UserBook UserBook { get; set; } = default!;
+        public LendRequest LendRequest { get; set; } = default!;
 
         public async Task<IActionResult> OnGetAsync(string? id)
         {
@@ -69,7 +69,7 @@ namespace Book_Lending_System.Pages.BookViews.ExploreView
                 return Page();
             }
 
-            UserBook = new()
+            LendRequest = new()
             {
                 BookId = book.Id,
                 UserId = user.Id,
@@ -96,7 +96,7 @@ namespace Book_Lending_System.Pages.BookViews.ExploreView
 
         public async Task<IActionResult> OnPostAsync()
         {
-            if (_context.UserBook == null || Book == null)
+            if (_context.LendRequest == null || Book == null)
             {
                 return NotFound();
             }
@@ -111,17 +111,18 @@ namespace Book_Lending_System.Pages.BookViews.ExploreView
                 return await OnGetAsync(Book.Id);
             }
 
-            UserBook userBookToCreate = new()
+            LendRequest lendRequestToCreate = new()
             {
                 BookId = Book.Id,
                 UserId = user.Id,
-                DateRequested = DateTime.UtcNow.Date
+                DateRequested = DateTime.UtcNow.Date,
+                Status = BookLendingStatus.Submitted
             };
 
-            _context.UserBook.Add(userBookToCreate);
+            _context.LendRequest.Add(lendRequestToCreate);
             await _context.SaveChangesAsync();
 
-            return RedirectToPage("../LendingView/Details", new { id = userBookToCreate.Id });
+            return RedirectToPage("../LendingView/Details", new { id = lendRequestToCreate.Id });
         }   
     }
 }

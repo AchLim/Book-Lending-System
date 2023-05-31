@@ -126,23 +126,26 @@
                     <div class="form-group">
                         <input type="submit" id="submit_request_lend" value="Request" class="btn btn-primary" style="display: none !important;" />
                     </div>
-                    <hr />
                     <div asp-validation-summary="ModelOnly" class="text-danger p-6 px-4"></div>
+                    <hr />
                     <div class="form-group">
-                        <label asp-for="UserBook.StartDate" class="control-label"></label>
-                        <input asp-for="UserBook.StartDate" class="form-control" />
-                        <span asp-validation-for="UserBook.StartDate" class="text-danger"></span>
+                        <label asp-for="LendRequest.StartDate" class="control-label"></label>
+                        <input asp-for="LendRequest.StartDate" class="form-control" />
+                        <span asp-validation-for="LendRequest.StartDate" class="text-danger"></span>
                     </div>
                     <div class="form-group">
-                        <label asp-for="UserBook.EndDate" class="control-label"></label>
-                        <input asp-for="UserBook.EndDate" class="form-control" />
-                        <span asp-validation-for="UserBook.EndDate" class="text-danger"></span>
+                        <label asp-for="LendRequest.EndDate" class="control-label"></label>
+                        <input asp-for="LendRequest.EndDate" class="form-control" />
+                        <span asp-validation-for="LendRequest.EndDate" class="text-danger"></span>
                     </div>
                     <br />
                 </form>
             </div>
             <div class="modal-footer">
-                <label role="button" class="btn btn-primary" for="submit_request_lend" tabindex="0">Request</label>
+                @if ((await Model.GetUserPartnerFromSelf()) != null)
+                {
+                    <label role="button" class="btn btn-primary" for="submit_request_lend" tabindex="0">Request</label>
+                }
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
             </div>
         </div>

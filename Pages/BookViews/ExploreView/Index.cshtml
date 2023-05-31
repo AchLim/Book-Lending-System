@@ -13,6 +13,8 @@
         @foreach (var Category in Model.Category)
         {
             var Books = await Model.GetAllBookForCategory(Category);
+            if (Books.Count() <= 0)
+                continue;
 
             <text>
                 <div class="carousel-section-header">
