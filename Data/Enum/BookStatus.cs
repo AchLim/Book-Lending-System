@@ -6,15 +6,15 @@ namespace Book_Lending_System.Data
     public enum BookStatus : byte
     {
         [Display(Name = "New")]
-        New,
+        New = 5,
 
         [Display(Name = "Displayed")]
-        Displayed,
+        Displayed = 10,
 
         [Display(Name = "Unfit")]
-        Unfit,
+        Unfit = 15,
 
         [Display(Name = "Borrowed")]
-        Borrowed,
+        Borrowed = 20,
     }
 }
