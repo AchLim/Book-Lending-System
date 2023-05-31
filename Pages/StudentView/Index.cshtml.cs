@@ -26,7 +26,7 @@ namespace Book_Lending_System.Pages.StudentView
             if (_context.Student != null)
             {
                 Student = await _context.Student
-                .Include(s => s.Account).ToListAsync();
+                .Include(s => s.UserPartner).ToListAsync();
             }
         }
     }

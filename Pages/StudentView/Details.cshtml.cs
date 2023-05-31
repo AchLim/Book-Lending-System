@@ -28,7 +28,7 @@ namespace Book_Lending_System.Pages.StudentView
                 return NotFound();
             }
 
-            var student = await _context.Student.FirstOrDefaultAsync(m => m.NPM == id);
+            var student = await _context.Student.Include(s => s.UserPartner).FirstOrDefaultAsync(m => m.Id == id);
             if (student == null)
             {
                 return NotFound();

@@ -7,6 +7,8 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Book_Lending_System.Data;
 using Book_Lending_System.Models;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 
 namespace Book_Lending_System.Pages.StudentView
 {
@@ -19,8 +21,32 @@ namespace Book_Lending_System.Pages.StudentView
             _context = context;
         }
 
-        public IActionResult OnGet()
+        [BindProperty]
+        public ICollection<UserPartner> UserPartners { get; set; } = default!;
+
+        public async Task<IActionResult> OnGetAsync()
         {
+            if (_context.UserPartner != null && _context.Student != null)
+            {
+                var userPartners = await _context.UserPartner.ToListAsync();
+                var students = await _context.Student.Include(s => s.UserPartner).ToListAsync();
+
+                UserPartners = new List<UserPartner>();
+
+                foreach (var userPartner in userPartners)
+                    UserPartners.Add(userPartner);
+
+                foreach (var student in students)
+                {
+                    if (student.UserPartner != null)
+                    {
+                        UserPartners.Remove(student.UserPartner);
+                    }
+                }
+
+                //UserPartners = await _context.UserPartner.ToListAsync();
+            }
+
             return Page();
         }
 
@@ -31,22 +57,23 @@ namespace Book_Lending_System.Pages.StudentView
         // To protect from overposting attacks, see https://aka.ms/RazorPagesCRUD
         public async Task<IActionResult> OnPostAsync()
         {
-          if (!ModelState.IsValid || _context.Student == null || Student == null)
+            if (!ModelState.IsValid || _context.Student == null || Student == null)
             {
-                return Page();
+                return await OnGetAsync();
             }
 
-            Student duplicatedNPM = _context.Student.Where(student => student.NPM == Student.NPM).FirstOrDefault();
+            Student? duplicatedNPM = _context.Student.Where(student => student.NPM == Student.NPM).FirstOrDefault();
             if (duplicatedNPM != null)
             {
                 ModelState.AddModelError("DuplicateNPM", "Duplicated NPM found! Please contact IT Department!");
-                return Page();
+                return await OnGetAsync();
             }
 
             _context.Student.Add(Student);
             await _context.SaveChangesAsync();
 
-            return RedirectToPage("./Index");
+
+            return RedirectToPage("./Details", new { id = Student.Id });
         }
     }
 }

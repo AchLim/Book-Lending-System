@@ -6,46 +6,66 @@
     Layout = "~/Pages/Shared/_Layout.cshtml";
 }
 
-<div class="container">
 
-    <nav aria-label="breadcrumb">
-        <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a href="/Index">Home</a></li>
-            <li class="breadcrumb-item active" aria-current="page">Student</li>
-        </ol>
-    </nav>
-
-    <div class="pb-4">
-        <a class="btn btn-primary" asp-page="Create">Create</a>
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item active" aria-current="page">Student</li>
+    </ol>
+    <div class="form-button-view">
+        <a class="btn btn-primary btn-sm" asp-page="Create">Create</a>
     </div>
-
-    <table class="datatable_responsive table table-striped table-hover gy-5 gs-7 border rounded w-100">
-        <thead>
-            <tr>
-                <th>
-                    @Html.DisplayNameFor(model => model.Student[0].Name)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Student[0].StudyProgram)
-                </th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var item in Model.Student)
-            {
-                <tr class="cursor-pointer">
-                    <td>
-                        <a class="text-decoration-none text-black d-block" asp-page="./Details" asp-route-id="@item.NPM">
-                            @Html.DisplayFor(modelItem => item.Name)
-                        </a>
-                    </td>
-                    <td>
-                        <a class="text-decoration-none text-black d-block" asp-page="./Details" asp-route-id="@item.NPM">
-                            @Html.DisplayFor(modelItem => item.StudyProgram)
-                        </a>
-                    </td>
+</nav>
+<div class="container">
+    <div class="datatable-container pb-4">
+        <table class="datatable_responsive table table-striped table-hover gy-5 gs-7 border rounded w-100">
+            <thead>
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Student[0].NPM)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Student[0].Name)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Student[0].StudyProgram)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Student[0].UserPartner)
+                    </th>
                 </tr>
-            }
-        </tbody>
-    </table>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.Student)
+                {
+                    <tr class="cursor-pointer">
+                        <td>
+                            <a class="text-decoration-none text-black d-block" asp-page="./Details" asp-route-id="@item.Id">
+                                @Html.DisplayFor(modelItem => item.NPM)
+                            </a>
+                        </td>
+                        <td>
+                            <a class="text-decoration-none text-black d-block" asp-page="./Details" asp-route-id="@item.Id">
+                                @Html.DisplayFor(modelItem => item.Name)
+                            </a>
+                        </td>
+                        <td>
+                            <a class="text-decoration-none text-black d-block" asp-page="./Details" asp-route-id="@item.Id">
+                                @Html.DisplayFor(modelItem => item.StudyProgram)
+                            </a>
+                        </td>
+                        <td>
+                            @if (item.UserPartner != null)
+                            {
+                                <a class="text-decoration-none text-black d-block" asp-page="./Details" asp-route-id="@item.Id">
+                                    <span class="badge bg-primary">
+                                        @item.UserPartner
+                                    </span>
+                                </a>
+                            }
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
 </div>
