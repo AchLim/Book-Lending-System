@@ -11,16 +11,28 @@ html {
 }
 
 body {
-    font-size: 10px;
+    font-size: 8px;
     font-family: 'Poppins', sans-serif;
     color: #666666;
     line-height: 1.42857143;
 }
 
+@media (min-width: 480px) {
+    body {
+        font-size: 12px;
+    }
+}
+
 @media (min-width: 768px) {
-  body {
-    font-size: 13px;
-  }
+    body {
+        font-size: 14px;
+    }
+}
+
+@media (min-width: 1024px) {
+    body {
+        font-size: 16px;
+    }
 }
 
 .btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
@@ -126,6 +138,14 @@ html .main-navbar {
 }
 
 .main-navbar > ul > li > a {
+    display: block;
+    height: 46px;
+    padding: 0 10px;
+    color: black;
+    line-height: 46px;
+}
+
+.main-navbar > ul > li > form > button {
     display: block;
     height: 46px;
     padding: 0 10px;
@@ -456,6 +476,10 @@ ul.dropdown-menu > li > a:hover {
 /* ------------- */
 
 /* Utils */
+.pr-0 {
+    padding-right: 0 !important;
+}
+
 .visible-xs-block {
     display: none !important;
 }
@@ -483,10 +507,6 @@ ul.dropdown-menu > li > a:hover {
 
 .book .bookcover {
     height: 125px
-}
-
-div#imageManageView, div.imageManageView {
-    padding: 0 20px 20px
 }
 
 div#imageManageView img, div.imageManageView img {
@@ -528,7 +548,7 @@ div#imageManageView img, div.imageManageView img {
 
 .book img.bookcover {
     margin: 0 auto;
-    box-shadow: 1px 2px 5px 0 #c3b683;
+    box-shadow: 1px 2px 5px 0 #5f5d94;
     border-radius: 3px;
     max-width: 100%;
     max-height: 200px
@@ -860,7 +880,7 @@ div#imageManageView img, div.imageManageView img {
     background-color: #ffffff;
     border: 1px solid #d9d7d7;
     box-shadow: 0 5px 20px -15px #000000;
-    padding: 1rem;
+    padding: 2rem 1rem;
 }
 
 .form-label, .form-value {
@@ -871,11 +891,65 @@ div#imageManageView img, div.imageManageView img {
 .form-sheet .form-label {
     font-weight: bold;
     margin-right: 0px;
-
 }
 
 .form-sheet .form-value {
-    
+}
+
+
+.form-sheet .form-value div.ms-options-wrap button {
+    border-radius: 0.375rem;
+}
+
+.form-sheet .form-value input,
+.form-sheet .form-value select,
+.form-sheet .form-value div.ms-options-wrap {
+    font-size: 13px;
+}
+
+.form-sheet .row {
+    margin-bottom: .375rem;
+}
+
+.form-sheet .form-value input[type="text"],
+.form-sheet .form-value input[type="number"],
+.form-sheet .form-value input[type="tel"],
+.form-sheet .form-value input[type="email"],
+.form-sheet .form-value input[type="password"],
+.form-sheet .form-value input[type="date"],
+.form-sheet .form-value input[type="datetime"],
+.form-sheet .form-value input[type="file"],
+.form-sheet .form-value select,
+.form-sheet .form-value div.ms-options-wrap,
+.form-sheet .form-value textarea{
+    height: 80%;
+    width: 96%;
+}
+.form-sheet .form-value input[type="checkbox"] {
+    margin-bottom: .5rem;
+}
+
+.form-sheet .form-value select,
+.form-sheet .form-value input[type="file"] {
+    height: 100%;
+    padding: .375rem .75rem;
+}
+
+.modal-dialog-m {
+    max-width: 768px;
+}
+
+.modal-label {
+    font-size: 13px;
+    font-weight: bold;
+    margin-bottom: .5rem;
+}
+
+.modal-value textarea {
+    font-weight: normal;
+    padding: .15rem;
+    font-size: 13px;
+    border: 1px solid grey;
 }
 
 /* End of Book */
@@ -883,3 +957,96 @@ div#imageManageView img, div.imageManageView img {
 /* ------------- */
 /* ------------- */
 /* ------------- */
+
+.datatable-container {
+    overflow-x: auto;
+}
+
+/* Breadcrumb */
+nav[aria-label="breadcrumb"] {
+    font-size: 14px;
+    line-height: 2rem;
+    background-color: white;
+    box-shadow: 0 0 4px rgba(0, 0, 0, 0.2);
+    margin: 8px auto;
+    width: 98%;
+    border-radius: 6px;
+    padding: 16px;
+}
+
+nav[aria-label="breadcrumb"] .breadcrumb {
+    --lim-breadcrumb-margin-bottom: 4px;
+    margin-bottom: var(--lim-breadcrumb-margin-bottom)
+}
+
+
+nav[aria-label="breadcrumb"] li a {
+    font-size: 14px;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+nav[aria-label="breadcrumb"] .form-button-view {
+    margin-right: 4px;
+}
+
+
+nav[aria-label="breadcrumb"] .form-button-view a {
+    border-radius: 24px;
+    text-transform: uppercase;
+    padding: 5px 10px;
+}
+
+.d-none-important {
+    display: none !important;
+}
+
+
+nav[aria-label="breadcrumb"] .form-button-view *[role="button"] {
+    border-radius: 24px;
+    text-transform: uppercase;
+    padding: 5px 10px;
+}
+
+@media (min-width: 1024px) {
+    nav[aria-label="breadcrumb"] {
+        font-size: 18px;
+    }
+
+    nav[aria-label="breadcrumb"] li a {
+        font-size: 18px;
+    }
+}
+
+.button-header {
+    max-height: 100px;
+    background-color: white;
+    line-height: 2rem;
+    box-shadow: 0 0 4px rgba(0, 0, 0, 0.2);
+    margin: 8px auto;
+    width: 98%;
+    border-radius: 6px;
+}
+
+.button-header > .button-container {
+    padding: .5rem;
+    padding-left: .75rem;
+}
+
+.button-header > .button-container > button {
+    --lim-btn-padding-x: .35rem;
+    --lim-btn-padding-y: .175rem;
+    --lim-btn-font-size: .8rem;
+    --lim-btn-border-radius: .8rem;
+
+    padding-left: var(--lim-btn-padding-x);
+    padding-right: var(--lim-btn-padding-x);
+    padding-top: var(--lim-btn-padding-y);
+    padding-bottom: var(--lim-btn-padding-y);
+    border-radius: var(--lim-btn-border-radius);
+    font-size: var(--lim-btn-font-size);
+    
+    text-transform: uppercase;
+
+    margin-right: .25rem;
+}
