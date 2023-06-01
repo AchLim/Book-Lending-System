@@ -9,6 +9,8 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc.Authorization;
 using Book_Lending_System.FileUploadService;
 using Microsoft.Extensions.Options;
+using Quartz;
+using Book_Lending_System.Data.Jobs;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -44,6 +46,26 @@ builder.Services.AddAuthorization(options =>
 });
 
 builder.Services.AddControllersWithViews();
+
+// Every minute => 0 * * ? * *
+// Every hour => 0 0 * ? * *
+// Every day on 3 pm => 0 0 15 * * ?
+// Fire at 10:15 am => 0 15 10 * * ?
+// Fire at 22:10 pm => 0 10 22 * * ?
+
+builder.Services.AddQuartz(q =>
+{
+    q.UseMicrosoftDependencyInjectionJobFactory();
+    var jobKey = new JobKey("EmailSchedulerJob");
+    q.AddJob<EmailSchedulerJob>(opts => opts.WithIdentity(jobKey));
+
+    q.AddTrigger(opts => opts
+                         .ForJob(jobKey)
+                         .WithIdentity("EmailScheduler-trigger")
+                         .WithCronSchedule("0 01 22 * * ?"));
+});
+
+builder.Services.AddQuartzHostedService(q => q.WaitForJobsToComplete = true);
 
 var app = builder.Build();
 
