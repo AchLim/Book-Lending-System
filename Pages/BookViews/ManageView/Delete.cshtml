@@ -18,42 +18,115 @@
         <a asp-page="Details" asp-route-id="@Model.Book?.Id" class="btn btn-light btn-sm btn-outline-primary">Cancel</a>
     </div>
 </nav>
+
+
+
 <div class="container">
-    <form method="post" class="d-none-important">
-        <input type="hidden" asp-for="Book.Id" />
-        <input type="submit" id="form-delete-record" value="Delete" class="btn btn-danger" />
+    <form method="post">
+        <div class="row form-sheet">
+            <div class="col-sm-12 col-md-6">
+                <div class="row">
+                    <div class="col-4 form-label">
+                        @Html.DisplayNameFor(model => model.Book.Title)
+                    </div>
+                    <div class="col-8 form-value">
+                        @Html.DisplayFor(model => model.Book.Title)
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-4 form-label">
+                        @Html.DisplayNameFor(model => model.Book.Status)
+                    </div>
+                    <div class="col-8 form-value">
+                        @Html.DisplayFor(model => model.Book.Status)
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-4 form-label">
+                        @Html.DisplayNameFor(model => model.Book.BookAuthors)
+                    </div>
+                    <div class="col-8 form-value">
+                        @if (Model.BookAuthors != null)
+                        {
+                            var AuthorList = Model.BookAuthors;
+                            foreach (var author in AuthorList)
+                            {
+                                <span class="badge bg-primary">@author</span>
+                                <span>&nbsp;</span>
+                            }
+                        }
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-4 form-label">
+                        @Html.DisplayNameFor(model => model.Book.ReleaseDate)
+                    </div>
+                    <div class="col-8 form-value">
+                        @Html.DisplayFor(model => model.Book.ReleaseDate)
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-4 form-label">
+                        @Html.DisplayNameFor(model => model.Book.BookCategories)
+                    </div>
+                    <div class="col-8 form-value">
+                        @if (Model.BookCategories != null)
+                        {
+                            var CategoryList = Model.BookCategories;
+                            foreach (var category in CategoryList)
+                            {
+                                <span class="badge bg-primary">@category</span>
+                                <span>&nbsp;</span>
+                            }
+                        }
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-4 form-label">
+                        @Html.DisplayNameFor(model => model.Book.BookPublishers)
+                    </div>
+                    <div class="col-8 form-value">
+                        @if (Model.BookPublishers != null)
+                        {
+                            var PublisherList = Model.BookPublishers;
+                            foreach (var publisher in PublisherList)
+                            {
+                                <span class="badge bg-primary">@publisher</span>
+                                <span>&nbsp;</span>
+                            }
+                        }
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-4 form-label">
+                        @Html.DisplayNameFor(model => model.Book.ImageLocation)
+                    </div>
+                    <div class="col-8 form-value">
+                        @if (Model.Book != null)
+                        {
+                            <img src="~/images/uploads/@{@Model.Book.ImageLocation}" alt="Cover" style="height: 120px; width: 120px;" />
+                        }
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-sm-12 col-md-6">
+                <div class="row">
+                    <div class="col-4 form-label">
+                        @Html.DisplayNameFor(model => model.Book.Synopsis)
+                    </div>
+                    <div class="col-8 form-value">
+                        @Html.DisplayFor(model => model.Book.Synopsis)
+                    </div>
+                </div>
+            </div>
+
+
+            <!-- Invisible -->
+            <div class="form-group d-none-important">
+                <input type="submit" id="form-delete-record" value="Delete" class="btn btn-primary" />
+                <input type="hidden" asp-for="Book.Id" />
+            </div>
+        </div>
     </form>
-    <hr />
-    <dl class="row">
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Book.Title)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Book.Title)
-        </dd>
-@*        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Book.Author)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Book.Author)
-        </dd>*@
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Book.Synopsis)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Book.Synopsis)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Book.ReleaseDate)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Book.ReleaseDate)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Book.Status)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Book.Status)
-        </dd>
-    </dl>
 </div>
