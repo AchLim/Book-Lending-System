@@ -67,9 +67,13 @@ namespace Book_Lending_System.Pages.BookViews.LendingView
 
             if (_context.LendRequest != null)
             {
-                LendRequest? lendRequestToUpdate = await _context.LendRequest.FirstOrDefaultAsync(ub => ub.Id == id);
+                LendRequest? lendRequestToUpdate = await _context.LendRequest.Include(lr => lr.Book).FirstOrDefaultAsync(ub => ub.Id == id);
                 if (lendRequestToUpdate != null)
                 {
+                    if (lendRequestToUpdate.Book != null)
+                    {
+                        lendRequestToUpdate.Book.Status = BookStatus.Borrowed;
+                    }
                     lendRequestToUpdate.Status = BookLendingStatus.Approved;
                     await _context.SaveChangesAsync();
                     return RedirectToPage("./Details", new { id = LendRequest.Id });
@@ -129,7 +133,7 @@ namespace Book_Lending_System.Pages.BookViews.LendingView
                 // Need check if already due date, then redirect to status Pending_Payment_Due, at there will show button "Paid" which will redirect to status: Returned.
                 // Else if not due date, redirect to status: Returned.
 
-                LendRequest? lendRequestToUpdate = await _context.LendRequest.FirstOrDefaultAsync(ub => ub.Id == id);
+                LendRequest? lendRequestToUpdate = await _context.LendRequest.Include(lr => lr.Book).FirstOrDefaultAsync(ub => ub.Id == id);
                 if (lendRequestToUpdate == null)
                     return NotFound();
 
@@ -139,6 +143,11 @@ namespace Book_Lending_System.Pages.BookViews.LendingView
                 {
                     ModelState.AddModelError("InvalidReason", "Please enter a valid date of book returned.");
                     return await OnGetAsync(id);
+                }
+
+                if (lendRequestToUpdate.Book != null)
+                {
+                    lendRequestToUpdate.Book.Status = BookStatus.Displayed;
                 }
 
                 bool returnIsDueDate = lendRequestToUpdate.EndDate.CompareTo(ReturnedDate.Value) == -1;

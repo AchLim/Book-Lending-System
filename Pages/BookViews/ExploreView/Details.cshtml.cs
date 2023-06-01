@@ -96,7 +96,7 @@ namespace Book_Lending_System.Pages.BookViews.ExploreView
 
         public async Task<IActionResult> OnPostAsync()
         {
-            if (_context.LendRequest == null || Book == null)
+            if (_context.LendRequest == null || _context.Book == null || Book == null)
             {
                 return NotFound();
             }
@@ -110,6 +110,13 @@ namespace Book_Lending_System.Pages.BookViews.ExploreView
                 ModelState.AddModelError("", "User record is not found, please contact IT Department.");
                 return await OnGetAsync(Book.Id);
             }
+
+            Book? bookToCheck = await _context.Book.FirstOrDefaultAsync(b => b.Id == Book.Id);
+            if (bookToCheck == null)
+                return NotFound();
+
+            if (bookToCheck.Status == BookStatus.Borrowed)
+                return NotFound();
 
             LendRequest lendRequestToCreate = new()
             {
